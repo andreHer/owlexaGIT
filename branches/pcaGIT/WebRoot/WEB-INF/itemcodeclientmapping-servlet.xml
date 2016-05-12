@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="itemCodeClientMappingValidator" class="com.ametis.cms.web.validator.ItemCodeClientMappingValidator"/>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/itemcodeclientmapping">itemCodeClientMappingController</prop>
+				<prop key="/itemcodeclientmapping-form">itemCodeClientMappingFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/itemCodeClientMapping/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="itemCodeClientMappingController" class="com.ametis.cms.web.controller.ItemCodeClientMappingController">
+		<property name="itemCodeClientMappingService">
+			<ref bean="itemCodeClientMappingService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+		<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+	</bean>
+
+	<bean name="itemCodeClientMappingFormController" class="com.ametis.cms.web.controller.ItemCodeClientMappingFormController">
+		<property name="formView" value="editItemCodeClientMapping"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="itemCodeClientMappingValidator"/>
+		<property name="commandName" value="itemCodeClientMappingForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.ItemCodeClientMappingForm" />
+
+		<property name="itemCodeClientMappingService">
+			<ref bean="itemCodeClientMappingService" />
+		</property>
+		<property name="securityService" >
+			<ref bean="securityService" />
+		</property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+		
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.itemCodeClientMapping</value></property>
+	</bean>
+</beans>
+
+

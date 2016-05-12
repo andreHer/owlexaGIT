@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="providerValidator" class="com.ametis.cms.web.validator.ProviderValidator"/>
+	<bean id="providerClaimValidator" class="com.ametis.cms.web.validator.ProviderClaimValidator"/>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/provider">providerController</prop>
+				<prop key="/provider-form">providerFormController</prop>
+				<prop key="/providerclaim-form">providerClaimFormController</prop>
+				<prop key="/providerreport">providerController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/provider/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="providerController" class="com.ametis.cms.web.controller.ProviderController">
+		<property name="providerDoctorService">
+			<ref bean="providerDoctorService" />
+		</property>
+		<property name="providerItemService">
+			<ref bean="providerItemService" />
+		</property>
+		<property name="providerPoliklinikService">
+			<ref bean="providerPoliklinikService" />
+		</property>
+		<property name="providerService">
+			<ref bean="providerService" />
+		</property>
+		<property name="memberService">
+			<ref bean="memberService" />
+		</property>
+        <property name="edcTerminalService">
+            <ref bean="edcTerminalService" />
+        </property>
+        <property name="edcTransactionLogService">
+            <ref bean="edcTransactionLogService" />
+        </property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+        <property name="configurationService">
+			<ref bean="configurationService" />
+		</property>
+		<property name="caseService">
+			<ref bean="myCaseService" />
+		</property>
+	</bean>
+
+	<bean name="providerFormController" class="com.ametis.cms.web.controller.ProviderFormController">
+		<property name="formView" value="editProvider"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="providerValidator"/>
+		<property name="commandName" value="providerForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.ProviderForm" />
+<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+		<property name="providerService">
+			<ref bean="providerService" />
+		</property>
+		<property name="providerGroupService">
+			<ref bean="providerGroupService" />
+		</property>
+		<property name="poliklinikService">
+			<ref bean="poliklinikService" />
+		</property>
+		<property name="currencyService">
+			<ref bean="currencyService" />
+		</property>
+		<property name="userService">
+			<ref bean="userService" />
+		</property>
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+		<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+				<property name="providerCategoryService">
+			<ref bean="providerCategoryService" />
+		</property>
+		<property name="providerTypeService">
+			<ref bean="providerTypeService" />
+		</property>
+			
+<!-- foreign affairs end -->
+
+	</bean>
+	
+	
+	<bean name="providerClaimFormController" class="com.ametis.cms.web.controller.ProviderFormController">
+		<property name="formView" value="editProviderFromClaim"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="providerClaimValidator"/>
+		<property name="commandName" value="providerForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.ProviderForm" />
+<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+		<property name="providerService">
+			<ref bean="providerService" />
+		</property>
+		<property name="poliklinikService">
+			<ref bean="poliklinikService" />
+		</property>
+		<property name="currencyService">
+			<ref bean="currencyService" />
+		</property>
+		<property name="userService">
+			<ref bean="userService" />
+		</property>
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+		<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+				<property name="providerCategoryService">
+			<ref bean="providerCategoryService" />
+		</property>
+		
+		<property name="providerTypeService">
+			<ref bean="providerTypeService" />
+		</property>
+		
+<!-- foreign affairs end -->
+
+	
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.provider</value></property>
+	</bean>
+</beans>
+
+

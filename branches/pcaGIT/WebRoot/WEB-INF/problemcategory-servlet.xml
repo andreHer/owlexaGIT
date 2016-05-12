@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="problemCategoryValidator" class="com.ametis.cms.web.validator.ProblemCategoryValidator"/>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/problemcategory">problemCategoryController</prop>
+				<prop key="/problemcategory-form">problemCategoryFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/problemCategory/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="problemCategoryController" class="com.ametis.cms.web.controller.ProblemCategoryController">
+		<property name="problemCategoryService">
+			<ref bean="problemCategoryService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+		<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+	</bean>
+
+	<bean name="problemCategoryFormController" class="com.ametis.cms.web.controller.ProblemCategoryFormController">
+		<property name="formView" value="editProblemCategory"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="problemCategoryValidator"/>
+		<property name="commandName" value="problemCategoryForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.ProblemCategoryForm" />
+
+		<property name="problemCategoryService">
+			<ref bean="problemCategoryService" />
+		</property>
+		<property name="securityService" >
+			<ref bean="securityService" />
+		</property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+		
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.problemCategory</value></property>
+	</bean>
+</beans>
+
+

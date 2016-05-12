@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="memberProviderValidator" class="com.ametis.cms.web.validator.MemberProviderValidator"/>
+
+	
+ 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+ 	
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/memberprovider">memberProviderController</prop>
+				<prop key="/memberprovider-form">memberProviderFormController</prop>
+				<prop key="/memberprovider-upload">uploadMemberProviderFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/memberProvider/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="memberProviderController" class="com.ametis.cms.web.controller.MemberProviderController">
+		<property name="memberProviderService">
+			<ref bean="memberProviderService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+		<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+
+		<property name="userService">
+			<ref bean="userService" />
+		</property>
+				<property name="providerReviewQuestionaireService">
+			<ref bean="providerReviewQuestionaireService" />
+		</property>
+				<property name="providerReviewService">
+			<ref bean="providerReviewService" />
+		</property>
+				<property name="questionaireService">
+			<ref bean="questionaireService" />
+		</property>
+				<property name="questionaireItemService">
+			<ref bean="questionaireItemService" />
+		</property>
+		<property name="memberService">
+			<ref bean="memberService" />
+		</property>
+	</bean>
+
+	<bean name="memberProviderFormController" class="com.ametis.cms.web.controller.MemberProviderFormController">
+		<property name="formView" value="editMemberProvider"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="memberProviderValidator"/>
+		<property name="commandName" value="memberProviderForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.MemberProviderForm" />
+
+		<property name="memberProviderService">
+			<ref bean="memberProviderService" />
+		</property>
+		<property name="securityService" >
+			<ref bean="securityService" />
+		</property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		<property name="policyService">
+			<ref bean="policyService" />
+		</property>
+
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+			<property name="memberService">
+			<ref bean="memberService" />
+		</property>
+				<property name="providerService">
+			<ref bean="providerService" />
+		</property>
+			
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean name="uploadMemberProviderFormController" class="com.ametis.cms.web.controller.MemberProviderFormController">
+		<property name="formView" value="uploadMemberProvider"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="memberProviderValidator"/>
+		<property name="commandName" value="memberProviderForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.MemberProviderForm" />
+
+		<property name="memberProviderService">
+			<ref bean="memberProviderService" />
+		</property>
+		<property name="securityService" >
+			<ref bean="securityService" />
+		</property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		<property name="policyService">
+			<ref bean="policyService" />
+		</property>
+
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+			<property name="memberService">
+			<ref bean="memberService" />
+		</property>
+				<property name="providerService">
+			<ref bean="providerService" />
+		</property>
+			
+<!-- foreign affairs end -->
+
+	</bean>
+	
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.memberProvider</value></property>
+	</bean>
+</beans>
+
+

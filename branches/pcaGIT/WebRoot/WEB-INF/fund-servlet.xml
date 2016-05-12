@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+
+	<bean id="fundValidator"
+		class="com.ametis.cms.web.validator.FundValidator" />
+
+	<bean id="urlMapping"
+		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/fund">fundController</prop>
+				<prop key="/fund-form">fundFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/fund/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="fundController"
+		class="com.ametis.cms.web.controller.FundController">
+		<property name="providerService">
+			<ref bean="providerService" />
+		</property>
+		<property name="policyService">
+			<ref bean="policyService" />
+		</property>
+		<property name="clientService">
+			<ref bean="clientService" />
+		</property>
+		<property name="fundService">
+			<ref bean="fundService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+		<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+		<property name="userService">
+			<ref bean="userService" />
+		</property>
+		<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+        <property name="configurationService">
+        	<ref bean="configurationService" />
+        </property>
+	</bean>
+
+	<bean name="fundFormController"
+		class="com.ametis.cms.web.controller.FundFormController">
+		<property name="formView" value="editFund" />
+		<property name="successView" value="ownerRedirect" />
+		<property name="validator" ref="fundValidator" />
+		<property name="commandName" value="fundForm" />
+		<property name="commandClass"
+			value="com.ametis.cms.web.form.FundForm" />
+
+		<property name="policyService">
+			<ref bean="policyService" />
+		</property>
+		<property name="policyCoverageFundService">
+			<ref bean="policyCoverageFundService" />
+		</property>
+		<property name="fundService">
+			<ref bean="fundService" />
+		</property>
+		<property name="providerService">
+			<ref bean="providerService" />
+		</property>
+<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+		<property name="currencyService">
+			<ref bean="currencyService" />
+		</property>
+		<property name="userService">
+			<ref bean="userService" />
+		</property>
+	
+	<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+		<property name="fundCategoryService">
+			<ref bean="fundCategoryService" />
+		</property>
+		<property name="excessChargeService">
+			<ref bean="excessChargeService" />
+		</property>
+		<property name="outstandingService">
+			<ref bean="outstandingService" />
+		</property>
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+		<!-- foreign affairs -->
+
+		<property name="clientService">
+			<ref bean="clientService" />
+		</property>
+
+		<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename">
+			<value>com.ametis.cms.messages.fund</value>
+		</property>
+	</bean>
+</beans>
+
+

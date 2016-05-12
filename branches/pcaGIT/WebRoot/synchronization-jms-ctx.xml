@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<!--  start jms -->
+	<bean id="jmsConnectionFactory" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName">
+			<value>java:/ConnectionFactory</value>
+		</property>
+		<property name="jndiEnvironment">
+			<props>
+				<prop key="java.naming.factory.initial">org.jnp.interfaces.NamingContextFactory</prop>
+				<prop key="java.naming.provider.url">jnp://localhost:1099</prop>
+				<prop key="java.naming.factory.url.pkgs">org.jboss.naming:org.jnp.interfaces</prop>
+			</props>
+		</property>
+		<property name="resourceRef">
+			<value>true</value>
+		</property>
+	</bean>
+
+	<bean id="jndiTemplate" class="org.springframework.jndi.JndiTemplate">
+		<property name="environment">
+			<props>
+				<prop key="java.naming.factory.initial">org.jnp.interfaces.NamingContextFactory</prop>
+				<prop key="java.naming.provider.url">localhost</prop>
+				<prop key="java.naming.factory.url.pkgs">org.jnp.interfaces:org.jboss.naming</prop>
+			</props>
+		</property>
+	</bean>
+	
+		<!-- buat expire reminder -->
+	<bean id="synchronizationServiceMessageListener" class="com.ametis.cms.jms.SynchronizationReceiver" >
+<!--		<property name="config" ref="configBean" />-->
+		<property name="dataSource" value="java:INSURANCEDB" />
+	
+	</bean>
+	<bean id="synchronizationSender" class="com.ametis.cms.jms.SynchronizationSender">
+		<property name="jmsTemplate" ref="synchronizationServiceJmsTemplate" />
+	</bean>
+
+	<bean id="synchronizationServiceJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="jmsConnectionFactory" />
+		<property name="defaultDestination" ref="synchronizationDestination" />
+	</bean>
+	<bean id="synchronizationServiceListenerContainer" class="org.springframework.jms.listener.SimpleMessageListenerContainer">
+		<property name="connectionFactory" ref="jmsConnectionFactory" />
+		<property name="destination" ref="synchronizationDestination" />
+		<property name="messageListener" ref="synchronizationServiceMessageListener" />
+	</bean>
+	<bean id="synchronizationDestination" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiTemplate">
+			<ref bean="jndiTemplate" />
+		</property>
+		<property name="jndiName">
+			<value>queue/insuranceSynchronizationQueue</value>
+		</property>
+	</bean>
+	<!-- end of expire reminder -->
+	
+	<!--  end jms -->
+</beans>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="costContainmentValidator" class="com.ametis.cms.web.validator.CostContainmentValidator"/>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/costcontainment">costContainmentController</prop>
+				<prop key="/costcontainment-form">costContainmentFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/costContainment/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="costContainmentController" class="com.ametis.cms.web.controller.CostContainmentController">
+		<property name="clientService">
+			<ref bean="clientService" />
+		</property>
+		<property name="memberGroupService">
+			<ref bean="memberGroupService" />
+		</property>
+		<property name="costContainmentService">
+			<ref bean="costContainmentService" />
+		</property>
+		<property name="costContainmentTypeService">
+			<ref bean="costContainmentTypeService"/>
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+        <property name="configurationService">
+            <ref bean="configurationService" />
+        </property>
+        <property name="caseService">
+            <ref bean="myCaseService" />
+        </property>
+	</bean>
+
+	<bean name="costContainmentFormController" class="com.ametis.cms.web.controller.CostContainmentFormController">
+		<property name="formView" value="editCostContainment"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="costContainmentValidator"/>
+		<property name="commandName" value="costContainmentForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.CostContainmentForm" />
+
+		<property name="costContainmentService">
+			<ref bean="costContainmentService" />
+		</property>
+
+<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+		<property name="caseService">
+			<ref bean="myCaseService" />
+		</property>
+			<property name="itemService">
+			<ref bean="itemService" />
+		</property>
+			
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.costContainment</value></property>
+	</bean>
+</beans>
+
+

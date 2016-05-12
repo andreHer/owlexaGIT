@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="paymentRecipientValidator" class="com.ametis.cms.web.validator.PaymentRecipientValidator"/>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/paymentrecipient">paymentRecipientController</prop>
+				<prop key="/paymentrecipient-form">paymentRecipientFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/paymentRecipient/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="paymentRecipientController" class="com.ametis.cms.web.controller.PaymentRecipientController">
+		<property name="paymentRecipientService">
+			<ref bean="paymentRecipientService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+	</bean>
+
+	<bean name="paymentRecipientFormController" class="com.ametis.cms.web.controller.PaymentRecipientFormController">
+		<property name="formView" value="editPaymentRecipient"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="paymentRecipientValidator"/>
+		<property name="commandName" value="paymentRecipientForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.PaymentRecipientForm" />
+
+		<property name="paymentRecipientService">
+			<ref bean="paymentRecipientService" />
+		</property>
+<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+		
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.paymentRecipient</value></property>
+	</bean>
+</beans>
+
+

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="itemMeasurementUnitValidator" class="com.ametis.cms.web.validator.ItemMeasurementUnitValidator"/>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/itemmeasurementunit">itemMeasurementUnitController</prop>
+				<prop key="/itemmeasurementunit-form">itemMeasurementUnitFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/itemMeasurementUnit/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="itemMeasurementUnitController" class="com.ametis.cms.web.controller.ItemMeasurementUnitController">
+		<property name="itemMeasurementUnitService">
+			<ref bean="itemMeasurementUnitService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+	</bean>
+
+	<bean name="itemMeasurementUnitFormController" class="com.ametis.cms.web.controller.ItemMeasurementUnitFormController">
+		<property name="formView" value="editItemMeasurementUnit"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="itemMeasurementUnitValidator"/>
+		<property name="commandName" value="itemMeasurementUnitForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.ItemMeasurementUnitForm" />
+
+		<property name="itemMeasurementUnitService">
+			<ref bean="itemMeasurementUnitService" />
+		</property>
+
+<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+			<property name="itemCategoryService">
+			<ref bean="itemCategoryService" />
+		</property>
+				<property name="measurementUnitService">
+			<ref bean="measurementUnitService" />
+		</property>
+			
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.itemMeasurementUnit</value></property>
+	</bean>
+</beans>
+
+

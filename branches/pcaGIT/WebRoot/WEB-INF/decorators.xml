@@ -1,0 +1,47 @@
+<decorators defaultdir="/WEB-INF/template">
+	<excludes>
+		<pattern>*navigation=lookup*</pattern>
+		<pattern>*navigation=golookup*</pattern>
+		<pattern>*navigation=print*</pattern>
+		<pattern>*error*</pattern>
+		<pattern>*index.html*</pattern>
+		<pattern>*login*</pattern>
+		<pattern>*authorize*</pattern>
+		<pattern>*popup*</pattern>
+		<pattern>*provider?navigation=detailmapinfo*</pattern>
+		<pattern>*provider?navigation=*json*</pattern>
+		<pattern>*json*</pattern>
+		<pattern>*procedure?navigation=*json*</pattern>
+		<pattern>*policyprovider?navigation=*json*</pattern>
+		<pattern>*dashboard?navigation=membergrowth*</pattern>
+         <pattern>*dashboard?navigation=claimgrowth*</pattern>
+         <pattern>*dashboard?navigation=premiumgrowth*</pattern>
+		<pattern>*dashboard?navigation=groupclaim*</pattern>
+		<pattern>*dashboard?navigation=*client*</pattern>
+		<pattern>*dashboard?navigation=claimprovider*</pattern>
+		<pattern>*dashboard?navigation=queryclaimstat*</pattern>
+        <pattern>*dashboard?navigation=claimdiagnosis*</pattern>		
+        <pattern>*provider?navigation=showprovidermap*</pattern>
+        <pattern>*membergroup?navigation=showgroupmap*</pattern>
+        <pattern>*provider?navigation=loadprovidermapjson*</pattern>
+        <pattern>*document?navigation=preview*</pattern>
+        <pattern>*mobile*</pattern>
+        <pattern>*member?navigation=freeactivate*</pattern>
+        <pattern>*claim?navigation=testregister*</pattern>                                         
+	</excludes>
+	
+	<decorator name="lookup" page="lookup-template.jsp" >
+		
+	</decorator>
+	  
+	<decorator name="main" page="main-template-menubaru_biru.jsp">
+		<pattern>/*</pattern>
+	</decorator>
+	
+	<decorator name="menu-kiri" page="menu.jsp"/>
+	<decorator name="directory" page="directory.jsp"/>
+	
+	
+	
+	
+</decorators>

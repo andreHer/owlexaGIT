@@ -1,0 +1,487 @@
+
+package com.ametis.cms.datamodel;
+
+
+import java.sql.*;
+import java.util.*;
+import javax.persistence.*;
+import org.hibernate.annotations.Generated;
+
+
+@Entity
+@Table(name="ref_province")
+public class RefProvince implements java.io.Serializable{
+	private static final long serialVersionUID = 1L;
+
+	//Fields
+		
+	/**data for the column :
+	
+ --------- ref_province.id --------- 
+ schema        = null
+ tableName     = ref_province
+ foreignCol    = 
+ foreignTab    = 
+ catalog       = insura
+ remarks       = auto_increment
+ defaultValue  = null
+ decDigits     = 0
+ radix         = 10
+ nullable      = 0
+ ordinal       = 1
+ size          = 11
+ type          = 4 
+ isPrimaryKey  = true
+
+=========================================
+
+
+*/
+	private Integer id;
+			
+	/**data for the column :
+	
+ --------- ref_province.country_id --------- 
+ schema        = null
+ tableName     = ref_province
+ foreignCol    = 
+ foreignTab    = 
+ catalog       = insura
+ remarks       = 
+ defaultValue  = null
+ decDigits     = 0
+ radix         = 10
+ nullable      = 1
+ ordinal       = 2
+ size          = 11
+ type          = 4 
+ isPrimaryKey  = false
+
+=========================================
+
+
+*/
+	private RefCountry countryId;
+			
+	/**data for the column :
+	
+ --------- ref_province.province_name --------- 
+ schema        = null
+ tableName     = ref_province
+ foreignCol    = 
+ foreignTab    = 
+ catalog       = insura
+ remarks       = 
+ defaultValue  = null
+ decDigits     = 0
+ radix         = 10
+ nullable      = 1
+ ordinal       = 3
+ size          = 100
+ type          = 12 
+ isPrimaryKey  = false
+
+=========================================
+
+
+*/
+	private String provinceName;
+			
+	/**data for the column :
+	
+ --------- ref_province.province_code --------- 
+ schema        = null
+ tableName     = ref_province
+ foreignCol    = 
+ foreignTab    = 
+ catalog       = insura
+ remarks       = 
+ defaultValue  = null
+ decDigits     = 0
+ radix         = 10
+ nullable      = 1
+ ordinal       = 4
+ size          = 50
+ type          = 12 
+ isPrimaryKey  = false
+
+=========================================
+
+
+*/
+	private String provinceCode;
+	private String provincePhoneCode;
+			
+	/**data for the column :
+	
+ --------- ref_province.description --------- 
+ schema        = null
+ tableName     = ref_province
+ foreignCol    = 
+ foreignTab    = 
+ catalog       = insura
+ remarks       = 
+ defaultValue  = null
+ decDigits     = 0
+ radix         = 10
+ nullable      = 1
+ ordinal       = 5
+ size          = 65535
+ type          = -1 
+ isPrimaryKey  = false
+
+=========================================
+
+
+*/
+	private String description;
+			
+	/**data for the column :
+	
+ --------- ref_province.longitude --------- 
+ schema        = null
+ tableName     = ref_province
+ foreignCol    = 
+ foreignTab    = 
+ catalog       = insura
+ remarks       = 
+ defaultValue  = null
+ decDigits     = 0
+ radix         = 10
+ nullable      = 1
+ ordinal       = 6
+ size          = 50
+ type          = 12 
+ isPrimaryKey  = false
+
+=========================================
+
+
+*/
+	private String longitude;
+			
+	/**data for the column :
+	
+ --------- ref_province.latitude --------- 
+ schema        = null
+ tableName     = ref_province
+ foreignCol    = 
+ foreignTab    = 
+ catalog       = insura
+ remarks       = 
+ defaultValue  = null
+ decDigits     = 0
+ radix         = 10
+ nullable      = 1
+ ordinal       = 7
+ size          = 50
+ type          = 12 
+ isPrimaryKey  = false
+
+=========================================
+
+
+*/
+	private String latitude;
+			
+	/**data for the column :
+	
+ --------- ref_province.created_time --------- 
+ schema        = null
+ tableName     = ref_province
+ foreignCol    = 
+ foreignTab    = 
+ catalog       = insura
+ remarks       = 
+ defaultValue  = CURRENT_TIMESTAMP
+ decDigits     = 0
+ radix         = 10
+ nullable      = 1
+ ordinal       = 8
+ size          = 19
+ type          = 93 
+ isPrimaryKey  = false
+
+=========================================
+
+
+*/
+	private java.sql.Timestamp createdTime;
+			
+	/**data for the column :
+	
+ --------- ref_province.created_by --------- 
+ schema        = null
+ tableName     = ref_province
+ foreignCol    = 
+ foreignTab    = 
+ catalog       = insura
+ remarks       = 
+ defaultValue  = null
+ decDigits     = 0
+ radix         = 10
+ nullable      = 1
+ ordinal       = 9
+ size          = 50
+ type          = 12 
+ isPrimaryKey  = false
+
+=========================================
+
+
+*/
+	private String createdBy;
+			
+	/**data for the column :
+	
+ --------- ref_province.modified_time --------- 
+ schema        = null
+ tableName     = ref_province
+ foreignCol    = 
+ foreignTab    = 
+ catalog       = insura
+ remarks       = 
+ defaultValue  = 0000-00-00 00:00:00
+ decDigits     = 0
+ radix         = 10
+ nullable      = 1
+ ordinal       = 10
+ size          = 19
+ type          = 93 
+ isPrimaryKey  = false
+
+=========================================
+
+
+*/
+	private java.sql.Timestamp modifiedTime;
+			
+	/**data for the column :
+	
+ --------- ref_province.modified_by --------- 
+ schema        = null
+ tableName     = ref_province
+ foreignCol    = 
+ foreignTab    = 
+ catalog       = insura
+ remarks       = 
+ defaultValue  = null
+ decDigits     = 0
+ radix         = 10
+ nullable      = 1
+ ordinal       = 11
+ size          = 50
+ type          = 12 
+ isPrimaryKey  = false
+
+=========================================
+
+
+*/
+	private String modifiedBy;
+			
+	/**data for the column :
+	
+ --------- ref_province.deleted_time --------- 
+ schema        = null
+ tableName     = ref_province
+ foreignCol    = 
+ foreignTab    = 
+ catalog       = insura
+ remarks       = 
+ defaultValue  = 0000-00-00 00:00:00
+ decDigits     = 0
+ radix         = 10
+ nullable      = 1
+ ordinal       = 12
+ size          = 19
+ type          = 93 
+ isPrimaryKey  = false
+
+=========================================
+
+
+*/
+	private java.sql.Timestamp deletedTime;
+			
+	/**data for the column :
+	
+ --------- ref_province.deleted_by --------- 
+ schema        = null
+ tableName     = ref_province
+ foreignCol    = 
+ foreignTab    = 
+ catalog       = insura
+ remarks       = 
+ defaultValue  = null
+ decDigits     = 0
+ radix         = 10
+ nullable      = 1
+ ordinal       = 13
+ size          = 50
+ type          = 12 
+ isPrimaryKey  = false
+
+=========================================
+
+
+*/
+	private String deletedBy;
+			
+	/**data for the column :
+	
+ --------- ref_province.deleted_status --------- 
+ schema        = null
+ tableName     = ref_province
+ foreignCol    = 
+ foreignTab    = 
+ catalog       = insura
+ remarks       = 
+ defaultValue  = null
+ decDigits     = 0
+ radix         = 10
+ nullable      = 1
+ ordinal       = 14
+ size          = 2
+ type          = -6 
+ isPrimaryKey  = false
+
+=========================================
+
+
+*/
+	private Integer deletedStatus;
+	private String countryName;
+	private RefRegion refRegionId;
+		
+
+			@Id
+	@Column(name="id")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	public java.lang.Integer getId(){
+		return id;
+	}
+	public void setId(java.lang.Integer value){
+		id = value;
+	}
+			// PK GETTER SETTER END
+	@ManyToOne
+						@JoinColumn(name="country_id")
+	public RefCountry getCountryId(){
+		return countryId;
+	}
+	public void setCountryId(RefCountry value){
+		countryId = value;
+	}
+				@Column(name="province_name")
+	public java.lang.String getProvinceName(){
+		return provinceName;
+	}
+	public void setProvinceName(java.lang.String value){
+		provinceName = value;
+	}
+				@Column(name="province_code")
+	public java.lang.String getProvinceCode(){
+		return provinceCode;
+	}
+	public void setProvinceCode(java.lang.String value){
+		provinceCode = value;
+	}
+				@Column(name="description")
+	public java.lang.String getDescription(){
+		return description;
+	}
+	public void setDescription(java.lang.String value){
+		description = value;
+	}
+				@Column(name="longitude")
+	public java.lang.String getLongitude(){
+		return longitude;
+	}
+	public void setLongitude(java.lang.String value){
+		longitude = value;
+	}
+				@Column(name="latitude")
+	public java.lang.String getLatitude(){
+		return latitude;
+	}
+	public void setLatitude(java.lang.String value){
+		latitude = value;
+	}
+				@Column(name="created_time")
+	public java.sql.Timestamp getCreatedTime(){
+		return createdTime;
+	}
+	public void setCreatedTime(java.sql.Timestamp value){
+		createdTime = value;
+	}
+				@Column(name="created_by")
+	public java.lang.String getCreatedBy(){
+		return createdBy;
+	}
+	public void setCreatedBy(java.lang.String value){
+		createdBy = value;
+	}
+				@Column(name="modified_time")
+	public java.sql.Timestamp getModifiedTime(){
+		return modifiedTime;
+	}
+	public void setModifiedTime(java.sql.Timestamp value){
+		modifiedTime = value;
+	}
+				@Column(name="modified_by")
+	public java.lang.String getModifiedBy(){
+		return modifiedBy;
+	}
+	public void setModifiedBy(java.lang.String value){
+		modifiedBy = value;
+	}
+				@Column(name="deleted_time")
+	public java.sql.Timestamp getDeletedTime(){
+		return deletedTime;
+	}
+	public void setDeletedTime(java.sql.Timestamp value){
+		deletedTime = value;
+	}
+				@Column(name="deleted_by")
+	public java.lang.String getDeletedBy(){
+		return deletedBy;
+	}
+	public void setDeletedBy(java.lang.String value){
+		deletedBy = value;
+	}
+				@Column(name="deleted_status")
+	public java.lang.Integer getDeletedStatus(){
+		return deletedStatus;
+	}
+	public void setDeletedStatus(java.lang.Integer value){
+		deletedStatus = value;
+	}
+	
+	@Column(name="country_name")
+	public String getCountryName() {
+		return countryName;
+	}
+	public void setCountryName(String countryName) {
+		this.countryName = countryName;
+	}
+	@ManyToOne
+	@JoinColumn(name="region_id")
+	public RefRegion getRefRegionId() {
+		return refRegionId;
+	}
+	public void setRefRegionId(RefRegion refRegionId) {
+		this.refRegionId = refRegionId;
+	}
+	@Column(name="province_phone_code")
+	public String getProvincePhoneCode() {
+		return provincePhoneCode;
+	}
+	public void setProvincePhoneCode(String provincePhoneCode) {
+		this.provincePhoneCode = provincePhoneCode;
+	}
+	
+	
+
+
+}

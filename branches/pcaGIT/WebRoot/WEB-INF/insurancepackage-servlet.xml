@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="insurancePackageValidator" class="com.ametis.cms.web.validator.InsurancePackageValidator"/>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/insurancepackage">insurancePackageController</prop>
+				<prop key="/insurancepackage-form">insurancePackageFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/insurancePackage/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="insurancePackageController" class="com.ametis.cms.web.controller.InsurancePackageController">
+		<property name="insurancePackageService">
+			<ref bean="insurancePackageService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+	</bean>
+
+	<bean name="insurancePackageFormController" class="com.ametis.cms.web.controller.InsurancePackageFormController">
+		<property name="formView" value="editInsurancePackage"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="insurancePackageValidator"/>
+		<property name="commandName" value="insurancePackageForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.InsurancePackageForm" />
+
+		<property name="insurancePackageService">
+			<ref bean="insurancePackageService" />
+		</property>
+<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+			<property name="clientService">
+			<ref bean="clientService" />
+		</property>
+				<property name="productTypeService">
+			<ref bean="productTypeService" />
+		</property>
+			
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.insurancePackage</value></property>
+	</bean>
+</beans>
+
+

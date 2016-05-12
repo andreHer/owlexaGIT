@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="memberName" class="java.lang.String"/>
+	<parameter name="claimNumber" class="java.lang.String"/>
+	<parameter name="memberNumber" class="java.lang.String"/>
+	<parameter name="diagnosisName" class="java.lang.String"/>
+	<parameter name="providerName" class="java.lang.String"/>
+	<parameter name="claimDate" class="java.util.Date"/>
+	<parameter name="valueTotalDescription" class="java.lang.String"/>
+	<parameter name="subTotalClaim" class="java.lang.Double"/>
+	<parameter name="totalClaim" class="java.lang.Double"/>
+	<parameter name="subTotalApproved" class="java.lang.Double"/>
+	<parameter name="totalApproved" class="java.lang.Double"/>
+	<parameter name="subTotalExcess" class="java.lang.Double"/>
+	<parameter name="totalExcess" class="java.lang.Double"/>
+	<parameter name="groupAddress" class="java.lang.String"/>
+	<parameter name="groupName" class="java.lang.String"/>
+	<field name="itemId.itemName" class="java.lang.String"/>
+	<field name="claimItemValue" class="java.lang.String"/>
+	<field name="claimItemApprovedValue" class="java.lang.String"/>
+	<field name="benefitCheckRemarks" class="java.lang.String"/>
+	<field name="excessValue" class="java.lang.Double"/>
+	<field name="claimApprovedValue" class="java.lang.Double"/>
+	<background>
+		<band/>
+	</background>
+	<pageHeader>
+		<band height="432">
+			<staticText>
+				<reportElement key="staticText-22" x="340" y="403" width="80" height="18"/>
+				<textElement textAlignment="Justified">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Kelebihan Claim]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-23" x="461" y="403" width="66" height="18"/>
+				<textElement textAlignment="Justified">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Keterangan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-18" x="14" y="383" width="176" height="18"/>
+				<textElement textAlignment="Justified"/>
+				<text><![CDATA[Dengan perincian sebagai berikut  :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-21" x="225" y="403" width="105" height="18"/>
+				<textElement textAlignment="Justified">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Manfaat sesuai plan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-19" x="14" y="403" width="44" height="18"/>
+				<textElement textAlignment="Justified">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Uraian]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-20" x="142" y="403" width="76" height="18"/>
+				<textElement textAlignment="Justified">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tagihan Claim]]></text>
+			</staticText>
+			<image>
+				<reportElement x="14" y="-1" width="100" height="52"/>
+				<imageExpression class="java.lang.String"><![CDATA["img/WanaArtha.jpg"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="0" y="426" width="555" height="1"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-1" x="14" y="65" width="123" height="19"/>
+				<textElement/>
+				<text><![CDATA[Kepada  :]]></text>
+			</staticText>
+			<elementGroup>
+				<elementGroup>
+					<staticText>
+						<reportElement key="staticText-10" x="303" y="294" width="78" height="18"/>
+						<textElement textAlignment="Justified"/>
+						<text><![CDATA[Nomor Peserta   ]]></text>
+					</staticText>
+					<staticText>
+						<reportElement key="staticText-11" x="14" y="323" width="92" height="18"/>
+						<textElement textAlignment="Justified"/>
+						<text><![CDATA[Nomor Klaim]]></text>
+					</staticText>
+					<textField>
+						<reportElement x="137" y="323" width="142" height="18"/>
+						<textElement/>
+						<textFieldExpression class="java.lang.String"><![CDATA[$P{claimNumber}]]></textFieldExpression>
+					</textField>
+					<staticText>
+						<reportElement key="staticText-17" x="303" y="323" width="78" height="18"/>
+						<textElement textAlignment="Justified"/>
+						<text><![CDATA[Tanggal Klaim  ]]></text>
+					</staticText>
+					<staticText>
+						<reportElement key="staticText-15" x="111" y="341" width="12" height="18"/>
+						<textElement textAlignment="Justified">
+							<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+						</textElement>
+						<text><![CDATA[:]]></text>
+					</staticText>
+					<textField>
+						<reportElement x="395" y="293" width="123" height="20"/>
+						<textElement/>
+						<textFieldExpression class="java.lang.String"><![CDATA[$P{memberNumber}]]></textFieldExpression>
+					</textField>
+					<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+						<reportElement x="395" y="323" width="123" height="17"/>
+						<textElement/>
+						<textFieldExpression class="java.util.Date"><![CDATA[$P{claimDate}]]></textFieldExpression>
+					</textField>
+					<staticText>
+						<reportElement key="staticText-9" x="14" y="294" width="92" height="18"/>
+						<textElement textAlignment="Justified"/>
+						<text><![CDATA[Nama Pasien   ]]></text>
+					</staticText>
+					<textField>
+						<reportElement x="137" y="363" width="381" height="20"/>
+						<textElement/>
+						<textFieldExpression class="java.lang.String"><![CDATA[$P{providerName}]]></textFieldExpression>
+					</textField>
+					<staticText>
+						<reportElement key="staticText-16" x="111" y="363" width="12" height="18"/>
+						<textElement textAlignment="Justified">
+							<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+						</textElement>
+						<text><![CDATA[:]]></text>
+					</staticText>
+					<textField>
+						<reportElement x="137" y="342" width="381" height="20"/>
+						<textElement/>
+						<textFieldExpression class="java.lang.String"><![CDATA[$P{diagnosisName}]]></textFieldExpression>
+					</textField>
+					<staticText>
+						<reportElement key="staticText-14" x="383" y="323" width="12" height="18"/>
+						<textElement textAlignment="Justified">
+							<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+						</textElement>
+						<text><![CDATA[:]]></text>
+					</staticText>
+					<staticText>
+						<reportElement key="staticText-12" x="14" y="341" width="92" height="18"/>
+						<textElement textAlignment="Justified"/>
+						<text><![CDATA[Diagnosis]]></text>
+					</staticText>
+					<textField>
+						<reportElement x="137" y="293" width="142" height="20"/>
+						<textElement/>
+						<textFieldExpression class="java.lang.String"><![CDATA[$P{memberName}]]></textFieldExpression>
+					</textField>
+					<staticText>
+						<reportElement key="staticText-14" x="111" y="323" width="12" height="18"/>
+						<textElement textAlignment="Justified">
+							<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+						</textElement>
+						<text><![CDATA[:]]></text>
+					</staticText>
+					<staticText>
+						<reportElement key="staticText-13" x="14" y="363" width="92" height="18"/>
+						<textElement textAlignment="Justified"/>
+						<text><![CDATA[Nama RS / Klinik]]></text>
+					</staticText>
+					<staticText>
+						<reportElement key="staticText-14" x="383" y="294" width="12" height="18"/>
+						<textElement textAlignment="Justified">
+							<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+						</textElement>
+						<text><![CDATA[:]]></text>
+					</staticText>
+					<staticText>
+						<reportElement key="staticText-14" x="111" y="293" width="12" height="18"/>
+						<textElement textAlignment="Justified">
+							<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+						</textElement>
+						<text><![CDATA[:]]></text>
+					</staticText>
+				</elementGroup>
+			</elementGroup>
+			<line>
+				<reportElement x="0" y="383" width="555" height="1"/>
+			</line>
+			<line>
+				<reportElement x="0" y="316" width="555" height="1"/>
+			</line>
+			<line>
+				<reportElement x="0" y="286" width="555" height="1"/>
+			</line>
+			<textField>
+				<reportElement x="14" y="84" width="222" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{memberName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="14" y="104" width="222" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{groupName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="14" y="124" width="265" height="31"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{groupAddress}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="15" y="168" width="522" height="33"/>
+				<textElement/>
+				<text><![CDATA[Surat ini dibuat berdasarkan polis Asuransi Kesehatan Perusahaan Anda untuk biaya pengobatan bagi karyawan perusahaan, dimana biaya yang telah dibayar oleh WanaArtha Life melebihi batasan Manfaat.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="201" width="522" height="32"/>
+				<textElement/>
+				<text><![CDATA[Bersama surat ini, melalui HRD Perusahaan Anda, dimohon membayarkan kembali kelebihan tagihan kepada PT. WanaArtha Life.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="234" width="522" height="32"/>
+				<textElement/>
+				<text><![CDATA[Apabila ada pertanyaan sehubungan dengan tagihan ini, mohon hubungi Wanaartha Assistance & Healthcare di (021) 7060 7161 atau 7094 7161.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="267" width="264" height="20"/>
+				<textElement/>
+				<text><![CDATA[Tagihan kelebihan Biaya, untuk:]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="18"/>
+	</columnHeader>
+	<detail>
+		<band height="26">
+			<textField isBlankWhenNull="true">
+				<reportElement x="11" y="6" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{itemId.itemName}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="125" y="6" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{claimItemValue}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="225" y="6" width="105" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{claimItemApprovedValue}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="335" y="6" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{excessValue}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="439" y="6" width="116" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{benefitCheckRemarks}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="317">
+			<staticText>
+				<reportElement key="staticText-36" x="395" y="272" width="123" height="18"/>
+				<textElement textAlignment="Justified"/>
+				<text><![CDATA[Dra. Iswara Maya, Apt]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-33" x="14" y="155" width="316" height="18"/>
+				<textElement textAlignment="Justified">
+					<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[BCA kantor Cabang Menara Mulia, Jl. Gatot Subroto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-37" x="395" y="290" width="142" height="18"/>
+				<textElement textAlignment="Justified"/>
+				<text><![CDATA[Chief Financial Officer]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-35" x="14" y="191" width="523" height="30"/>
+				<textElement textAlignment="Justified"/>
+				<text><![CDATA[Mohon diberikan catatan / keterangan " pembayaran kelebihan Biaya " a.n.  ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-32" x="14" y="137" width="206" height="18"/>
+				<textElement textAlignment="Justified">
+					<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[PT. AJ. Adisarana Wanaartha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-38" x="14" y="247" width="289" height="35"/>
+				<textElement/>
+				<text><![CDATA[NB  :  Surat ini dibuat dengan komputer, sah tanpa tanda tangan]]></text>
+			</staticText>
+			<line direction="BottomUp">
+				<reportElement key="line-8" x="395" y="269" width="144" height="1"/>
+			</line>
+			<staticText>
+				<reportElement key="staticText-34" x="14" y="173" width="206" height="18"/>
+				<textElement textAlignment="Justified">
+					<font size="12" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[No. Rek. 255.301.1132]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-31" x="14" y="114" width="422" height="18"/>
+				<textElement textAlignment="Justified"/>
+				<text><![CDATA[Pembayaran melalui bank harap ditransfer dalam waktu 5 hari dari tanggal tagihan ini]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-30" x="14" y="94" width="92" height="18"/>
+				<textElement textAlignment="Justified"/>
+				<text><![CDATA[Terbilang]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-29" x="14" y="78" width="265" height="18"/>
+				<textElement textAlignment="Justified"/>
+				<text><![CDATA[Pembayaran dilakukan melalui Bagian HRD sejumlah :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-28" x="14" y="28" width="92" height="18"/>
+				<textElement textAlignment="Justified"/>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="111" y="94" width="426" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{valueTotalDescription}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-27" x="14" y="10" width="92" height="18"/>
+				<textElement textAlignment="Justified"/>
+				<text><![CDATA[Subtotal]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="9" width="555" height="1"/>
+			</line>
+			<line>
+				<reportElement x="0" y="46" width="555" height="1"/>
+			</line>
+			<textField>
+				<reportElement x="351" y="191" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{memberName}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="###0.00;(###0.00)" isBlankWhenNull="true">
+				<reportElement x="125" y="10" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$P{subTotalClaim}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;(###0.00)" isBlankWhenNull="true">
+				<reportElement x="125" y="30" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$P{totalClaim}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;(###0.00)" isBlankWhenNull="true">
+				<reportElement x="225" y="10" width="110" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$P{subTotalApproved}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;(###0.00)" isBlankWhenNull="true">
+				<reportElement x="225" y="30" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$P{totalApproved}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="true">
+				<reportElement x="336" y="10" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$P{subTotalExcess}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;(###0.00)" isBlankWhenNull="true">
+				<reportElement x="336" y="28" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$P{totalExcess}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00;(###0.00)" isBlankWhenNull="true">
+				<reportElement x="283" y="78" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$P{totalExcess}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

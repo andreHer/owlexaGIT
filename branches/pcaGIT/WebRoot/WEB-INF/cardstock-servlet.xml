@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="cardStockValidator" class="com.ametis.cms.web.validator.CardStockValidator"/>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/cardstock">cardStockController</prop>
+				<prop key="/cardstock-form">cardStockFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/cardStock/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="cardStockController" class="com.ametis.cms.web.controller.CardStockController">
+		<property name="clientService">
+			<ref bean="clientService" />
+		</property>
+		<property name="cardStockService">
+			<ref bean="cardStockService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+		<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+	</bean>
+
+	<bean name="cardStockFormController" class="com.ametis.cms.web.controller.CardStockFormController">
+		<property name="formView" value="editCardStock"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="cardStockValidator"/>
+		<property name="commandName" value="cardStockForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.CardStockForm" />
+
+		<property name="cardStockService">
+			<ref bean="cardStockService" />
+		</property>
+		<property name="securityService" >
+			<ref bean="securityService" />
+		</property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		<property name="clientService">
+			<ref bean="clientService" />
+		</property>
+
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+		
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.cardStock</value></property>
+	</bean>
+</beans>
+
+

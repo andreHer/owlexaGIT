@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+
+	<bean id="caseProviderValidator"
+		class="com.ametis.cms.web.validator.CaseProviderValidator" />
+
+	<bean id="urlMapping"
+		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/caseprovider">caseProviderController</prop>
+				<prop key="/caseprovider-form">
+					caseProviderFormController
+				</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/caseProvider/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="caseProviderController"
+		class="com.ametis.cms.web.controller.CaseProviderController">
+		<property name="caseProviderService">
+			<ref bean="caseProviderService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+		<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+		<property name="userService">
+			<ref bean="userService" />
+		</property>
+
+	</bean>
+
+	<bean name="caseProviderFormController"
+		class="com.ametis.cms.web.controller.CaseProviderFormController">
+		<property name="formView" value="editCaseProvider" />
+		<property name="successView" value="ownerRedirect" />
+		<property name="validator" ref="caseProviderValidator" />
+		<property name="commandName" value="caseProviderForm" />
+		<property name="commandClass"
+			value="com.ametis.cms.web.form.CaseProviderForm" />
+
+		<property name="caseProviderService">
+			<ref bean="caseProviderService" />
+		</property>
+<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+
+		<property name="userService">
+			<ref bean="userService" />
+		</property>
+
+<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+		<!-- foreign affairs -->
+
+
+		<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename">
+			<value>com.ametis.cms.messages.caseProvider</value>
+		</property>
+	</bean>
+</beans>
+
+

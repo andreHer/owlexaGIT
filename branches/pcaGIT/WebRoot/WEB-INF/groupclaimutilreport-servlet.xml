@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="groupClaimUtilReportValidator" class="com.ametis.cms.web.validator.GroupClaimUtilReportValidator"/>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/groupclaimutilreport">groupClaimUtilReportController</prop>
+				<prop key="/groupclaimutilreport-form">groupClaimUtilReportFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/groupClaimUtilReport/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="groupClaimUtilReportController" class="com.ametis.cms.web.controller.GroupClaimUtilReportController">
+		<property name="groupClaimUtilReportService">
+			<ref bean="groupClaimUtilReportService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+	</bean>
+
+	<bean name="groupClaimUtilReportFormController" class="com.ametis.cms.web.controller.GroupClaimUtilReportFormController">
+		<property name="formView" value="editGroupClaimUtilReport"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="groupClaimUtilReportValidator"/>
+		<property name="commandName" value="groupClaimUtilReportForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.GroupClaimUtilReportForm" />
+
+		<property name="groupClaimUtilReportService">
+			<ref bean="groupClaimUtilReportService" />
+		</property>
+<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+		
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.groupClaimUtilReport</value></property>
+	</bean>
+</beans>
+
+

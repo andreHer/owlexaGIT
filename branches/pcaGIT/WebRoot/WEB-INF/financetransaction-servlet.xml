@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="financeTransactionValidator" class="com.ametis.cms.web.validator.FinanceTransactionValidator"/>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/financetransaction">financeTransactionController</prop>
+				<prop key="/financetransaction-form">financeTransactionFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/financeTransaction/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="financeTransactionController" class="com.ametis.cms.web.controller.FinanceTransactionController">
+		<property name="financeTransactionService">
+			<ref bean="financeTransactionService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+		<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+	</bean>
+
+	<bean name="financeTransactionFormController" class="com.ametis.cms.web.controller.FinanceTransactionFormController">
+		<property name="formView" value="editFinanceTransaction"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="financeTransactionValidator"/>
+		<property name="commandName" value="financeTransactionForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.FinanceTransactionForm" />
+
+		<property name="financeTransactionService">
+			<ref bean="financeTransactionService" />
+		</property>
+		<property name="securityService" >
+			<ref bean="securityService" />
+		</property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+		
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.financeTransaction</value></property>
+	</bean>
+</beans>
+
+

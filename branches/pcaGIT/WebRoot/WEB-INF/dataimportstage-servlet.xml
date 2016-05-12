@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+    <bean id="dataImportStageValidator" class="com.ametis.cms.web.validator.DataImportStageValidator"/>
+
+    <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="mappings">
+            <props>
+                <prop key="/dataimportstage">dataImportStageController</prop>
+                <prop key="/dataimportstage-form">dataImportStageFormController</prop>
+            </props>
+        </property>
+    </bean>
+        
+ <bean id="multipartResolver"
+	class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+    
+    
+		
+	
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass">
+            <value>org.springframework.web.servlet.view.JstlView</value>
+        </property>
+        <property name="prefix">
+            <value>WEB-INF/jsp/dataImportStage/</value>
+        </property>
+        <property name="suffix">
+            <value>.jsp</value>
+        </property>
+    </bean> 
+    <bean name="dataImportStageController" class="com.ametis.cms.web.controller.DataImportStageController">
+        <property name="dataImportStageService">
+            <ref bean="dataImportStageService" />
+        </property>
+        <property name="countSet">
+            <ref bean="countSet" />
+        </property>
+        <property name="maxPercountSet">
+            <ref bean="maxPercountSet" />
+        </property>
+        <property name="alertProperties">
+            <ref bean="alertProperties" />
+        </property>
+        <property name="securityService">
+            <ref bean="securityService" />
+        </property>
+
+        <property name="userService">
+            <ref bean="userService" />
+        </property>
+		<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+    </bean>
+
+    <bean name="dataImportStageFormController" class="com.ametis.cms.web.controller.DataImportStageFormController">
+        <property name="formView" value="editDataImportStage"/>
+        <property name="successView" value="ownerRedirect"/>
+        
+        <property name="validator" ref="dataImportStageValidator"/>
+        <property name="commandName" value="dataImportStageForm" />
+        <property name="commandClass" value="com.ametis.cms.web.form.DataImportStageForm" />
+
+		<property name="configurationService">
+            <ref bean="configurationService" />
+        </property>
+        <property name="dataImportStageService">
+            <ref bean="dataImportStageService" />
+        </property>
+        <property name="templateService">
+            <ref bean="exportImportTemplateService" />
+            </property>
+        <property name="securityService" >
+            <ref bean="securityService" />
+        </property>
+
+        <property name="userService">
+            <ref bean="userService" />
+        </property>
+		
+<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+
+        <property name="propertiesUtil">
+            <ref bean="alertProperties" />
+        </property>
+
+<!-- foreign affairs -->
+	
+		
+<!-- foreign affairs end -->
+
+    </bean>
+    <bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename">
+            <value>com.ametis.cms.messages.dataImportStage</value>
+        </property>
+    </bean>
+</beans>
+
+

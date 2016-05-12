@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="itemCategoryMapValidator" class="com.ametis.cms.web.validator.ItemCategoryMapValidator"/>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/itemcategorymap">itemCategoryMapController</prop>
+				<prop key="/itemcategorymap-form">itemCategoryMapFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/itemCategoryMap/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="itemCategoryMapController" class="com.ametis.cms.web.controller.ItemCategoryMapController">
+		<property name="itemCategoryMapService">
+			<ref bean="itemCategoryMapService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+	</bean>
+
+	<bean name="itemCategoryMapFormController" class="com.ametis.cms.web.controller.ItemCategoryMapFormController">
+		<property name="formView" value="editItemCategoryMap"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="itemCategoryMapValidator"/>
+		<property name="commandName" value="itemCategoryMapForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.ItemCategoryMapForm" />
+
+		<property name="itemCategoryMapService">
+			<ref bean="itemCategoryMapService" />
+		</property>
+<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+			<property name="caseCategoryService">
+			<ref bean="caseCategoryService" />
+		</property>
+				<property name="itemService">
+			<ref bean="itemService" />
+		</property>
+				<property name="itemCategoryService">
+			<ref bean="itemCategoryService" />
+		</property>
+			
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.itemCategoryMap</value></property>
+	</bean>
+</beans>
+
+

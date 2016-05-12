@@ -1,0 +1,43 @@
+.vertical-text {
+	-ms-transform: rotate(90deg);
+	-moz-transform: rotate(90deg);
+	-webkit-transform: rotate(90deg);
+	transform: rotate(90deg);
+
+	-ms-transform-origin: center center 0;
+	-moz-transform-origin: center center 0;
+	-webkit-transform-origin: center center 0;
+	transform-origin: center center 0;
+
+	background: #E7F0FE;
+	color: #000000;
+	margin-left: -15px;
+	margin-top: 17px;
+	padding: 5px;
+	border: 1px solid #ccc;
+	text-transform: uppercase;
+	border: 1px solid #B52C2C;
+	text-transform: 1px 1px 0px rgba(0, 0, 0, 0.5);
+	box-shadow: 2px -2px 0px rgba(0, 0, 0, 0.1);
+
+}
+
+.vertical-text-sidebar {
+	-ms-transform: rotate(90deg);
+	-moz-transform: rotate(90deg);
+	-webkit-transform: rotate(90deg);
+	transform: rotate(90deg);
+
+	-ms-transform-origin: center center 0;
+	-moz-transform-origin: center center 0;
+	-webkit-transform-origin: center center 0;
+	transform-origin: center center 0;
+
+	color: #000000;
+	margin-left: -38px;
+	margin-top: 30px;
+	padding: 5px;
+	text-transform: uppercase;
+	text-transform: 1px 1px 0px rgba(0, 0, 0, 0.5);
+
+}

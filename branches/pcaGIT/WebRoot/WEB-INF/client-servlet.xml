@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="clientValidator" class="com.ametis.cms.web.validator.ClientValidator"/>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/client">clientController</prop>
+				<prop key="/client-form">clientFormController</prop>
+				<prop key="/client-lookup">clientController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/client/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="clientController" class="com.ametis.cms.web.controller.ClientController">
+		<property name="clientService">
+			<ref bean="clientService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+	</bean>
+
+	<bean name="clientFormController" class="com.ametis.cms.web.controller.ClientFormController">
+		<property name="formView" value="editClient"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="clientValidator"/>
+		<property name="commandName" value="clientForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.ClientForm" />
+
+		<property name="clientService">
+			<ref bean="clientService" />
+		</property>
+<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+			<property name="clientCategoryService">
+			<ref bean="clientCategoryService" />
+		</property>
+		<property name="currencyService">
+			<ref bean="currencyService" />
+		</property>
+			
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.client</value></property>
+	</bean>
+</beans>
+
+

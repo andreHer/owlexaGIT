@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="policyDiagnosisExclusionValidator" class="com.ametis.cms.web.validator.PolicyDiagnosisExclusionValidator"/>
+
+
+ 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+ 	
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/policydiagnosisexclusion">policyDiagnosisExclusionController</prop>
+				<prop key="/policydiagnosisexclusion-form">policyDiagnosisExclusionFormController</prop>
+				<prop key="/policydiagnosisexclusion-upload">uploadPolicyDiagnosisExclusionFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/policyDiagnosisExclusion/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="policyDiagnosisExclusionController" class="com.ametis.cms.web.controller.PolicyDiagnosisExclusionController">
+		<property name="policyDiagnosisExclusionService">
+			<ref bean="policyDiagnosisExclusionService" />
+		</property>
+		<property name="memberService">
+			<ref bean="memberService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+		<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+
+			<property name="policyService">
+			<ref bean="policyService" />
+		</property>
+				<property name="actionUserService">
+			<ref bean="userService" />
+		</property>
+		
+	</bean>
+
+	<bean name="policyDiagnosisExclusionFormController" class="com.ametis.cms.web.controller.PolicyDiagnosisExclusionFormController">
+		<property name="formView" value="editPolicyDiagnosisExclusion"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="policyDiagnosisExclusionValidator"/>
+		<property name="commandName" value="policyDiagnosisExclusionForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.PolicyDiagnosisExclusionForm" />
+
+		<property name="policyDiagnosisExclusionService">
+			<ref bean="policyDiagnosisExclusionService" />
+		</property>
+		<property name="securityService" >
+			<ref bean="securityService" />
+		</property>
+
+				<property name="actionUserService">
+			<ref bean="userService" />
+		</property>
+		
+
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+		
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean name="uploadPolicyDiagnosisExclusionFormController" class="com.ametis.cms.web.controller.PolicyDiagnosisExclusionFormController">
+		<property name="formView" value="uploadPolicyDiagnosisExclusion"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="policyDiagnosisExclusionValidator"/>
+		<property name="commandName" value="policyDiagnosisExclusionForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.PolicyDiagnosisExclusionForm" />
+
+		<property name="policyDiagnosisExclusionService">
+			<ref bean="policyDiagnosisExclusionService" />
+		</property>
+		<property name="securityService" >
+			<ref bean="securityService" />
+		</property>
+
+				<property name="actionUserService">
+			<ref bean="userService" />
+		</property>
+		
+
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+		
+<!-- foreign affairs end -->
+
+	</bean>
+	
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.policyDiagnosisExclusion</value></property>
+	</bean>
+</beans>
+
+

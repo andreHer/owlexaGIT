@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="claimProcedureValidator" class="com.ametis.cms.web.validator.ClaimProcedureValidator"/>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/claimprocedure">claimProcedureController</prop>
+				<prop key="/claimprocedure-form">claimProcedureFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/claimProcedure/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="claimProcedureController" class="com.ametis.cms.web.controller.ClaimProcedureController">
+		<property name="claimProcedureService">
+			<ref bean="claimProcedureService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+		<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+		<property name="claimService">
+			<ref bean="claimService" />
+		</property>
+
+			<!-- 	<property name="userService">
+			<ref bean="userService" />
+		</property> -->
+		
+	</bean>
+
+	<bean name="claimProcedureFormController" class="com.ametis.cms.web.controller.ClaimProcedureFormController">
+		<property name="formView" value="editClaimProcedure"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="claimProcedureValidator"/>
+		<property name="commandName" value="claimProcedureForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.ClaimProcedureForm" />
+
+		<property name="claimProcedureService">
+			<ref bean="claimProcedureService" />
+		</property>
+		<property name="securityService" >
+			<ref bean="securityService" />
+		</property>
+
+		<!-- 		<property name="userService">
+			<ref bean="userService" />
+		</property> -->
+		
+
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+		
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.claimProcedure</value></property>
+	</bean>
+</beans>
+
+

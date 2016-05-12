@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="memberBenefitValidator" class="com.ametis.cms.web.validator.MemberBenefitValidator"/>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/memberbenefit">memberBenefitController</prop>
+				<prop key="/memberbenefit-form">memberBenefitFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/memberBenefit/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="memberBenefitController" class="com.ametis.cms.web.controller.MemberBenefitController">
+		<property name="claimService">
+			<ref bean="claimService" />
+		</property>
+		<property name="memberBenefitService">
+			<ref bean="memberBenefitService" />
+		</property>
+		<property name="memberProductService">
+			<ref bean="memberProductService" />
+		</property>
+		<property name="memberLimitLayerService">
+			<ref bean="memberLimitLayerService" />
+		</property>
+		<property name="memberService">
+			<ref bean="memberService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+	</bean>
+
+	<bean name="memberBenefitFormController" class="com.ametis.cms.web.controller.MemberBenefitFormController">
+		<property name="formView" value="editMemberBenefit"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="memberBenefitValidator"/>
+		<property name="commandName" value="memberBenefitForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.MemberBenefitForm" />
+
+		<property name="memberBenefitService">
+			<ref bean="memberBenefitService" />
+		</property>
+
+<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+			<property name="memberService">
+			<ref bean="memberService" />
+		</property>
+				<property name="itemCategoryService">
+			<ref bean="itemCategoryService" />
+		</property>
+			
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.memberBenefit</value></property>
+	</bean>
+</beans>
+
+

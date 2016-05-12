@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="memberLimitLayerValidator" class="com.ametis.cms.web.validator.MemberLimitLayerValidator"/>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/memberlimitlayer">memberLimitLayerController</prop>
+				<prop key="/memberlimitlayer-form">memberLimitLayerFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/memberLimitLayer/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="memberLimitLayerController" class="com.ametis.cms.web.controller.MemberLimitLayerController">
+		<property name="memberLimitLayerService">
+			<ref bean="memberLimitLayerService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+		<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+	</bean>
+
+	<bean name="memberLimitLayerFormController" class="com.ametis.cms.web.controller.MemberLimitLayerFormController">
+		<property name="formView" value="editMemberLimitLayer"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="memberLimitLayerValidator"/>
+		<property name="commandName" value="memberLimitLayerForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.MemberLimitLayerForm" />
+
+		<property name="memberLimitLayerService">
+			<ref bean="memberLimitLayerService" />
+		</property>
+		<property name="securityService" >
+			<ref bean="securityService" />
+		</property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+			<property name="productLayerLimitService">
+			<ref bean="productLayerLimitService" />
+		</property>
+				<property name="memberService">
+			<ref bean="memberService" />
+		</property>
+				<property name="productService">
+			<ref bean="productService" />
+		</property>
+			
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.memberLimitLayer</value></property>
+	</bean>
+</beans>
+
+

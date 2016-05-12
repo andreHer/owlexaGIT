@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+<session-factory>
+	<property name="connection.pool_size">25</property>
+	<property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+	<property name="current_session_context_class">thread</property>
+	<property name="cache.provider_class">
+		org.hibernate.cache.NoCacheProvider
+	</property>
+	<property name="show_sql">false</property>
+	
+	
+		<property name="hibernate.hbm2ddl.auto">update</property>
+	
+	<property name="format_sql">true</property>
+	<property name="use_sql_comments">true</property>
+	<property name="order_updates">true</property>
+	<property name="c3p0.min_size">5</property>
+	<property name="c3p0.max_size">25</property>
+	<property name="c3p0.timeout">1800</property>
+	
+	<property name="c3p0.max_statements">50</property>
+	<property name="bytecode.use_reflection_optimizer">true</property>
+	<!-- 
+	<property name="hibernate.cache.use_query_cache">true</property>
+	 -->
+	
+	<!-- 
+		<property name="hibernate.transaction.factory_class">org.hibernate.transaction.JTATransactionFactory</property>
+		<property name="hibernate.transaction.manager_lookup_class">org.hibernate.transaction.JBossTransactionManagerLookup</property>
+	-->
+	<!--  
+		<property name="connection.datasource">INSURADS</property>
+	-->
+	<mapping class="com.ametis.cms.datamodel.Action" />
+	<mapping class="com.ametis.cms.datamodel.ActivityLog" />
+	<mapping class="com.ametis.cms.datamodel.AuthMember" />
+	<mapping class="com.ametis.cms.datamodel.AuthProvider" />
+	<mapping class="com.ametis.cms.datamodel.BatchClaim" />
+	<mapping class="com.ametis.cms.datamodel.Benefit" />
+	<mapping class="com.ametis.cms.datamodel.BenefitCategory" />
+	<mapping class="com.ametis.cms.datamodel.BenefitUsageType" />
+	<mapping class="com.ametis.cms.datamodel.Branch" />
+	<mapping class="com.ametis.cms.datamodel.Broker" />
+	<mapping class="com.ametis.cms.datamodel.Bank" />
+	<mapping class="com.ametis.cms.datamodel.BankAccount" />
+	<mapping class="com.ametis.cms.datamodel.BusinessCategory"/>
+	<mapping class="com.ametis.cms.datamodel.BillingItem" />
+	<mapping class="com.ametis.cms.datamodel.CallCategory" />
+	<mapping class="com.ametis.cms.datamodel.CardPrinting"/>
+	<mapping class="com.ametis.cms.datamodel.CardStock"/>
+	<mapping class="com.ametis.cms.datamodel.CardStockUsage"/>
+	<mapping class="com.ametis.cms.datamodel.CardType"/>
+	<mapping class="com.ametis.cms.datamodel.Case" />
+	<mapping class="com.ametis.cms.datamodel.CaseMedicine"/>
+	<mapping class="com.ametis.cms.datamodel.CaseCategory" />
+	<mapping class="com.ametis.cms.datamodel.CaseConversation" />
+	<mapping class="com.ametis.cms.datamodel.CaseGlRequirement" />
+	<mapping class="com.ametis.cms.datamodel.CaseEvent" />
+	<mapping class="com.ametis.cms.datamodel.CaseHistory" />
+	<mapping class="com.ametis.cms.datamodel.CaseInvestigation" />
+	<mapping class="com.ametis.cms.datamodel.CaseItem" />
+	<mapping class="com.ametis.cms.datamodel.CaseProcedure"/>
+	<mapping class="com.ametis.cms.datamodel.CaseProvider" />
+	<mapping class="com.ametis.cms.datamodel.CaseStatus" />
+	<mapping class="com.ametis.cms.datamodel.Claim" />
+	<mapping class="com.ametis.cms.datamodel.ClaimCompletion" />
+	<mapping class="com.ametis.cms.datamodel.ClaimDocument" />
+	<mapping class="com.ametis.cms.datamodel.ClaimHistory" />
+	<mapping class="com.ametis.cms.datamodel.ClaimInvestigation" />
+	<mapping class="com.ametis.cms.datamodel.ClaimItem" />
+	<mapping class="com.ametis.cms.datamodel.ClaimMedicine" />
+	<mapping class="com.ametis.cms.datamodel.ClaimReceiving" />
+	<mapping class="com.ametis.cms.datamodel.ClaimProcedure" />
+	<mapping class="com.ametis.cms.datamodel.ClaimType" />
+	<mapping class="com.ametis.cms.datamodel.Clausul" />
+	<mapping class="com.ametis.cms.datamodel.ClausulCategory" />
+	<mapping class="com.ametis.cms.datamodel.Client" />
+	<mapping class="com.ametis.cms.datamodel.ClientCategory" />
+	<mapping class="com.ametis.cms.datamodel.ClientContract" />
+	<mapping class="com.ametis.cms.datamodel.ClientContractItem" />
+	<mapping class="com.ametis.cms.datamodel.ContractChargeInterval" />
+	<mapping class="com.ametis.cms.datamodel.ContractTypeLayanan" />
+	<mapping class="com.ametis.cms.datamodel.ClientProvider" />
+	<mapping class="com.ametis.cms.datamodel.ClientProviderDiagnosis" />
+	<mapping class="com.ametis.cms.datamodel.ClientMedicine" />
+	<mapping class="com.ametis.cms.datamodel.ConversationCategory" />
+	<mapping class="com.ametis.cms.datamodel.CostContainment" />
+	<mapping class="com.ametis.cms.datamodel.Configuration" />
+	<mapping class="com.ametis.cms.datamodel.ContactPerson" />
+	<mapping class="com.ametis.cms.datamodel.ContractType" />
+	<mapping class="com.ametis.cms.datamodel.CostContainmentType" />
+	<mapping class="com.ametis.cms.datamodel.CoverageStatus" />
+	<mapping class="com.ametis.cms.datamodel.Currency" />
+	<mapping class="com.ametis.cms.datamodel.DataImportStage" />
+	<mapping class="com.ametis.cms.datamodel.Diagnosis" />
+	<mapping class="com.ametis.cms.datamodel.DiagnosisMedicine"/>
+	<mapping class="com.ametis.cms.datamodel.DiagnosisMedicineCategory"/>
+	
+	<mapping class="com.ametis.cms.datamodel.DiagnosisMapping"/>	
+	<mapping class="com.ametis.cms.datamodel.DiagnosisSet"/>
+	<mapping class="com.ametis.cms.datamodel.DiagnosisSetDetail"/>
+	
+	<mapping class="com.ametis.cms.datamodel.Dependent" />
+	<mapping class="com.ametis.cms.datamodel.DiagnosisItem" />
+	<mapping class="com.ametis.cms.datamodel.DiscountUsageType" />
+	<mapping class="com.ametis.cms.datamodel.Document"/>
+	<mapping class="com.ametis.cms.datamodel.DocumentCategory"/>
+	<mapping class="com.ametis.cms.datamodel.EdcTerminal" />
+	<mapping class="com.ametis.cms.datamodel.EdcTransactionLog" />
+	<mapping class="com.ametis.cms.datamodel.ErrorLog" />
+	<mapping class="com.ametis.cms.datamodel.EventCategory" />
+	<mapping class="com.ametis.cms.datamodel.ExchangeRate" />
+	<mapping class="com.ametis.cms.datamodel.ExcessCharge" />
+	<mapping class="com.ametis.cms.datamodel.ExcessChargeItem" />
+	<mapping class="com.ametis.cms.datamodel.ExcessReminder" />
+
+	<mapping class="com.ametis.cms.datamodel.ExportImportTemplate" />
+	<mapping class="com.ametis.cms.datamodel.ExternalClaim" />
+	<mapping class="com.ametis.cms.datamodel.ExternalClaimDetail" />
+	<mapping class="com.ametis.cms.datamodel.ExternalPaymentData" />
+	<mapping class="com.ametis.cms.datamodel.ExternalRawData" />
+	<mapping class="com.ametis.cms.datamodel.ExternalRawDetailData" />
+
+	<mapping class="com.ametis.cms.datamodel.FinanceAccount" />
+	<mapping class="com.ametis.cms.datamodel.FinanceCoa" />
+	<mapping class="com.ametis.cms.datamodel.FinanceTransaction" />
+	<mapping class="com.ametis.cms.datamodel.FirstCall" />
+	<mapping class="com.ametis.cms.datamodel.Formularium"/>
+	<mapping class="com.ametis.cms.datamodel.FormulariumMedicine"/>
+	<mapping class="com.ametis.cms.datamodel.Fund" />
+	<mapping class="com.ametis.cms.datamodel.FundCategory" />
+	<mapping class="com.ametis.cms.datamodel.Gender" />
+	<mapping class="com.ametis.cms.datamodel.GroupBenefit" />
+	<mapping class="com.ametis.cms.datamodel.GroupPackage" />
+	<mapping class="com.ametis.cms.datamodel.GroupProduct" />
+	<mapping class="com.ametis.cms.datamodel.GroupClaimUtilReport" />
+	<mapping class="com.ametis.cms.datamodel.Holiday"/>
+	<mapping class="com.ametis.cms.datamodel.InsurancePackage" />
+	<mapping class="com.ametis.cms.datamodel.Investigation" />
+	<mapping class="com.ametis.cms.datamodel.InvestigationCategory" />
+	<mapping class="com.ametis.cms.datamodel.Invoice" />
+	<mapping class="com.ametis.cms.datamodel.InvoiceItem" />
+	<mapping class="com.ametis.cms.datamodel.InvoiceItemMember" />
+	<mapping class="com.ametis.cms.datamodel.Item" />
+	<mapping class="com.ametis.cms.datamodel.ItemCategory" />
+	<mapping class="com.ametis.cms.datamodel.ItemCategoryMap" />
+	<mapping class="com.ametis.cms.datamodel.ItemMeasurementUnit" />
+	<mapping class="com.ametis.cms.datamodel.ItemCodeClientMapping" />
+	<mapping class="com.ametis.cms.datamodel.Layanan" />
+	<mapping class="com.ametis.cms.datamodel.MeasurementUnit" />
+	<mapping class="com.ametis.cms.datamodel.Medicine"/>
+	<mapping class="com.ametis.cms.datamodel.MedicineCategory"/>
+	<mapping class="com.ametis.cms.datamodel.MedicineFactory"/>
+	<mapping class="com.ametis.cms.datamodel.Member" />
+	<mapping class="com.ametis.cms.datamodel.MemberBenefit" />
+	<mapping class="com.ametis.cms.datamodel.MemberClausul" />
+	<mapping class="com.ametis.cms.datamodel.MemberDiagnosis" />
+	<mapping class="com.ametis.cms.datamodel.MedicalProcedureMapping"/>
+	<mapping class="com.ametis.cms.datamodel.MemberDiagnosisExclusion" />
+	<mapping class="com.ametis.cms.datamodel.MemberElectronicCard" />
+	<mapping class="com.ametis.cms.datamodel.MemberImport" />
+	<mapping class="com.ametis.cms.datamodel.MemberGroup" />
+	<mapping class="com.ametis.cms.datamodel.MemberGroupProvider" />
+	<mapping class="com.ametis.cms.datamodel.MemberGroupProviderDiagnosis" />
+	<mapping class="com.ametis.cms.datamodel.MemberPackage" />
+	<mapping class="com.ametis.cms.datamodel.MemberProduct" />
+	<mapping class="com.ametis.cms.datamodel.MemberLimitLayer" />
+	
+	<mapping class="com.ametis.cms.datamodel.MemberProvider"/>
+	<mapping class="com.ametis.cms.datamodel.MemberSuspendHistory"/>
+	<mapping class="com.ametis.cms.datamodel.MessageTemplate" />
+	
+	<mapping class="com.ametis.cms.datamodel.MostFrequentItem" />
+	<mapping class="com.ametis.cms.datamodel.NumberCounter" />
+	<mapping class="com.ametis.cms.datamodel.Notification" />
+	<mapping class="com.ametis.cms.datamodel.Outstanding" />
+	<mapping class="com.ametis.cms.datamodel.OutstandingClaim" />
+	<mapping class="com.ametis.cms.datamodel.OutstandingClaimItem" />
+	<mapping class="com.ametis.cms.datamodel.Payment" />
+	<mapping class="com.ametis.cms.datamodel.PaymentBatch" />
+	<mapping class="com.ametis.cms.datamodel.PaymentMethod" />
+	<mapping class="com.ametis.cms.datamodel.PaymentMode"/>
+	
+	<mapping class="com.ametis.cms.datamodel.PaymentDocument" />
+	<mapping class="com.ametis.cms.datamodel.PaymentInstallment" />
+	<mapping class="com.ametis.cms.datamodel.PaymentRecipient" />
+	<mapping class="com.ametis.cms.datamodel.PaymentStatus" />
+	<mapping class="com.ametis.cms.datamodel.PendingClaim" />
+	<mapping class="com.ametis.cms.datamodel.PendingCategory" />
+	<mapping class="com.ametis.cms.datamodel.Policy" />
+	<mapping class="com.ametis.cms.datamodel.PolicyBillingRate" />
+	<mapping class="com.ametis.cms.datamodel.PolicyClausul" />
+
+	<mapping class="com.ametis.cms.datamodel.PolicyDiagnosisExclusion" />
+	<mapping class="com.ametis.cms.datamodel.PolicyDocument" />
+	<mapping class="com.ametis.cms.datamodel.PolicyCoverageFund" />
+	<mapping class="com.ametis.cms.datamodel.PolicyBenefit" />
+	<mapping class="com.ametis.cms.datamodel.PolicyMember" />
+	<mapping class="com.ametis.cms.datamodel.PolicyPayment" />
+	<mapping class="com.ametis.cms.datamodel.PolicyProduct" />
+	<mapping class="com.ametis.cms.datamodel.PolicyMemberMovement" />
+	<mapping class="com.ametis.cms.datamodel.PolicyMedicine" />
+	<mapping class="com.ametis.cms.datamodel.PolicyProvider" />
+	<mapping class="com.ametis.cms.datamodel.PolicyProviderDiagnosis" />
+	<mapping class="com.ametis.cms.datamodel.Poliklinik"/>
+	<mapping class="com.ametis.cms.datamodel.Priority" />
+	<mapping class="com.ametis.cms.datamodel.Problem" />
+	<mapping class="com.ametis.cms.datamodel.Procedure" />
+	
+	<mapping class="com.ametis.cms.datamodel.ProcedureCodeClientMapping" />
+	<mapping class="com.ametis.cms.datamodel.ProcedureDiagnosis" />
+	<mapping class="com.ametis.cms.datamodel.ProcedureMedicine" />
+	
+	
+	<mapping class="com.ametis.cms.datamodel.Product" />
+	<mapping class="com.ametis.cms.datamodel.ProductBenefit" />
+	<mapping class="com.ametis.cms.datamodel.ProductClausul" />
+	<mapping class="com.ametis.cms.datamodel.ProductItem" />
+	<mapping class="com.ametis.cms.datamodel.ProductLayerLimit" />
+	<mapping class="com.ametis.cms.datamodel.ProductLimitType" />
+	<mapping class="com.ametis.cms.datamodel.ProductPackage" />
+	<mapping class="com.ametis.cms.datamodel.ProductType" />
+	<mapping class="com.ametis.cms.datamodel.ProductTypePoliklinik"/>
+	<mapping class="com.ametis.cms.datamodel.ProductTypeProvider"/>
+	<mapping class="com.ametis.cms.datamodel.Provider" />
+	<mapping class="com.ametis.cms.datamodel.ProviderGroup" />
+	<mapping class="com.ametis.cms.datamodel.ProviderCapitationFund" />
+	<mapping class="com.ametis.cms.datamodel.ProviderCategory" />
+	
+	<mapping class="com.ametis.cms.datamodel.ProviderClaimUtilReport" />
+	<mapping class="com.ametis.cms.datamodel.ProviderDiagnosisTreatment"/>
+	<mapping class="com.ametis.cms.datamodel.ProviderItem" />
+	<mapping class="com.ametis.cms.datamodel.ProviderDoctor"/>
+	<mapping class="com.ametis.cms.datamodel.ProviderHistory"/>
+	<mapping class="com.ametis.cms.datamodel.ProviderMedicine"/>
+	<mapping class="com.ametis.cms.datamodel.ProviderPoliklinik"/>	
+	<mapping class="com.ametis.cms.datamodel.ProviderProcedure" />
+	<mapping class="com.ametis.cms.datamodel.ProviderReview"/>
+	<mapping class="com.ametis.cms.datamodel.ProviderReviewQuestionaire"/>
+	<mapping class="com.ametis.cms.datamodel.ProviderService"/>
+	<mapping class="com.ametis.cms.datamodel.ProviderSet"/>
+	<mapping class="com.ametis.cms.datamodel.ProviderSetMapping"/>
+	<mapping class="com.ametis.cms.datamodel.ProviderType"/>
+	<mapping class="com.ametis.cms.datamodel.ProviderTypeDiagnosisTreatment"/>
+	<mapping class="com.ametis.cms.datamodel.ProviderTypeProcedure"/>
+
+	<mapping class="com.ametis.cms.datamodel.Refund" />
+	<mapping class="com.ametis.cms.datamodel.RefundItem" />
+	<mapping class="com.ametis.cms.datamodel.RefCity" />
+	<mapping class="com.ametis.cms.datamodel.RefDistrict" />
+	<mapping class="com.ametis.cms.datamodel.RefCountry" />
+	<mapping class="com.ametis.cms.datamodel.RefProvince" />
+	<mapping class="com.ametis.cms.datamodel.RefRegion"/>
+	
+	<mapping class="com.ametis.cms.datamodel.Questionaire"/>
+	<mapping class="com.ametis.cms.datamodel.QuestionaireItem"/>
+	
+	<mapping class="com.ametis.cms.datamodel.Quotation" />
+	<mapping class="com.ametis.cms.datamodel.QuotationMember" />
+	<mapping class="com.ametis.cms.datamodel.QuotationProduct" />
+	<mapping class="com.ametis.cms.datamodel.QuotationType"/>
+	
+	<mapping class="com.ametis.cms.datamodel.RejectedClaim" />
+	<mapping class="com.ametis.cms.datamodel.RejectCategory" />
+	<mapping class="com.ametis.cms.datamodel.RejectedCase" />
+	<mapping class="com.ametis.cms.datamodel.Relationship" />
+	<mapping class="com.ametis.cms.datamodel.ReportRequest" />
+	<mapping class="com.ametis.cms.datamodel.Role" />
+	<mapping class="com.ametis.cms.datamodel.RoleAction" />
+
+	<mapping class="com.ametis.cms.datamodel.ScheduledPayment" />
+	<mapping class="com.ametis.cms.datamodel.ScheduledPaymentItem" />
+	<mapping class="com.ametis.cms.datamodel.ServiceCategory" />
+	<mapping class="com.ametis.cms.datamodel.ServiceDiagnosis" />
+	<mapping class="com.ametis.cms.datamodel.SubscriptionStatus" />
+	<mapping class="com.ametis.cms.datamodel.SubstitutionItem" />
+	<mapping class="com.ametis.cms.datamodel.Therapy"/>
+	<mapping class="com.ametis.cms.datamodel.TherapyMedicine"/>
+	<mapping class="com.ametis.cms.datamodel.Tpa"/>
+	<mapping class="com.ametis.cms.datamodel.TreatmentClass"/>
+	<mapping class="com.ametis.cms.datamodel.TarifType"/>
+	<mapping class="com.ametis.cms.datamodel.TreatmentLocation"/>
+	<mapping class="com.ametis.cms.datamodel.TreatmentRisk"/>
+	<mapping class="com.ametis.cms.datamodel.TreatmentUpgradeType"/>
+	<mapping class="com.ametis.cms.datamodel.User" />
+	<mapping class="com.ametis.cms.datamodel.UserType" />
+	
+	<mapping class="com.ametis.cms.datamodel.UserGroupAssignment" />
+	
+	<mapping class="com.ametis.cms.datamodel.ProviderRollHistory"/>
+	
+	<mapping class="com.ametis.cms.datamodel.PaymentTransactionLog"/>
+	
+</session-factory>
+</hibernate-configuration>

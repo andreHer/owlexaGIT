@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="outstandingClaimValidator" class="com.ametis.cms.web.validator.OutstandingClaimValidator"/>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/outstandingclaim">outstandingClaimController</prop>
+				<prop key="/outstandingclaim-form">outstandingClaimFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/outstandingClaim/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="outstandingClaimController" class="com.ametis.cms.web.controller.OutstandingClaimController">
+		<property name="outstandingClaimService">
+			<ref bean="outstandingClaimService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+		<property name="userService">
+			<ref bean="userService" />
+		</property>
+		<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+	</bean>
+
+	<bean name="outstandingClaimFormController" class="com.ametis.cms.web.controller.OutstandingClaimFormController">
+		<property name="formView" value="editOutstandingClaim"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="outstandingClaimValidator"/>
+		<property name="commandName" value="outstandingClaimForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.OutstandingClaimForm" />
+
+		<property name="outstandingClaimService">
+			<ref bean="outstandingClaimService" />
+		</property>
+
+<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+		
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.outstandingClaim</value></property>
+	</bean>
+</beans>
+
+

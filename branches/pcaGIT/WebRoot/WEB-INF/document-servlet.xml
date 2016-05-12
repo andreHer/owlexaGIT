@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="documentValidator" class="com.ametis.cms.web.validator.DocumentValidator"/>
+
+
+ 	<bean id="multipartResolver"
+	class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+	
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/document">documentController</prop>
+				<prop key="/document-form">documentFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/document/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="documentController" class="com.ametis.cms.web.controller.DocumentController">
+		<property name="claimService">
+			<ref bean="claimService" />
+		</property>
+		<property name="caseService">
+			<ref bean="myCaseService" />
+		</property>
+		<property name="documentService">
+			<ref bean="documentService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+		<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+
+				<property name="actionUserService">
+			<ref bean="userService" />
+		</property>
+		
+	</bean>
+
+	<bean name="documentFormController" class="com.ametis.cms.web.controller.DocumentFormController">
+		<property name="formView" value="editDocument"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="documentValidator"/>
+		<property name="commandName" value="documentForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.DocumentForm" />
+
+<property name="caseService">
+			<ref bean="myCaseService" />
+		</property>
+		<property name="documentService">
+			<ref bean="documentService" />
+		</property>
+		<property name="securityService" >
+			<ref bean="securityService" />
+		</property>
+
+				<property name="actionUserService">
+			<ref bean="userService" />
+		</property>
+		
+
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+			<property name="claimService">
+			<ref bean="claimService" />
+		</property>
+				<property name="documentCategoryService">
+			<ref bean="documentCategoryService" />
+		</property>
+				<property name="memberService">
+			<ref bean="memberService" />
+		</property>
+			
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.document</value></property>
+	</bean>
+</beans>
+
+

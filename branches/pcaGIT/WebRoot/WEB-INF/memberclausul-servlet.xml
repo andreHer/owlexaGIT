@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="memberClausulValidator" class="com.ametis.cms.web.validator.MemberClausulValidator"/>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/memberclausul">memberClausulController</prop>
+				<prop key="/memberclausul-form">memberClausulFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/memberClausul/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="memberClausulController" class="com.ametis.cms.web.controller.MemberClausulController">
+		<property name="claimService">
+			<ref bean="claimService" />
+		</property>
+		<property name="memberClausulService">
+			<ref bean="memberClausulService" />
+		</property>
+		<property name="policyClausulService">
+			<ref bean="policyClausulService" />
+		</property>
+		<property name="memberService">
+			<ref bean="memberService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+	</bean>
+
+	<bean name="memberClausulFormController" class="com.ametis.cms.web.controller.MemberClausulFormController">
+		<property name="formView" value="editMemberClausul"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="memberClausulValidator"/>
+		<property name="commandName" value="memberClausulForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.MemberClausulForm" />
+
+		<property name="memberClausulService">
+			<ref bean="memberClausulService" />
+		</property>
+<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+		
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.memberClausul</value></property>
+	</bean>
+</beans>
+
+

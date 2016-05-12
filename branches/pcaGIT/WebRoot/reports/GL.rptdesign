@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.14" id="1">
+    <property name="createdBy">MyEclipse Report Designer Version 1.0</property>
+    <property name="units">in</property>
+    <property name="comments">Copyright (c) 2007 &lt;&lt;Your Company Name here>></property>
+    <html-property name="description">Creates a blank report with no predefined content.</html-property>
+    <text-property name="displayName">Blank Report</text-property>
+    <property name="iconFile">/templates/blank_report.gif</property>
+    <parameters>
+        <scalar-parameter name="caseId" id="93">
+            <property name="valueType">static</property>
+            <property name="dataType">integer</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+    </parameters>
+    <data-sources>
+        <oda-data-source extensionID="com.genuitec.eclipse.reporting.oda" name="Case" id="91">
+            <property name="meDriver">MySQL</property>
+            <property name="odaDriverClass">com.mysql.jdbc.Driver</property>
+            <property name="odaURL">jdbc:mysql://localhost:3306/wanaartha</property>
+            <property name="odaUser">root</property>
+            <encrypted-property name="odaPassword">cm9vdA==</encrypted-property>
+        </oda-data-source>
+    </data-sources>
+    <data-sets>
+        <oda-data-set extensionID="com.genuitec.eclipse.reporting.oda.dataSet" name="Data Set" id="92">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">first_name</property>
+                    <property name="displayName">first_name</property>
+                </structure>
+                <structure>
+                    <property name="columnName">customer_policy_number</property>
+                    <property name="displayName">customer_policy_number</property>
+                </structure>
+                <structure>
+                    <property name="columnName">group_name</property>
+                    <property name="displayName">group_name</property>
+                </structure>
+                <structure>
+                    <property name="columnName">case_start_time</property>
+                    <property name="displayName">case_start_time</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">first_name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">customer_policy_number</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">group_name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">case_start_time</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">Case</property>
+            <list-property name="parameters">
+                <structure>
+                    <property name="name">caseId</property>
+                    <property name="paramName">caseId</property>
+                    <property name="dataType">any</property>
+                    <property name="position">1</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+            </list-property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">first_name</property>
+                    <property name="nativeName">first_name</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">customer_policy_number</property>
+                    <property name="nativeName">customer_policy_number</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">group_name</property>
+                    <property name="nativeName">group_name</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">case_start_time</property>
+                    <property name="nativeName">case_start_time</property>
+                    <property name="dataType">date</property>
+                    <property name="nativeDataType">91</property>
+                </structure>
+            </list-property>
+            <property name="queryText">select m.first_name,m.customer_policy_number,mg.group_name,
+c.case_start_time
+from tb_case c, member_group mg, member m where case_id = ?
+and c.member_id = m.member_id and m.member_group_id = mg.member_group_id</property>
+        </oda-data-set>
+    </data-sets>
+    <styles>
+        <style name="crosstab" id="4">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+        <style name="crosstab-cell" id="5">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+    </styles>
+    <page-setup>
+        <simple-master-page name="Simple MasterPage" id="2">
+            <page-header>
+                <image id="6">
+                    <property name="source">file</property>
+                    <expression name="uri">"WEB-INF/report/img/WanaArtha.jpg"</expression>
+                </image>
+            </page-header>
+            <page-footer>
+                <text id="3">
+                    <property name="contentType">html</property>
+                    <text-property name="content"><![CDATA[<value-of>new Date()</value-of>]]></text-property>
+                </text>
+            </page-footer>
+        </simple-master-page>
+    </page-setup>
+    <body>
+        <label id="7">
+            <property name="fontSize">18pt</property>
+            <property name="fontWeight">bold</property>
+            <property name="textAlign">center</property>
+            <text-property name="text">SURAT JAMINAN</text-property>
+        </label>
+        <label id="8"/>
+        <label id="10"/>
+        <label id="9">
+            <property name="fontWeight">bold</property>
+            <text-property name="text">INFORMASI RUJUKAN</text-property>
+        </label>
+        <label id="13"/>
+        <grid id="15">
+            <property name="width">100%</property>
+            <column id="16">
+                <property name="width">2.125in</property>
+            </column>
+            <column id="17">
+                <property name="width">0.21875in</property>
+            </column>
+            <column id="18"/>
+            <row id="19">
+                <cell id="20">
+                    <label id="34">
+                        <text-property name="text">Jenis Surat Jaminan</text-property>
+                    </label>
+                </cell>
+                <cell id="21">
+                    <label id="31">
+                        <text-property name="text">:</text-property>
+                    </label>
+                </cell>
+                <cell id="22">
+                    <label id="37"/>
+                </cell>
+            </row>
+            <row id="23">
+                <cell id="24">
+                    <label id="35">
+                        <text-property name="text">No. Surat Jaminan</text-property>
+                    </label>
+                </cell>
+                <cell id="25">
+                    <label id="32">
+                        <text-property name="text">:</text-property>
+                    </label>
+                </cell>
+                <cell id="26">
+                    <label id="38"/>
+                </cell>
+            </row>
+            <row id="27">
+                <cell id="28">
+                    <label id="36">
+                        <text-property name="text">Nama Asuransi</text-property>
+                    </label>
+                </cell>
+                <cell id="29">
+                    <label id="33">
+                        <text-property name="text">:</text-property>
+                    </label>
+                </cell>
+                <cell id="30">
+                    <label id="39"/>
+                </cell>
+            </row>
+        </grid>
+        <label id="41"/>
+        <label id="42"/>
+        <label id="43">
+            <property name="fontWeight">bold</property>
+            <text-property name="text">DATA PASIEN</text-property>
+        </label>
+        <label id="44"/>
+        <label id="14"/>
+        <grid id="45">
+            <property name="width">100%</property>
+            <column id="46">
+                <property name="width">1.3541666667in</property>
+            </column>
+            <column id="47">
+                <property name="width">0.2083333333in</property>
+            </column>
+            <column id="48">
+                <property name="width">1.59375in</property>
+            </column>
+            <column id="49">
+                <property name="width">1.0208333333in</property>
+            </column>
+            <column id="50">
+                <property name="width">0.2083333333in</property>
+            </column>
+            <column id="51"/>
+            <row id="52">
+                <cell id="53">
+                    <label id="73">
+                        <text-property name="text">Nama Pasien</text-property>
+                    </label>
+                </cell>
+                <cell id="54">
+                    <label id="76">
+                        <text-property name="text">:</text-property>
+                    </label>
+                </cell>
+                <cell id="55">
+                    <label id="79"/>
+                </cell>
+                <cell id="56">
+                    <label id="85">
+                        <text-property name="text">No Pasien</text-property>
+                    </label>
+                </cell>
+                <cell id="57">
+                    <label id="82">
+                        <text-property name="text">:</text-property>
+                    </label>
+                </cell>
+                <cell id="58">
+                    <label id="88"/>
+                </cell>
+            </row>
+            <row id="59">
+                <cell id="60">
+                    <label id="74">
+                        <text-property name="text">Kelas Perawatan</text-property>
+                    </label>
+                </cell>
+                <cell id="61">
+                    <label id="77">
+                        <text-property name="text">:</text-property>
+                    </label>
+                </cell>
+                <cell id="62">
+                    <label id="80"/>
+                </cell>
+                <cell id="63">
+                    <label id="86">
+                        <text-property name="text">Nama  Perusahaan</text-property>
+                    </label>
+                </cell>
+                <cell id="64">
+                    <label id="83">
+                        <text-property name="text">:</text-property>
+                    </label>
+                </cell>
+                <cell id="65">
+                    <label id="89"/>
+                </cell>
+            </row>
+            <row id="66">
+                <cell id="67">
+                    <label id="75">
+                        <text-property name="text">No. Polis</text-property>
+                    </label>
+                </cell>
+                <cell id="68">
+                    <label id="78">
+                        <text-property name="text">:</text-property>
+                    </label>
+                </cell>
+                <cell id="69">
+                    <label id="81"/>
+                </cell>
+                <cell id="70">
+                    <label id="87">
+                        <text-property name="text">Starting Date</text-property>
+                    </label>
+                </cell>
+                <cell id="71">
+                    <label id="84">
+                        <text-property name="text">:</text-property>
+                    </label>
+                </cell>
+                <cell id="72">
+                    <label id="90"/>
+                </cell>
+            </row>
+        </grid>
+        <label id="94"/>
+        <label id="95"/>
+        <label id="143"/>
+        <label id="142"/>
+        <grid id="96">
+            <property name="width">100%</property>
+            <column id="97">
+                <property name="width">1.3854166667in</property>
+            </column>
+            <column id="98">
+                <property name="width">0.2083333333in</property>
+            </column>
+            <column id="99"/>
+            <column id="100"/>
+            <column id="101">
+                <property name="width">0.2083333333in</property>
+            </column>
+            <column id="102"/>
+            <row id="103">
+                <cell id="104">
+                    <label id="124">
+                        <text-property name="text">Rumah Sakit</text-property>
+                    </label>
+                </cell>
+                <cell id="105">
+                    <label id="127">
+                        <text-property name="text">:</text-property>
+                    </label>
+                </cell>
+                <cell id="106">
+                    <label id="130"/>
+                </cell>
+                <cell id="107">
+                    <label id="133">
+                        <text-property name="text">Ditujukan Kepada</text-property>
+                    </label>
+                </cell>
+                <cell id="108">
+                    <label id="136">
+                        <text-property name="text">:</text-property>
+                    </label>
+                </cell>
+                <cell id="109">
+                    <label id="139"/>
+                </cell>
+            </row>
+            <row id="110">
+                <cell id="111">
+                    <label id="125">
+                        <text-property name="text">Tanggal</text-property>
+                    </label>
+                </cell>
+                <cell id="112">
+                    <label id="128">
+                        <text-property name="text">:</text-property>
+                    </label>
+                </cell>
+                <cell id="113">
+                    <label id="131"/>
+                </cell>
+                <cell id="114">
+                    <label id="134">
+                        <text-property name="text">Bagian</text-property>
+                    </label>
+                </cell>
+                <cell id="115">
+                    <label id="137">
+                        <text-property name="text">:</text-property>
+                    </label>
+                </cell>
+                <cell id="116">
+                    <label id="140"/>
+                </cell>
+            </row>
+            <row id="117">
+                <cell id="118">
+                    <label id="126">
+                        <text-property name="text">Diagnosa Masuk</text-property>
+                    </label>
+                </cell>
+                <cell id="119">
+                    <label id="129">
+                        <text-property name="text">:</text-property>
+                    </label>
+                </cell>
+                <cell id="120">
+                    <label id="132"/>
+                </cell>
+                <cell id="121">
+                    <label id="135"/>
+                </cell>
+                <cell id="122">
+                    <label id="138">
+                        <text-property name="text">:</text-property>
+                    </label>
+                </cell>
+                <cell id="123">
+                    <label id="141"/>
+                </cell>
+            </row>
+        </grid>
+        <label id="144"/>
+        <label id="145"/>
+        <text id="146">
+            <property name="textAlign">justify</property>
+            <property name="contentType">auto</property>
+            <text-property name="content"><![CDATA[Surat jaminan ini berlaku apabila pasien menggunakan kamar Rumah Sakit sesuai dengan Plan yang dimilikinya atau ada pemberitahuan lain dari Pihak WanaArtha Assistance & Healthcare.
+
+Apabila Pasien memilih Plan yang melebihi yang dijamin, maka pasien harus membayarkan terlebih dahulu biaya perawatan tersebut atau ada pemberitahuan lain dari Pihak WanaArtha Assistance & Healthcare.
+]]></text-property>
+        </text>
+        <text id="147">
+            <property name="contentType">auto</property>
+            <text-property name="content"><![CDATA[a)	Mohon melampirkan copy dari Surat Jaminan ini pada saat penagihan biaya perawatan yang terjadi atas Pasien tersebut diatas serta fotocopy kartu Asuransi atau fotocopy identitas diri (KTP/SIM) Pasien/anggota keluarga.
+
+b)	Mohon bantuan dari pihak RS agar apabila biaya perawatan telah mencapai Rp. 5 juta atau kelipatannya dapat diinformasikan kepada kami melalui Telp : +62 21 791 96322 (direct), +62 21 798 5179 Ext (333), Fax : +62 21 799 5107 atau Customer Service 24 jam : Telp : +62 21 7060 7161
+
+c)	Surat Jaminan ini hanya berlaku untuk 1 (satu) kali perawatan saja.
+
+d)	Mohon dapat melampirkan semua dokumen perawatan pasien ini dalam waktu sebelum 30 hari setelah pasien meninggalkan Rumah Sakit kepada WanaArtha Assistance & Healthcare.
+
+]]></text-property>
+        </text>
+    </body>
+</report>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="benefitUsageTypeValidator" class="com.ametis.cms.web.validator.BenefitUsageTypeValidator"/>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/benefitusagetype">benefitUsageTypeController</prop>
+				<prop key="/benefitusagetype-form">benefitUsageTypeFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/benefitUsageType/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="benefitUsageTypeController" class="com.ametis.cms.web.controller.BenefitUsageTypeController">
+		<property name="benefitUsageTypeService">
+			<ref bean="benefitUsageTypeService" />
+		</property>
+		<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+	</bean>
+
+	<bean name="benefitUsageTypeFormController" class="com.ametis.cms.web.controller.BenefitUsageTypeFormController">
+		<property name="formView" value="editBenefitUsageType"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="benefitUsageTypeValidator"/>
+		<property name="commandName" value="benefitUsageTypeForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.BenefitUsageTypeForm" />
+
+		<property name="benefitUsageTypeService">
+			<ref bean="benefitUsageTypeService" />
+		</property>
+
+<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+		
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.benefitUsageType</value></property>
+	</bean>
+</beans>
+
+

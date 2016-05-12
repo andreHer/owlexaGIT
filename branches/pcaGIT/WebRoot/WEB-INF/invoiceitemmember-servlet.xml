@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="invoiceItemMemberValidator" class="com.ametis.cms.web.validator.InvoiceItemMemberValidator"/>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/invoiceitemmember">invoiceItemMemberController</prop>
+				<prop key="/invoiceitemmember-form">invoiceItemMemberFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/invoiceItemMember/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="invoiceItemMemberController" class="com.ametis.cms.web.controller.InvoiceItemMemberController">
+		<property name="invoiceItemMemberService">
+			<ref bean="invoiceItemMemberService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+		<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+	</bean>
+
+	<bean name="invoiceItemMemberFormController" class="com.ametis.cms.web.controller.InvoiceItemMemberFormController">
+		<property name="formView" value="editInvoiceItemMember"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="invoiceItemMemberValidator"/>
+		<property name="commandName" value="invoiceItemMemberForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.InvoiceItemMemberForm" />
+
+		<property name="invoiceItemMemberService">
+			<ref bean="invoiceItemMemberService" />
+		</property>
+		<property name="securityService" >
+			<ref bean="securityService" />
+		</property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+			<property name="invoiceItemService">
+			<ref bean="invoiceItemService" />
+		</property>
+				<property name="memberService">
+			<ref bean="memberService" />
+		</property>
+			
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.invoiceItemMember</value></property>
+	</bean>
+</beans>
+
+

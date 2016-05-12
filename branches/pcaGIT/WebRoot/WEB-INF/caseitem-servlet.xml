@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+
+	<bean id="caseItemValidator"
+		class="com.ametis.cms.web.validator.CaseItemValidator" />
+
+	<bean id="urlMapping"
+		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/caseitem">caseItemController</prop>
+				<prop key="/caseitem-form">caseItemFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/caseItem/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="caseItemController"
+		class="com.ametis.cms.web.controller.CaseItemController">
+		<property name="caseItemService">
+			<ref bean="caseItemService" />
+		</property>
+		<property name="caseService">
+			<ref bean="myCaseService" />
+		</property>
+		<property name="memberBenefitService">
+			<ref bean="memberBenefitService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+		<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+		<property name="userService">
+			<ref bean="userService" />
+		</property>
+<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+        <property name="itemService">
+            <ref bean="itemService" />
+        </property>
+        <property name="claimItemService">
+			<ref bean="claimItemService" />
+		</property>
+		<property name="claimService">
+			<ref bean="claimService" />
+		</property>
+	</bean>
+
+	<bean name="caseItemFormController"
+		class="com.ametis.cms.web.controller.CaseItemFormController">
+		<property name="formView" value="editCaseItem" />
+		<property name="successView" value="ownerRedirect" />
+		<property name="validator" ref="caseItemValidator" />
+		<property name="commandName" value="caseItemForm" />
+		<property name="commandClass"
+			value="com.ametis.cms.web.form.CaseItemForm" />
+
+		<property name="caseItemService">
+			<ref bean="caseItemService" />
+		</property>
+		<property name="itemService">
+			<ref bean="itemService" />
+		</property>
+<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+
+		<property name="userService">
+			<ref bean="userService" />
+		</property>
+
+<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+		<!-- foreign affairs -->
+
+		<property name="caseEventService">
+			<ref bean="caseEventService" />
+		</property>
+
+		<!-- foreign affairs end -->
+		<property name="claimItemService">
+			<ref bean="claimItemService" />
+		</property>
+		<property name="caseService">
+			<ref bean="myCaseService" />
+		</property>
+		<property name="claimService">
+			<ref bean="claimService" />
+		</property>
+	</bean>
+	<bean id="alertProperties"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename">
+			<value>com.ametis.cms.messages.caseItem</value>
+		</property>
+	</bean>
+</beans>
+
+

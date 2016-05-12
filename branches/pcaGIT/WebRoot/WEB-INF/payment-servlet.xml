@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="paymentValidator" class="com.ametis.cms.web.validator.PaymentValidator"/>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/payment">paymentController</prop>
+				<prop key="/payment-form">paymentFormController</prop>
+				<prop key="/paymentmonitor">paymentController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/payment/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="paymentController" class="com.ametis.cms.web.controller.PaymentController">
+		<property name="paymentService">
+			<ref bean="paymentService" />
+		</property>
+		<property name="excessChargeService">
+			<ref bean="excessChargeService" />
+		</property>
+		<property name="batchClaimService">
+			<ref bean="batchClaimService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="bankService">
+			<ref bean="bankService" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+		<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+		<property name="userService">
+			<ref bean="userService" />
+		</property>
+		<property name="claimItemService">
+			<ref bean="claimItemService" />
+		</property>
+		<property name="claimService">
+			<ref bean="claimService" />
+		</property>
+		<property name="configurationService">
+			<ref bean="configurationService" />
+		</property>
+		<property name="paymentBatchService">
+			<ref bean="paymentBatchService" />
+		</property>
+		<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+        <property name="contactPersonService">
+            <ref bean="contactPersonService" />
+        </property>
+	</bean>
+
+	<bean name="paymentFormController" class="com.ametis.cms.web.controller.PaymentFormController">
+		<property name="formView" value="editPayment"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="paymentValidator"/>
+		<property name="commandName" value="paymentForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.PaymentForm" />
+<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+		<property name="batchClaimService">
+			<ref bean="batchClaimService" />
+		</property>
+		
+		<property name="claimService">
+			<ref bean="claimService" />
+		</property>
+		
+		<property name="paymentService">
+			<ref bean="paymentService" />
+		</property>
+
+		<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+			<property name="outstandingService">
+			<ref bean="outstandingService" />
+		</property>
+				<property name="memberService">
+			<ref bean="memberService" />
+		</property>
+				<property name="providerService">
+			<ref bean="providerService" />
+		</property>
+			
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.payment</value></property>
+	</bean>
+</beans>
+
+

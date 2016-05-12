@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="productTypePoliklinikValidator" class="com.ametis.cms.web.validator.ProductTypePoliklinikValidator"/>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/producttypepoliklinik">productTypePoliklinikController</prop>
+				<prop key="/producttypepoliklinik-form">productTypePoliklinikFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/productTypePoliklinik/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="productTypePoliklinikController" class="com.ametis.cms.web.controller.ProductTypePoliklinikController">
+		<property name="productTypePoliklinikService">
+			<ref bean="productTypePoliklinikService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+		<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+	</bean>
+
+	<bean name="productTypePoliklinikFormController" class="com.ametis.cms.web.controller.ProductTypePoliklinikFormController">
+		<property name="formView" value="editProductTypePoliklinik"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="productTypePoliklinikValidator"/>
+		<property name="commandName" value="productTypePoliklinikForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.ProductTypePoliklinikForm" />
+
+		<property name="productTypePoliklinikService">
+			<ref bean="productTypePoliklinikService" />
+		</property>
+		<property name="securityService" >
+			<ref bean="securityService" />
+		</property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+			<property name="productTypeService">
+			<ref bean="productTypeService" />
+		</property>
+				<property name="poliklinikService">
+			<ref bean="poliklinikService" />
+		</property>
+			
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.productTypePoliklinik</value></property>
+	</bean>
+</beans>
+
+

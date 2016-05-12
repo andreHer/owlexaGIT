@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="policyProviderValidator" class="com.ametis.cms.web.validator.PolicyProviderValidator"/>
+
+	
+ 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+ 	
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/policyprovider">policyProviderController</prop>
+				<prop key="/policyprovider-form">policyProviderFormController</prop>
+				<prop key="/policyprovider-upload">uploadPolicyProviderFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/policyProvider/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="policyProviderController" class="com.ametis.cms.web.controller.PolicyProviderController">
+		<property name="policyService">
+			<ref bean="policyService" />
+		</property>
+		<property name="policyProviderService">
+			<ref bean="policyProviderService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+		<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+		
+		<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+
+				<property name="actionUserService">
+			<ref bean="userService" />
+		</property>
+		
+	</bean>
+
+	<bean name="policyProviderFormController" class="com.ametis.cms.web.controller.PolicyProviderFormController">
+		<property name="formView" value="editPolicyProvider"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="policyProviderValidator"/>
+		<property name="commandName" value="policyProviderForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.PolicyProviderForm" />
+
+		<property name="policyProviderService">
+			<ref bean="policyProviderService" />
+		</property>
+		<property name="policyService">
+			<ref bean="policyService" />
+		</property>
+		<property name="securityService" >
+			<ref bean="securityService" />
+		</property>
+
+				<property name="actionUserService">
+			<ref bean="userService" />
+		</property>
+		
+
+		<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+		
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean name="uploadPolicyProviderFormController" class="com.ametis.cms.web.controller.PolicyProviderFormController">
+		<property name="formView" value="uploadPolicyProvider"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="policyProviderValidator"/>
+		<property name="commandName" value="policyProviderForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.PolicyProviderForm" />
+
+		<property name="policyProviderService">
+			<ref bean="policyProviderService" />
+		</property>
+		<property name="policyService">
+			<ref bean="policyService" />
+		</property>
+		<property name="securityService" >
+			<ref bean="securityService" />
+		</property>
+
+				<property name="actionUserService">
+			<ref bean="userService" />
+		</property>
+		
+
+		<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+		
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.policyProvider</value></property>
+	</bean>
+</beans>
+
+

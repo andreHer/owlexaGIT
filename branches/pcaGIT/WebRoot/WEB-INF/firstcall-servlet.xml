@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="firstCallValidator" class="com.ametis.cms.web.validator.FirstCallValidator"/>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/firstcall">firstCallController</prop>
+				<prop key="/firstcall-form">firstCallFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/firstCall/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="firstCallController" class="com.ametis.cms.web.controller.FirstCallController">
+		<property name="firstCallService">
+			<ref bean="firstCallService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="securityService" >
+			<ref bean="securityService" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+	</bean>
+
+	<bean name="firstCallFormController" class="com.ametis.cms.web.controller.FirstCallFormController">
+		<property name="formView" value="editFirstCall"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="firstCallValidator"/>
+		<property name="commandName" value="firstCallForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.FirstCallForm" />
+
+		<property name="firstCallService">
+			<ref bean="firstCallService" />
+		</property>
+
+		<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+		<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+		<property name="caseService">
+            <ref bean="myCaseService" />
+        </property>
+		<property name="claimService">
+			<ref bean="claimService" />
+		</property>
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+		<!-- foreign affairs -->
+
+		
+		<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+		<property name="callCategoryService">
+			<ref bean="callCategoryService" />
+		</property>
+		
+		<property name="memberService">
+			<ref bean="memberService" />
+		</property>
+
+		<property name="priorityService">
+			<ref bean="priorityService" />
+		</property>
+	
+
+		<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.firstCall</value></property>
+	</bean>
+</beans>
+
+

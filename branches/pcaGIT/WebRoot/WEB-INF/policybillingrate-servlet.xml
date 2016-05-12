@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="policyBillingRateValidator" class="com.ametis.cms.web.validator.PolicyBillingRateValidator"/>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/policybillingrate">policyBillingRateController</prop>
+				<prop key="/policybillingrate-form">policyBillingRateFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/policyBillingRate/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="policyBillingRateController" class="com.ametis.cms.web.controller.PolicyBillingRateController">
+		<property name="policyBillingRateService">
+			<ref bean="policyBillingRateService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+		<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+	</bean>
+
+	<bean name="policyBillingRateFormController" class="com.ametis.cms.web.controller.PolicyBillingRateFormController">
+		<property name="formView" value="editPolicyBillingRate"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="policyBillingRateValidator"/>
+		<property name="commandName" value="policyBillingRateForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.PolicyBillingRateForm" />
+
+		<property name="policyBillingRateService">
+			<ref bean="policyBillingRateService" />
+		</property>
+		<property name="securityService" >
+			<ref bean="securityService" />
+		</property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+			<property name="itemService">
+			<ref bean="itemService" />
+		</property>
+				<property name="policyService">
+			<ref bean="policyService" />
+		</property>
+			
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.policyBillingRate</value></property>
+	</bean>
+</beans>
+
+

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="policyBenefitValidator" class="com.ametis.cms.web.validator.PolicyBenefitValidator"/>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/policybenefit">policyBenefitController</prop>
+				<prop key="/policybenefit-form">policyBenefitFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/policyBenefit/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="policyBenefitController" class="com.ametis.cms.web.controller.PolicyBenefitController">
+		<property name="policyService">
+			<ref bean="policyService" />
+		</property>
+		<property name="policyBenefitService">
+			<ref bean="policyBenefitService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+		<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+	</bean>
+
+	<bean name="policyBenefitFormController" class="com.ametis.cms.web.controller.PolicyBenefitFormController">
+		<property name="formView" value="editPolicyBenefit"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="policyBenefitValidator"/>
+		<property name="commandName" value="policyBenefitForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.PolicyBenefitForm" />
+<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+		<property name="policyBenefitService">
+			<ref bean="policyBenefitService" />
+		</property>
+		<property name="caseCategoryService">
+			<ref bean="caseCategoryService" />
+		</property>
+		<property name="procedureService">
+			<ref bean="procedureService" />
+		</property>
+		<property name="diagnosisService">
+			<ref bean="diagnosisService" />
+		</property>
+		<property name="diagnosisSetService">
+			<ref bean="diagnosisSetService" />
+		</property>
+		<property name="itemCategoryService">
+			<ref bean="itemCategoryService" />
+		</property>
+		<property name="securityService" >
+			<ref bean="securityService" />
+		</property>
+
+		<property name="userService">
+			<ref bean="userService" />
+		</property>
+		<property name="policyService">
+			<ref bean="policyService" />
+		</property>
+
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+		
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.policyBenefit</value></property>
+	</bean>
+</beans>
+
+

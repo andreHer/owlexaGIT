@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="scheduledPaymentItemValidator" class="com.ametis.cms.web.validator.ScheduledPaymentItemValidator"/>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/scheduledpaymentitem">scheduledPaymentItemController</prop>
+				<prop key="/scheduledpaymentitem-form">scheduledPaymentItemFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/scheduledPaymentItem/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="scheduledPaymentItemController" class="com.ametis.cms.web.controller.ScheduledPaymentItemController">
+		<property name="scheduledPaymentItemService">
+			<ref bean="scheduledPaymentItemService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+		<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+	</bean>
+
+	<bean name="scheduledPaymentItemFormController" class="com.ametis.cms.web.controller.ScheduledPaymentItemFormController">
+		<property name="formView" value="editScheduledPaymentItem"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="scheduledPaymentItemValidator"/>
+		<property name="commandName" value="scheduledPaymentItemForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.ScheduledPaymentItemForm" />
+
+		<property name="scheduledPaymentItemService">
+			<ref bean="scheduledPaymentItemService" />
+		</property>
+		<property name="securityService" >
+			<ref bean="securityService" />
+		</property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+		
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.scheduledPaymentItem</value></property>
+	</bean>
+</beans>
+
+

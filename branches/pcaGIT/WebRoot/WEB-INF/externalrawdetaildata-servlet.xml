@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="externalRawDetailDataValidator" class="com.ametis.cms.web.validator.ExternalRawDetailDataValidator"/>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/externalrawdetaildata">externalRawDetailDataController</prop>
+				<prop key="/externalrawdetaildata-form">externalRawDetailDataFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/externalRawDetailData/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="externalRawDetailDataController" class="com.ametis.cms.web.controller.ExternalRawDetailDataController">
+		<property name="externalRawDetailDataService">
+			<ref bean="externalRawDetailDataService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+		<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+				<property name="actionUserService">
+			<ref bean="userService" />
+		</property>
+		
+	</bean>
+
+	<bean name="externalRawDetailDataFormController" class="com.ametis.cms.web.controller.ExternalRawDetailDataFormController">
+		<property name="formView" value="editExternalRawDetailData"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="externalRawDetailDataValidator"/>
+		<property name="commandName" value="externalRawDetailDataForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.ExternalRawDetailDataForm" />
+
+		<property name="externalRawDetailDataService">
+			<ref bean="externalRawDetailDataService" />
+		</property>
+		<property name="securityService" >
+			<ref bean="securityService" />
+		</property>
+
+				<property name="actionUserService">
+			<ref bean="userService" />
+		</property>
+		<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+		
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.externalRawDetailData</value></property>
+	</bean>
+</beans>
+
+

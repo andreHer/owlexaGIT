@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="productBenefitValidator" class="com.ametis.cms.web.validator.ProductBenefitValidator"/>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/productbenefit">productBenefitController</prop>
+				<prop key="/productbenefit-form">productBenefitFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/productBenefit/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="productBenefitController" class="com.ametis.cms.web.controller.ProductBenefitController">
+		<property name="productBenefitService">
+			<ref bean="productBenefitService" />
+		</property>
+		<property name="productLayerLimitService">
+			<ref bean="productLayerLimitService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		<property name="productService">
+			<ref bean="productService" />
+		</property>
+		<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+	</bean>
+
+	<bean name="productBenefitFormController" class="com.ametis.cms.web.controller.ProductBenefitFormController">
+		<property name="formView" value="editProductBenefit"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="productBenefitValidator"/>
+		<property name="commandName" value="productBenefitForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.ProductBenefitForm" />
+<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+		<property name="productBenefitService">
+			<ref bean="productBenefitService" />
+		</property>
+		<property name="productLayerService">
+			<ref bean="productLayerLimitService" />
+		</property>
+
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+			<property name="discountUsageTypeService">
+			<ref bean="discountUsageTypeService" />
+		</property>
+				<property name="benefitUsageTypeService">
+			<ref bean="benefitUsageTypeService" />
+		</property>
+				<property name="productService">
+			<ref bean="productService" />
+		</property>
+				<property name="measurementUnitService">
+			<ref bean="measurementUnitService" />
+		</property>
+		
+				<property name="itemCategoryService">
+			<ref bean="itemCategoryService" />
+		</property>
+				<property name="caseCategoryService">
+			<ref bean="caseCategoryService" />
+		</property>
+		<property name="treatmentLocationService">
+			<ref bean="treatmentLocationService" />
+		</property>
+			
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.productBenefit</value></property>
+	</bean>
+</beans>
+
+

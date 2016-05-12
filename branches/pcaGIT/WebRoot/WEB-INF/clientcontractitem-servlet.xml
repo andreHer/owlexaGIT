@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="clientContractItemValidator" class="com.ametis.cms.web.validator.ClientContractItemValidator"/>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/clientcontractitem">clientContractItemController</prop>
+				<prop key="/clientcontractitem-form">clientContractItemFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/clientContractItem/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="clientContractItemController" class="com.ametis.cms.web.controller.ClientContractItemController">
+		<property name="clientContractItemService">
+			<ref bean="clientContractItemService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+		<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		<property name="itemService">
+			<ref bean="itemService" />
+		</property>
+		
+	</bean>
+
+	<bean name="clientContractItemFormController" class="com.ametis.cms.web.controller.ClientContractItemFormController">
+		<property name="formView" value="editClientContractItem"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="clientContractItemValidator"/>
+		<property name="commandName" value="clientContractItemForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.ClientContractItemForm" />
+
+		<property name="clientContractItemService">
+			<ref bean="clientContractItemService" />
+		</property>
+		<property name="securityService" >
+			<ref bean="securityService" />
+		</property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+			<property name="clientContractService">
+			<ref bean="clientContractService" />
+		</property>
+				<property name="itemService">
+			<ref bean="itemService" />
+		</property>
+		<property name="caseCategoryService">
+			<ref bean="caseCategoryService" />
+		</property>
+			
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.clientContractItem</value></property>
+	</bean>
+</beans>
+
+

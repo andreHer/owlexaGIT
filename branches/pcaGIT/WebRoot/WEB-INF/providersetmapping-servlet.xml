@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="providerSetMappingValidator" class="com.ametis.cms.web.validator.ProviderSetMappingValidator"/>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/providersetmapping">providerSetMappingController</prop>
+				<prop key="/providersetmapping-form">providerSetMappingFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/providerSetMapping/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="providerSetMappingController" class="com.ametis.cms.web.controller.ProviderSetMappingController">
+		<property name="providerSetService">
+			<ref bean="providerSetService" />
+		</property>
+		<property name="providerSetMappingService">
+			<ref bean="providerSetMappingService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+		<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+	</bean>
+
+	<bean name="providerSetMappingFormController" class="com.ametis.cms.web.controller.ProviderSetMappingFormController">
+		<property name="formView" value="editProviderSetMapping"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="providerSetMappingValidator"/>
+		<property name="commandName" value="providerSetMappingForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.ProviderSetMappingForm" />
+
+		<property name="providerSetMappingService">
+			<ref bean="providerSetMappingService" />
+		</property>
+		<property name="securityService" >
+			<ref bean="securityService" />
+		</property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+			<property name="providerSetService">
+			<ref bean="providerSetService" />
+		</property>
+			
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.providerSetMapping</value></property>
+	</bean>
+</beans>
+
+

@@ -1,0 +1,841 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.14" id="1">
+    <property name="createdBy">MyEclipse Report Designer Version 1.0</property>
+    <property name="units">in</property>
+    <property name="comments">Copyright (c) 2007 &lt;&lt;Your Company Name here>></property>
+    <html-property name="description">Creates a blank report with no predefined content.</html-property>
+    <text-property name="displayName">Blank Report</text-property>
+    <property name="iconFile">/templates/blank_report.gif</property>
+    <data-sources>
+        <oda-data-source extensionID="com.genuitec.eclipse.reporting.oda" name="Data Source" id="7">
+            <text-property name="displayName"></text-property>
+            <property name="meDriver">MySQL</property>
+            <property name="odaDriverClass">com.mysql.jdbc.Driver</property>
+            <property name="odaURL">jdbc:mysql://localhost:3306/wanaartha</property>
+            <property name="odaUser">root</property>
+            <encrypted-property name="odaPassword">cm9vdA==</encrypted-property>
+        </oda-data-source>
+    </data-sources>
+    <data-sets>
+        <oda-data-set extensionID="com.genuitec.eclipse.reporting.oda.dataSet" name="Case Data Set" id="8">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">case_id</property>
+                    <property name="displayName">case_id</property>
+                </structure>
+                <structure>
+                    <property name="columnName">description</property>
+                    <property name="displayName">description</property>
+                </structure>
+                <structure>
+                    <property name="columnName">created_time</property>
+                    <property name="displayName">created_time</property>
+                </structure>
+                <structure>
+                    <property name="columnName">created_by</property>
+                    <property name="displayName">created_by</property>
+                </structure>
+                <structure>
+                    <property name="columnName">deleted_time</property>
+                    <property name="displayName">deleted_time</property>
+                </structure>
+                <structure>
+                    <property name="columnName">deleted_by</property>
+                    <property name="displayName">deleted_by</property>
+                </structure>
+                <structure>
+                    <property name="columnName">modified_time</property>
+                    <property name="displayName">modified_time</property>
+                </structure>
+                <structure>
+                    <property name="columnName">modified_by</property>
+                    <property name="displayName">modified_by</property>
+                </structure>
+                <structure>
+                    <property name="columnName">deleted_status</property>
+                    <property name="displayName">deleted_status</property>
+                </structure>
+                <structure>
+                    <property name="columnName">case_start_time</property>
+                    <property name="displayName">case_start_time</property>
+                </structure>
+                <structure>
+                    <property name="columnName">case_end_time</property>
+                    <property name="displayName">case_end_time</property>
+                </structure>
+                <structure>
+                    <property name="columnName">initial_symptom</property>
+                    <property name="displayName">initial_symptom</property>
+                </structure>
+                <structure>
+                    <property name="columnName">case_number</property>
+                    <property name="displayName">case_number</property>
+                </structure>
+                <structure>
+                    <property name="columnName">physician</property>
+                    <property name="displayName">physician</property>
+                </structure>
+                <structure>
+                    <property name="columnName">case_handler</property>
+                    <property name="displayName">case_handler</property>
+                </structure>
+                <structure>
+                    <property name="columnName">long_of_stay</property>
+                    <property name="displayName">long_of_stay</property>
+                </structure>
+                <structure>
+                    <property name="columnName">case_type</property>
+                    <property name="displayName">case_type</property>
+                </structure>
+                <structure>
+                    <property name="columnName">priority_id</property>
+                    <property name="displayName">priority_id</property>
+                </structure>
+                <structure>
+                    <property name="columnName">diagnosis1_id</property>
+                    <property name="displayName">diagnosis1_id</property>
+                </structure>
+                <structure>
+                    <property name="columnName">case_category_id</property>
+                    <property name="displayName">case_category_id</property>
+                </structure>
+                <structure>
+                    <property name="columnName">case_status_id</property>
+                    <property name="displayName">case_status_id</property>
+                </structure>
+                <structure>
+                    <property name="columnName">diagnosis2_id</property>
+                    <property name="displayName">diagnosis2_id</property>
+                </structure>
+                <structure>
+                    <property name="columnName">member_id</property>
+                    <property name="displayName">member_id</property>
+                </structure>
+                <structure>
+                    <property name="columnName">room</property>
+                    <property name="displayName">room</property>
+                </structure>
+                <structure>
+                    <property name="columnName">diagnosis3_id</property>
+                    <property name="displayName">diagnosis3_id</property>
+                </structure>
+                <structure>
+                    <property name="columnName">provider_id</property>
+                    <property name="displayName">provider_id</property>
+                </structure>
+                <structure>
+                    <property name="columnName">closing_time</property>
+                    <property name="displayName">closing_time</property>
+                </structure>
+                <structure>
+                    <property name="columnName">real_long_of_stay</property>
+                    <property name="displayName">real_long_of_stay</property>
+                </structure>
+                <structure>
+                    <property name="columnName">first_name</property>
+                    <property name="displayName">first_name</property>
+                </structure>
+                <structure>
+                    <property name="columnName">provider_name</property>
+                    <property name="displayName">provider_name</property>
+                </structure>
+                <structure>
+                    <property name="columnName">customer_policy_number</property>
+                    <property name="displayName">customer_policy_number</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">case_id</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">description</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">created_time</property>
+                        <property name="dataType">date-time</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">created_by</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">deleted_time</property>
+                        <property name="dataType">date-time</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">deleted_by</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">7</property>
+                        <property name="name">modified_time</property>
+                        <property name="dataType">date-time</property>
+                    </structure>
+                    <structure>
+                        <property name="position">8</property>
+                        <property name="name">modified_by</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">9</property>
+                        <property name="name">deleted_status</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">10</property>
+                        <property name="name">case_start_time</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">11</property>
+                        <property name="name">case_end_time</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">12</property>
+                        <property name="name">initial_symptom</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">13</property>
+                        <property name="name">case_number</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">14</property>
+                        <property name="name">physician</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">15</property>
+                        <property name="name">case_handler</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">16</property>
+                        <property name="name">long_of_stay</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">17</property>
+                        <property name="name">case_type</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">18</property>
+                        <property name="name">priority_id</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">19</property>
+                        <property name="name">diagnosis1_id</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">20</property>
+                        <property name="name">case_category_id</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">21</property>
+                        <property name="name">case_status_id</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">22</property>
+                        <property name="name">diagnosis2_id</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">23</property>
+                        <property name="name">member_id</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">24</property>
+                        <property name="name">room</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">25</property>
+                        <property name="name">diagnosis3_id</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">26</property>
+                        <property name="name">provider_id</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">27</property>
+                        <property name="name">closing_time</property>
+                        <property name="dataType">date-time</property>
+                    </structure>
+                    <structure>
+                        <property name="position">28</property>
+                        <property name="name">real_long_of_stay</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">29</property>
+                        <property name="name">first_name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">30</property>
+                        <property name="name">provider_name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">31</property>
+                        <property name="name">customer_policy_number</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">Data Source</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">case_id</property>
+                    <property name="nativeName">case_id</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">description</property>
+                    <property name="nativeName">description</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">created_time</property>
+                    <property name="nativeName">created_time</property>
+                    <property name="dataType">date-time</property>
+                    <property name="nativeDataType">93</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">created_by</property>
+                    <property name="nativeName">created_by</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">deleted_time</property>
+                    <property name="nativeName">deleted_time</property>
+                    <property name="dataType">date-time</property>
+                    <property name="nativeDataType">93</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">deleted_by</property>
+                    <property name="nativeName">deleted_by</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">7</property>
+                    <property name="name">modified_time</property>
+                    <property name="nativeName">modified_time</property>
+                    <property name="dataType">date-time</property>
+                    <property name="nativeDataType">93</property>
+                </structure>
+                <structure>
+                    <property name="position">8</property>
+                    <property name="name">modified_by</property>
+                    <property name="nativeName">modified_by</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">9</property>
+                    <property name="name">deleted_status</property>
+                    <property name="nativeName">deleted_status</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">10</property>
+                    <property name="name">case_start_time</property>
+                    <property name="nativeName">case_start_time</property>
+                    <property name="dataType">date</property>
+                    <property name="nativeDataType">91</property>
+                </structure>
+                <structure>
+                    <property name="position">11</property>
+                    <property name="name">case_end_time</property>
+                    <property name="nativeName">case_end_time</property>
+                    <property name="dataType">date</property>
+                    <property name="nativeDataType">91</property>
+                </structure>
+                <structure>
+                    <property name="position">12</property>
+                    <property name="name">initial_symptom</property>
+                    <property name="nativeName">initial_symptom</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">13</property>
+                    <property name="name">case_number</property>
+                    <property name="nativeName">case_number</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">14</property>
+                    <property name="name">physician</property>
+                    <property name="nativeName">physician</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">15</property>
+                    <property name="name">case_handler</property>
+                    <property name="nativeName">case_handler</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">16</property>
+                    <property name="name">long_of_stay</property>
+                    <property name="nativeName">long_of_stay</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">17</property>
+                    <property name="name">case_type</property>
+                    <property name="nativeName">case_type</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">18</property>
+                    <property name="name">priority_id</property>
+                    <property name="nativeName">priority_id</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">19</property>
+                    <property name="name">diagnosis1_id</property>
+                    <property name="nativeName">diagnosis1_id</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">20</property>
+                    <property name="name">case_category_id</property>
+                    <property name="nativeName">case_category_id</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">21</property>
+                    <property name="name">case_status_id</property>
+                    <property name="nativeName">case_status_id</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">22</property>
+                    <property name="name">diagnosis2_id</property>
+                    <property name="nativeName">diagnosis2_id</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">23</property>
+                    <property name="name">member_id</property>
+                    <property name="nativeName">member_id</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">24</property>
+                    <property name="name">room</property>
+                    <property name="nativeName">room</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">25</property>
+                    <property name="name">diagnosis3_id</property>
+                    <property name="nativeName">diagnosis3_id</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">26</property>
+                    <property name="name">provider_id</property>
+                    <property name="nativeName">provider_id</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">27</property>
+                    <property name="name">closing_time</property>
+                    <property name="nativeName">closing_time</property>
+                    <property name="dataType">date-time</property>
+                    <property name="nativeDataType">93</property>
+                </structure>
+                <structure>
+                    <property name="position">28</property>
+                    <property name="name">real_long_of_stay</property>
+                    <property name="nativeName">real_long_of_stay</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">29</property>
+                    <property name="name">first_name</property>
+                    <property name="nativeName">first_name</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">30</property>
+                    <property name="name">provider_name</property>
+                    <property name="nativeName">provider_name</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">31</property>
+                    <property name="name">customer_policy_number</property>
+                    <property name="nativeName">customer_policy_number</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+            </list-property>
+            <property name="queryText">select c.*, m.first_name, p.provider_name, m.customer_policy_number
+from tb_case c, member m, provider p where
+p.provider_id = c.provider_id and m.member_id = c.member_id</property>
+        </oda-data-set>
+    </data-sets>
+    <styles>
+        <style name="crosstab" id="4">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+        <style name="crosstab-cell" id="5">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+    </styles>
+    <page-setup>
+        <simple-master-page name="Simple MasterPage" id="2">
+            <property name="orientation">landscape</property>
+            <property name="leftMargin">1.25in</property>
+            <page-header>
+                <image id="6">
+                    <property name="source">file</property>
+                    <expression name="uri">"WEB-INF/report/img/WanaArtha.jpg"</expression>
+                </image>
+            </page-header>
+            <page-footer>
+                <text id="3">
+                    <property name="contentType">html</property>
+                    <text-property name="content"><![CDATA[<value-of>new Date()</value-of>]]></text-property>
+                </text>
+            </page-footer>
+        </simple-master-page>
+    </page-setup>
+    <body>
+        <table id="9">
+            <property name="width">100%</property>
+            <property name="dataSet">Case Data Set</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">case_id</property>
+                    <expression name="expression">dataSetRow["case_id"]</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">description</property>
+                    <expression name="expression">dataSetRow["description"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">created_time</property>
+                    <expression name="expression">dataSetRow["created_time"]</expression>
+                    <property name="dataType">date-time</property>
+                </structure>
+                <structure>
+                    <property name="name">created_by</property>
+                    <expression name="expression">dataSetRow["created_by"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">deleted_time</property>
+                    <expression name="expression">dataSetRow["deleted_time"]</expression>
+                    <property name="dataType">date-time</property>
+                </structure>
+                <structure>
+                    <property name="name">deleted_by</property>
+                    <expression name="expression">dataSetRow["deleted_by"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">modified_time</property>
+                    <expression name="expression">dataSetRow["modified_time"]</expression>
+                    <property name="dataType">date-time</property>
+                </structure>
+                <structure>
+                    <property name="name">modified_by</property>
+                    <expression name="expression">dataSetRow["modified_by"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">deleted_status</property>
+                    <expression name="expression">dataSetRow["deleted_status"]</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">case_start_time</property>
+                    <expression name="expression">dataSetRow["case_start_time"]</expression>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="name">case_end_time</property>
+                    <expression name="expression">dataSetRow["case_end_time"]</expression>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="name">initial_symptom</property>
+                    <expression name="expression">dataSetRow["initial_symptom"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">case_number</property>
+                    <expression name="expression">dataSetRow["case_number"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">physician</property>
+                    <expression name="expression">dataSetRow["physician"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">case_handler</property>
+                    <expression name="expression">dataSetRow["case_handler"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">long_of_stay</property>
+                    <expression name="expression">dataSetRow["long_of_stay"]</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">case_type</property>
+                    <expression name="expression">dataSetRow["case_type"]</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">priority_id</property>
+                    <expression name="expression">dataSetRow["priority_id"]</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">diagnosis1_id</property>
+                    <expression name="expression">dataSetRow["diagnosis1_id"]</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">case_category_id</property>
+                    <expression name="expression">dataSetRow["case_category_id"]</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">case_status_id</property>
+                    <expression name="expression">dataSetRow["case_status_id"]</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">diagnosis2_id</property>
+                    <expression name="expression">dataSetRow["diagnosis2_id"]</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">member_id</property>
+                    <expression name="expression">dataSetRow["member_id"]</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">room</property>
+                    <expression name="expression">dataSetRow["room"]</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">diagnosis3_id</property>
+                    <expression name="expression">dataSetRow["diagnosis3_id"]</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">provider_id</property>
+                    <expression name="expression">dataSetRow["provider_id"]</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">closing_time</property>
+                    <expression name="expression">dataSetRow["closing_time"]</expression>
+                    <property name="dataType">date-time</property>
+                </structure>
+                <structure>
+                    <property name="name">real_long_of_stay</property>
+                    <expression name="expression">dataSetRow["real_long_of_stay"]</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">first_name</property>
+                    <expression name="expression">dataSetRow["first_name"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">provider_name</property>
+                    <expression name="expression">dataSetRow["provider_name"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">customer_policy_number</property>
+                    <expression name="expression">dataSetRow["customer_policy_number"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <column id="31"/>
+            <column id="32"/>
+            <column id="33"/>
+            <column id="34"/>
+            <column id="35"/>
+            <column id="36"/>
+            <header>
+                <row id="10">
+                    <property name="backgroundColor">#C0C0C0</property>
+                    <property name="textAlign">center</property>
+                    <property name="verticalAlign">middle</property>
+                    <cell id="11">
+                        <label id="39">
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">center</property>
+                            <text-property name="text">Case Number</text-property>
+                        </label>
+                    </cell>
+                    <cell id="12">
+                        <label id="41">
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">center</property>
+                            <text-property name="text">Provider Name</text-property>
+                        </label>
+                    </cell>
+                    <cell id="13">
+                        <label id="43">
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">center</property>
+                            <text-property name="text">Member Name</text-property>
+                        </label>
+                    </cell>
+                    <cell id="14">
+                        <label id="45">
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">center</property>
+                            <text-property name="text">Member No.</text-property>
+                        </label>
+                    </cell>
+                    <cell id="15">
+                        <label id="47">
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">center</property>
+                            <text-property name="text">Case Start</text-property>
+                        </label>
+                    </cell>
+                    <cell id="16">
+                        <label id="49">
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">center</property>
+                            <text-property name="text">Case End</text-property>
+                        </label>
+                    </cell>
+                </row>
+            </header>
+            <detail>
+                <row id="17">
+                    <cell id="18">
+                        <data id="40">
+                            <property name="resultSetColumn">case_number</property>
+                        </data>
+                    </cell>
+                    <cell id="19">
+                        <data id="42">
+                            <property name="resultSetColumn">provider_name</property>
+                        </data>
+                    </cell>
+                    <cell id="20">
+                        <data id="44">
+                            <property name="resultSetColumn">first_name</property>
+                        </data>
+                    </cell>
+                    <cell id="21">
+                        <data id="46">
+                            <property name="resultSetColumn">customer_policy_number</property>
+                        </data>
+                    </cell>
+                    <cell id="22">
+                        <data id="48">
+                            <property name="resultSetColumn">case_start_time</property>
+                        </data>
+                    </cell>
+                    <cell id="23">
+                        <data id="50">
+                            <property name="resultSetColumn">case_end_time</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+            <footer>
+                <row id="24">
+                    <cell id="25"/>
+                    <cell id="26"/>
+                    <cell id="27"/>
+                    <cell id="28"/>
+                    <cell id="29"/>
+                    <cell id="30"/>
+                </row>
+            </footer>
+        </table>
+    </body>
+</report>

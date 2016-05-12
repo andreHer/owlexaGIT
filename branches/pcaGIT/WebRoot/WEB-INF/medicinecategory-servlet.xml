@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="medicineCategoryValidator" class="com.ametis.cms.web.validator.MedicineCategoryValidator"/>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/medicinecategory">medicineCategoryController</prop>
+				<prop key="/medicinecategory-form">medicineCategoryFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/medicineCategory/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="medicineCategoryController" class="com.ametis.cms.web.controller.MedicineCategoryController">
+		<property name="medicineCategoryService">
+			<ref bean="medicineCategoryService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+		<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+	</bean>
+
+	<bean name="medicineCategoryFormController" class="com.ametis.cms.web.controller.MedicineCategoryFormController">
+		<property name="formView" value="editMedicineCategory"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="medicineCategoryValidator"/>
+		<property name="commandName" value="medicineCategoryForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.MedicineCategoryForm" />
+
+		<property name="medicineCategoryService">
+			<ref bean="medicineCategoryService" />
+		</property>
+		<property name="securityService" >
+			<ref bean="securityService" />
+		</property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+		
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.medicineCategory</value></property>
+	</bean>
+</beans>
+
+
