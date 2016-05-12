@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="serviceCategoryValidator" class="com.ametis.cms.web.validator.ServiceCategoryValidator"/>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/servicecategory">serviceCategoryController</prop>
+				<prop key="/servicecategory-form">serviceCategoryFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/serviceCategory/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="serviceCategoryController" class="com.ametis.cms.web.controller.ServiceCategoryController">
+		<property name="serviceCategoryService">
+			<ref bean="serviceCategoryService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+	</bean>
+
+	<bean name="serviceCategoryFormController" class="com.ametis.cms.web.controller.ServiceCategoryFormController">
+		<property name="formView" value="editServiceCategory"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="serviceCategoryValidator"/>
+		<property name="commandName" value="serviceCategoryForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.ServiceCategoryForm" />
+
+		<property name="serviceCategoryService">
+			<ref bean="serviceCategoryService" />
+		</property>
+<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+		
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.serviceCategory</value></property>
+	</bean>
+</beans>
+
+

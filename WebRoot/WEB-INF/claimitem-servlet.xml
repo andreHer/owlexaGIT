@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+
+	<bean id="claimItemValidator"
+		class="com.ametis.cms.web.validator.ClaimItemValidator" />
+
+	<bean id="urlMapping"
+		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/claimitem">claimItemController</prop>
+				<prop key="/claimitem-form">
+					claimItemFormController
+				</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/claimItem/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="claimItemController"
+		class="com.ametis.cms.web.controller.ClaimItemController">
+		<property name="claimItemService">
+			<ref bean="claimItemService" />
+		</property>
+		<property name="mostFrequentItemService">
+			<ref bean="mostFrequentItemService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+		<property name="memberProductService">
+			<ref bean="memberProductService" />
+		</property>
+		<property name="productClausulService">
+			<ref bean="productClausulService" />
+		</property>
+
+		<property name="userService">
+			<ref bean="userService" />
+		</property>
+		<property name="memberBenefitService">
+			<ref bean="memberBenefitService" />
+		</property>
+		<property name="memberClausulService">
+			<ref bean="memberClausulService" />
+		</property>
+		<property name="itemService">
+			<ref bean="itemService" />
+		</property>
+		<property name="claimService">
+			<ref bean="claimService" />
+		</property>
+		<property name="caseService">
+			<ref bean="myCaseService" />
+		</property>
+		<property name="itemCategoryService">
+			<ref bean="itemCategoryService" />
+		</property>
+		<property name="memberLimitLayerService">
+			<ref bean="memberLimitLayerService" />
+		</property>
+		<property name="logService">
+			<ref bean="activityLogService" />
+		</property>
+		<property name="caseItemService">
+			<ref bean="caseItemService" />
+		</property>
+		<property name="diagnosisService">
+			<ref bean="diagnosisService" />
+		</property>
+		<property name="policyClausulService">
+			<ref bean="policyClausulService" />
+		</property>
+		<property name="memberService">
+			<ref bean="memberService" />
+		</property>
+	</bean>
+
+	<bean name="claimItemFormController"
+		class="com.ametis.cms.web.controller.ClaimItemFormController">
+		<property name="formView" value="editClaimItem" />
+		<property name="successView" value="ownerRedirect" />
+		<property name="validator" ref="claimItemValidator" />
+		<property name="commandName" value="claimItemForm" />
+		<property name="commandClass"
+			value="com.ametis.cms.web.form.ClaimItemForm" />
+
+		<property name="claimItemService">
+			<ref bean="claimItemService" />
+		</property>
+
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="userService">
+			<ref bean="userService" />
+		</property>
+		<property name="logService">
+			<ref bean="activityLogService" />
+		</property>
+		<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+		<!-- foreign affairs -->
+
+		<property name="itemService">
+			<ref bean="itemService" />
+		</property>
+		<property name="claimService">
+			<ref bean="claimService" />
+		</property>
+		<property name="measurementUnitService">
+			<ref bean="measurementUnitService" />
+		</property>
+
+		<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename">
+			<value>com.ametis.cms.messages.claimItem</value>
+		</property>
+	</bean>
+</beans>
+
+

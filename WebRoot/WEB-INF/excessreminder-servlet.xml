@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="excessReminderValidator" class="com.ametis.cms.web.validator.ExcessReminderValidator"/>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/excessreminder">excessReminderController</prop>
+				<prop key="/excessreminder-form">excessReminderFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/excessReminder/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="excessReminderController" class="com.ametis.cms.web.controller.ExcessReminderController">
+		<property name="excessReminderService">
+			<ref bean="excessReminderService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+	</bean>
+
+	<bean name="excessReminderFormController" class="com.ametis.cms.web.controller.ExcessReminderFormController">
+		<property name="formView" value="editExcessReminder"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="excessReminderValidator"/>
+		<property name="commandName" value="excessReminderForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.ExcessReminderForm" />
+
+		<property name="excessReminderService">
+			<ref bean="excessReminderService" />
+		</property>
+
+<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+		<property name="excessChargeService">
+			<ref bean="excessChargeService"/>
+		</property>
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+		<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.excessReminder</value></property>
+	</bean>
+</beans>
+
+

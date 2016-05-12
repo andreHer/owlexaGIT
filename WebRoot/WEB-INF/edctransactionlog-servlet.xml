@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="edcTransactionLogValidator" class="com.ametis.cms.web.validator.EdcTransactionLogValidator"/>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/edctransactionlog">edcTransactionLogController</prop>
+				<prop key="/edctransactionlog-form">edcTransactionLogFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/edcTransactionLog/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="edcTransactionLogController" class="com.ametis.cms.web.controller.EdcTransactionLogController">
+		<property name="edcTransactionLogService">
+			<ref bean="edcTransactionLogService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+		<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+
+				<property name="actionUserService">
+			<ref bean="userService" />
+		</property>
+<!-- 		<property name="edcLogWebService"> -->
+<!-- 			<ref bean="edcLogWebService" /> -->
+<!-- 		</property> -->
+		
+	</bean>
+
+	<bean name="edcTransactionLogFormController" class="com.ametis.cms.web.controller.EdcTransactionLogFormController">
+		<property name="formView" value="editEdcTransactionLog"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="edcTransactionLogValidator"/>
+		<property name="commandName" value="edcTransactionLogForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.EdcTransactionLogForm" />
+
+		<property name="edcTransactionLogService">
+			<ref bean="edcTransactionLogService" />
+		</property>
+		<property name="securityService" >
+			<ref bean="securityService" />
+		</property>
+
+				<property name="actionUserService">
+			<ref bean="userService" />
+		</property>
+		
+
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+		
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.edcTransactionLog</value></property>
+	</bean>
+</beans>
+
+

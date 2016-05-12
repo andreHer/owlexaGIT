@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="therapyValidator" class="com.ametis.cms.web.validator.TherapyValidator"/>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/therapy">therapyController</prop>
+				<prop key="/therapy-form">therapyFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/therapy/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="therapyController" class="com.ametis.cms.web.controller.TherapyController">
+		<property name="therapyService">
+			<ref bean="therapyService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+		<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+	</bean>
+
+	<bean name="therapyFormController" class="com.ametis.cms.web.controller.TherapyFormController">
+		<property name="formView" value="editTherapy"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="therapyValidator"/>
+		<property name="commandName" value="therapyForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.TherapyForm" />
+
+		<property name="therapyService">
+			<ref bean="therapyService" />
+		</property>
+		<property name="securityService" >
+			<ref bean="securityService" />
+		</property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+		
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.therapy</value></property>
+	</bean>
+</beans>
+
+

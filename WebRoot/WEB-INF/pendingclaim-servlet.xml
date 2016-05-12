@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="pendingClaimValidator" class="com.ametis.cms.web.validator.PendingClaimValidator"/>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/pendingclaim">pendingClaimController</prop>
+				<prop key="/pendingclaim-form">pendingClaimFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/pendingClaim/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="pendingClaimController" class="com.ametis.cms.web.controller.PendingClaimController">
+		<property name="pendingClaimService">
+			<ref bean="pendingClaimService" />
+		</property>
+		<property name="batchClaimService">
+			<ref bean="batchClaimService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+		<property name="claimService">
+			<ref bean="claimService" />
+		</property>
+		<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+	</bean>
+
+	<bean name="pendingClaimFormController" class="com.ametis.cms.web.controller.PendingClaimFormController">
+		<property name="formView" value="editPendingClaim"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="pendingClaimValidator"/>
+		<property name="commandName" value="pendingClaimForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.PendingClaimForm" />
+<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+		<property name="pendingClaimService">
+			<ref bean="pendingClaimService" />
+		</property>
+		<property name="pendingCategoryService">
+			<ref bean="pendingCategoryService" />
+		</property>
+		<property name="claimService">
+			<ref bean="claimService"/>
+		</property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+		
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.pendingClaim</value></property>
+	</bean>
+</beans>
+
+

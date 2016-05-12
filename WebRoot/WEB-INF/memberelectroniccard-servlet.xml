@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="memberElectronicCardValidator" class="com.ametis.cms.web.validator.MemberElectronicCardValidator"/>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/memberelectroniccard">memberElectronicCardController</prop>
+				<prop key="/memberelectroniccard-form">memberElectronicCardFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/memberElectronicCard/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="memberElectronicCardController" class="com.ametis.cms.web.controller.MemberElectronicCardController">
+		<property name="memberElectronicCardService">
+			<ref bean="memberElectronicCardService" />
+		</property>
+		<property name="memberService">
+			<ref bean="memberService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+		<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+
+				<property name="actionUserService">
+			<ref bean="userService" />
+		</property>
+		
+	</bean>
+
+	<bean name="memberElectronicCardFormController" class="com.ametis.cms.web.controller.MemberElectronicCardFormController">
+		<property name="formView" value="editMemberElectronicCard"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="memberElectronicCardValidator"/>
+		<property name="commandName" value="memberElectronicCardForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.MemberElectronicCardForm" />
+
+		<property name="memberElectronicCardService">
+			<ref bean="memberElectronicCardService" />
+		</property>
+				<property name="memberService">
+			<ref bean="memberService" />
+		</property>
+				<property name="cardTypeService">
+			<ref bean="cardTypeService" />
+		</property>
+		<property name="securityService" >
+			<ref bean="securityService" />
+		</property>
+
+				<property name="actionUserService">
+			<ref bean="userService" />
+		</property>
+		
+
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+		
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.memberElectronicCard</value></property>
+	</bean>
+</beans>
+
+

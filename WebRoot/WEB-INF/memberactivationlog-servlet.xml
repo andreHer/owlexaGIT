@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="memberActivationLogValidator" class="com.ametis.cms.web.validator.MemberActivationLogValidator"/>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/memberactivationlog">memberActivationLogController</prop>
+				<prop key="/memberactivationlog-form">memberActivationLogFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/memberActivationLog/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="memberActivationLogController" class="com.ametis.cms.web.controller.MemberActivationLogController">
+		<property name="memberActivationLogService">
+			<ref bean="memberActivationLogService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+		<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+	</bean>
+
+	<bean name="memberActivationLogFormController" class="com.ametis.cms.web.controller.MemberActivationLogFormController">
+		<property name="formView" value="editMemberActivationLog"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="memberActivationLogValidator"/>
+		<property name="commandName" value="memberActivationLogForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.MemberActivationLogForm" />
+
+		<property name="memberActivationLogService">
+			<ref bean="memberActivationLogService" />
+		</property>
+		<property name="securityService" >
+			<ref bean="securityService" />
+		</property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+		
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.memberActivationLog</value></property>
+	</bean>
+</beans>
+
+

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="providerTypeProcedureValidator" class="com.ametis.cms.web.validator.ProviderTypeProcedureValidator"/>
+	
+ 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+ 	
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/providertypeprocedure">providerTypeProcedureController</prop>
+				<prop key="/providertypeprocedure-form">providerTypeProcedureFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/providerTypeProcedure/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="providerTypeProcedureController" class="com.ametis.cms.web.controller.ProviderTypeProcedureController">
+		<property name="providerTypeProcedureService">
+			<ref bean="providerTypeProcedureService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+		<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+	</bean>
+
+	<bean name="providerTypeProcedureFormController" class="com.ametis.cms.web.controller.ProviderTypeProcedureFormController">
+		<property name="formView" value="editProviderTypeProcedure"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="providerTypeProcedureValidator"/>
+		<property name="commandName" value="providerTypeProcedureForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.ProviderTypeProcedureForm" />
+
+		<property name="providerTypeProcedureService">
+			<ref bean="providerTypeProcedureService" />
+		</property>
+		<property name="securityService" >
+			<ref bean="securityService" />
+		</property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+		
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.providerTypeProcedure</value></property>
+	</bean>
+</beans>
+
+

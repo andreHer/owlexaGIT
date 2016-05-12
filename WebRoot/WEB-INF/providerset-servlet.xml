@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="providerSetValidator" class="com.ametis.cms.web.validator.ProviderSetValidator"/>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/providerset">providerSetController</prop>
+				<prop key="/providerset-form">providerSetFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/providerSet/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="providerSetController" class="com.ametis.cms.web.controller.ProviderSetController">
+		<property name="providerSetService">
+			<ref bean="providerSetService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+		<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+	</bean>
+
+	<bean name="providerSetFormController" class="com.ametis.cms.web.controller.ProviderSetFormController">
+		<property name="formView" value="editProviderSet"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="providerSetValidator"/>
+		<property name="commandName" value="providerSetForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.ProviderSetForm" />
+
+		<property name="providerSetService">
+			<ref bean="providerSetService" />
+		</property>
+		<property name="securityService" >
+			<ref bean="securityService" />
+		</property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+		
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.providerSet</value></property>
+	</bean>
+</beans>
+
+

@@ -1,0 +1,5533 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<!-- ========================= RESOURCE DEFINITIONS========================= -->
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location">
+			<value>/WEB-INF/jdbc.properties</value>
+		</property>
+	</bean>
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName">
+			<value>${jdbc.driverClassName}</value>
+		</property>
+		<property name="url">
+			<value>${jdbc.url}</value>
+		</property>
+		<property name="username">
+			<value>${jdbc.username}</value>
+		</property>
+		<property name="password">
+			<value>${jdbc.password}</value>
+		</property>
+
+	</bean>
+
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="configurationClass"
+			value="org.hibernate.cfg.AnnotationConfiguration">
+		</property>
+		<property name="configLocation"
+			value="/WEB-INF/hibernate.cfg.xml">
+		</property>
+		<!-- <property name="configLocation" value="classpath:/hibernate.cfg.xml"></property>-->
+		<!-- <property name="mappingLocations" value="classpath:/hibernate.cfg.xml"></property>-->
+		<property name="dataSource">
+			<ref local="dataSource" />
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.cglib.use_reflection_optimizer">
+					true
+				</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+	<!-- Interceptor-->
+	<bean id="exceptionInterceptor"
+		class="com.ametis.cms.util.interceptor.ExceptionInterceptor">
+	</bean>
+	<bean id="debugInterceptor"
+		class="com.ametis.cms.util.interceptor.DebugInterceptor">
+	</bean>
+	<!-- Interceptor End-->
+
+	<!-- service,dao and the impl start-->
+
+
+	<bean id="actionService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.ActionService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="actionServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="actionServiceImpl"
+		class="com.ametis.cms.service.impl.ActionServiceImpl">
+		<property name="actionDao">
+			<ref bean="actionDao" />
+		</property>
+	</bean>
+	<bean id="actionDao"
+		class="com.ametis.cms.dao.impl.ActionDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="activityLogService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.ActivityLogService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="activityLogServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="activityLogServiceImpl"
+		class="com.ametis.cms.service.impl.ActivityLogServiceImpl">
+		<property name="activityLogDao">
+			<ref bean="activityLogDao" />
+		</property>
+	</bean>
+	<bean id="activityLogDao"
+		class="com.ametis.cms.dao.impl.ActivityLogDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+<bean id="configurationService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.ConfigurationService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<ref local="debugInterceptor" />
+			</list>
+		</property>
+		<property name="target">
+			<ref local="configurationServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="configurationServiceImpl" class="com.ametis.cms.service.impl.ConfigurationServiceImpl">
+		<property name="configurationDao">
+			<ref bean="configurationDao" />
+		</property>
+	</bean>
+	<bean id="configurationDao" class="com.ametis.cms.dao.impl.ConfigurationDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+	
+	<bean id="authMemberService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.AuthMemberService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="authMemberServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="authMemberServiceImpl"
+		class="com.ametis.cms.service.impl.AuthMemberServiceImpl">
+		<property name="authMemberDao">
+			<ref bean="authMemberDao" />
+		</property>
+	</bean>
+	<bean id="authMemberDao"
+		class="com.ametis.cms.dao.impl.AuthMemberDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="authProviderService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.AuthProviderService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="authProviderServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="authProviderServiceImpl"
+		class="com.ametis.cms.service.impl.AuthProviderServiceImpl">
+		<property name="authProviderDao">
+			<ref bean="authProviderDao" />
+		</property>
+	</bean>
+	<bean id="authProviderDao"
+		class="com.ametis.cms.dao.impl.AuthProviderDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="batchClaimService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.BatchClaimService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="batchClaimServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+				<prop key="appro*">PROPAGATION_REQUIRED</prop>
+				<prop key="is*">PROPAGATION_REQUIRED</prop>
+				<prop key="complete*">PROPAGATION_REQUIRED</prop>
+				<prop key="open*">PROPAGATION_REQUIRED</prop>
+				<prop key="close*">PROPAGATION_REQUIRED</prop>
+				<prop key="refresh*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="batchClaimServiceImpl"
+		class="com.ametis.cms.service.impl.BatchClaimServiceImpl">
+		<property name="batchClaimDao">
+			<ref bean="batchClaimDao" />
+		</property>
+		<property name="configurationService">
+			<ref bean="configurationService" />
+		</property>
+		<property name="outstandingService">
+			<ref bean="outstandingService" />
+		</property>
+		<property name="numberCounterService">
+			<ref bean="numberCounterService" />
+		</property>
+		<property name="clientService">
+			<ref bean="clientService" />
+		</property>
+	</bean>
+	<bean id="batchClaimDao"
+		class="com.ametis.cms.dao.impl.BatchClaimDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="benefitService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.BenefitService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="benefitServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="benefitServiceImpl"
+		class="com.ametis.cms.service.impl.BenefitServiceImpl">
+		<property name="benefitDao">
+			<ref bean="benefitDao" />
+		</property>
+	</bean>
+	<bean id="benefitDao"
+		class="com.ametis.cms.dao.impl.BenefitDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="benefitCategoryService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.BenefitCategoryService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="benefitCategoryServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="benefitCategoryServiceImpl"
+		class="com.ametis.cms.service.impl.BenefitCategoryServiceImpl">
+		<property name="benefitCategoryDao">
+			<ref bean="benefitCategoryDao" />
+		</property>
+	</bean>
+	<bean id="benefitCategoryDao"
+		class="com.ametis.cms.dao.impl.BenefitCategoryDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="benefitUsageTypeService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.BenefitUsageTypeService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="benefitUsageTypeServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="benefitUsageTypeServiceImpl"
+		class="com.ametis.cms.service.impl.BenefitUsageTypeServiceImpl">
+		<property name="benefitUsageTypeDao">
+			<ref bean="benefitUsageTypeDao" />
+		</property>
+	</bean>
+	<bean id="benefitUsageTypeDao"
+		class="com.ametis.cms.dao.impl.BenefitUsageTypeDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+<bean id="branchService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.BranchService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<ref local="debugInterceptor" />
+			</list>
+		</property>
+		<property name="target">
+			<ref local="branchServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="branchServiceImpl" class="com.ametis.cms.service.impl.BranchServiceImpl">
+		<property name="branchDao">
+			<ref bean="branchDao" />
+		</property>
+	</bean>
+	<bean id="branchDao" class="com.ametis.cms.dao.impl.BranchDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+<bean id="brokerService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.BrokerService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<ref local="debugInterceptor" />
+			</list>
+		</property>
+		<property name="target">
+			<ref local="brokerServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="brokerServiceImpl" class="com.ametis.cms.service.impl.BrokerServiceImpl">
+		<property name="brokerDao">
+			<ref bean="brokerDao" />
+		</property>
+	</bean>
+	<bean id="brokerDao" class="com.ametis.cms.dao.impl.BrokerDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="callCategoryService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.CallCategoryService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="callCategoryServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="callCategoryServiceImpl"
+		class="com.ametis.cms.service.impl.CallCategoryServiceImpl">
+		<property name="callCategoryDao">
+			<ref bean="callCategoryDao" />
+		</property>
+	</bean>
+	<bean id="callCategoryDao"
+		class="com.ametis.cms.dao.impl.CallCategoryDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="myCaseService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.CaseService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="myCaseServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="myCaseServiceImpl"
+		class="com.ametis.cms.service.impl.CaseServiceImpl">
+		<property name="caseDao">
+			<ref bean="myCaseDao" />
+		</property>
+		<property name="numberCounterService">
+			<ref bean="numberCounterService" />
+		</property>
+		<property name="configurationService">
+			<ref bean="configurationService" />
+		</property>
+	</bean>
+	<bean id="myCaseDao" class="com.ametis.cms.dao.impl.CaseDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="caseCategoryService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.CaseCategoryService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="caseCategoryServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="caseCategoryServiceImpl"
+		class="com.ametis.cms.service.impl.CaseCategoryServiceImpl">
+		<property name="caseCategoryDao">
+			<ref bean="caseCategoryDao" />
+		</property>
+	</bean>
+
+	<bean id="costContainmentTypeService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.CostContainmentTypeService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+		<!-- 
+				<ref local="debugInterceptor" />
+		-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="costContainmentTypeServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="costContainmentTypeServiceImpl" class="com.ametis.cms.service.impl.CostContainmentTypeServiceImpl">
+		<property name="costContainmentTypeDao">
+			<ref bean="costContainmentTypeDao" />
+		</property>
+	</bean>
+
+	<bean id="caseCategoryDao"
+		class="com.ametis.cms.dao.impl.CaseCategoryDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="caseConversationService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.CaseConversationService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="caseConversationServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="caseConversationServiceImpl"
+		class="com.ametis.cms.service.impl.CaseConversationServiceImpl">
+		<property name="caseConversationDao">
+			<ref bean="caseConversationDao" />
+		</property>
+	</bean>
+	<bean id="caseConversationDao"
+		class="com.ametis.cms.dao.impl.CaseConversationDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="caseEventService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.CaseEventService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="caseEventServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="caseEventServiceImpl"
+		class="com.ametis.cms.service.impl.CaseEventServiceImpl">
+		<property name="caseEventDao">
+			<ref bean="caseEventDao" />
+		</property>
+	</bean>
+	<bean id="caseEventDao"
+		class="com.ametis.cms.dao.impl.CaseEventDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="caseInvestigationService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.CaseInvestigationService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="caseInvestigationServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="caseInvestigationServiceImpl"
+		class="com.ametis.cms.service.impl.CaseInvestigationServiceImpl">
+		<property name="caseInvestigationDao">
+			<ref bean="caseInvestigationDao" />
+		</property>
+	</bean>
+	<bean id="caseInvestigationDao"
+		class="com.ametis.cms.dao.impl.CaseInvestigationDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="caseItemService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.CaseItemService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="caseItemServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="caseItemServiceImpl"
+		class="com.ametis.cms.service.impl.CaseItemServiceImpl">
+		<property name="caseItemDao">
+			<ref bean="caseItemDao" />
+		</property>
+	</bean>
+	<bean id="caseItemDao"
+		class="com.ametis.cms.dao.impl.CaseItemDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="caseProviderService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.CaseProviderService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="caseProviderServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="caseProviderServiceImpl"
+		class="com.ametis.cms.service.impl.CaseProviderServiceImpl">
+		<property name="caseProviderDao">
+			<ref bean="caseProviderDao" />
+		</property>
+	</bean>
+	<bean id="caseProviderDao"
+		class="com.ametis.cms.dao.impl.CaseProviderDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+
+	<bean id="caseStatusDao"
+		class="com.ametis.cms.dao.impl.CaseStatusDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="claimService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.ClaimService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="claimServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+				<prop key="appr*">PROPAGATION_REQUIRED</prop>
+				<prop key="close*">PROPAGATION_REQUIRED</prop>
+				<prop key="fin*">PROPAGATION_REQUIRED</prop>
+				<prop key="pay*">PROPAGATION_REQUIRED</prop>
+				<prop key="rej*">PROPAGATION_REQUIRED</prop>
+				<prop key="veri*">PROPAGATION_REQUIRED</prop>
+				<prop key="open*">PROPAGATION_REQUIRED</prop>
+				<prop key="complete*">PROPAGATION_REQUIRED</prop>
+				<prop key="corr*">PROPAGATION_REQUIRED</prop>
+				<prop key="extract*">PROPAGATION_REQUIRED</prop>
+				<prop key="refresh*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="claimServiceImpl"
+		class="com.ametis.cms.service.impl.ClaimServiceImpl">
+		<property name="claimDao">
+			<ref bean="claimDao" />
+		</property>
+		<property name="providerService">
+			<ref bean="providerService" />
+		</property>
+		<property name="configurationService">
+			<ref bean="configurationService" />
+		</property>
+		<property name="caseCategoryService">
+			<ref bean="caseCategoryService" />
+		</property>
+		<property name="diagnosisService">
+			<ref bean="diagnosisService" />
+		</property>
+		<property name="claimItemService">
+			<ref bean="claimItemService" />
+		</property>
+		<property name="numberCounterService">
+			<ref bean="numberCounterService" />
+		</property>
+		<property name="memberService">
+			<ref bean="memberService" />
+		</property>
+		<property name="excessChargeService">
+			<ref bean="excessChargeService" />
+		</property>
+		<property name="excessChargeItemService">
+			<ref bean="excessChargeItemService" />
+		</property>
+		<property name="memberBenefitService">
+			<ref bean="memberBenefitService" />
+		</property>
+		<property name="batchClaimService">
+			<ref bean="batchClaimService" />
+		</property>
+		<property name="memberProductService">
+			<ref bean="memberProductService" />
+		</property>
+		<property name="clientService">
+			<ref bean="clientService" />
+		</property>
+	</bean>
+<bean id="claimReportService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.ClaimReportService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="claimReportServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+				<prop key="appr*">PROPAGATION_REQUIRED</prop>
+				<prop key="close*">PROPAGATION_REQUIRED</prop>
+				<prop key="fin*">PROPAGATION_REQUIRED</prop>
+				<prop key="pay*">PROPAGATION_REQUIRED</prop>
+				<prop key="rej*">PROPAGATION_REQUIRED</prop>
+				<prop key="gen*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="claimReportServiceImpl"
+		class="com.ametis.cms.service.impl.ClaimReportServiceImpl">
+		<property name="claimDao">
+			<ref bean="claimDao" />
+		</property>
+	
+	</bean>
+
+	<bean id="claimDao" class="com.ametis.cms.dao.impl.ClaimDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="claimCompletionService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.ClaimCompletionService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="claimCompletionServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="claimCompletionServiceImpl"
+		class="com.ametis.cms.service.impl.ClaimCompletionServiceImpl">
+		<property name="claimCompletionDao">
+			<ref bean="claimCompletionDao" />
+		</property>
+		<property name="claimService">
+			<ref bean="claimService" />
+		</property>
+	</bean>
+	<bean id="claimCompletionDao"
+		class="com.ametis.cms.dao.impl.ClaimCompletionDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="dependentService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.DependentService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 				<ref local="debugInterceptor" /> -->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="dependentServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="dependentServiceImpl"
+		class="com.ametis.cms.service.impl.DependentServiceImpl">
+		<property name="dependentDao">
+			<ref bean="dependentDao" />
+		</property>
+	</bean>
+	<bean id="dependentDao"
+		class="com.ametis.cms.dao.impl.DependentDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+
+	<bean id="pendingCategoryService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.PendingCategoryService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="pendingCategoryServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="pendingCategoryServiceImpl"
+		class="com.ametis.cms.service.impl.PendingCategoryServiceImpl">
+		<property name="pendingCategoryDao">
+			<ref bean="pendingCategoryDao" />
+		</property>
+	</bean>
+	<bean id="pendingCategoryDao"
+		class="com.ametis.cms.dao.impl.PendingCategoryDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="rejectCategoryService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.RejectCategoryService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="rejectCategoryServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="rejectCategoryServiceImpl"
+		class="com.ametis.cms.service.impl.RejectCategoryServiceImpl">
+		<property name="rejectCategoryDao">
+			<ref bean="rejectCategoryDao" />
+		</property>
+	</bean>
+	<bean id="rejectCategoryDao"
+		class="com.ametis.cms.dao.impl.RejectCategoryDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="claimInvestigationService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.ClaimInvestigationService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="claimInvestigationServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="claimInvestigationServiceImpl"
+		class="com.ametis.cms.service.impl.ClaimInvestigationServiceImpl">
+		<property name="claimInvestigationDao">
+			<ref bean="claimInvestigationDao" />
+		</property>
+	</bean>
+	<bean id="claimInvestigationDao"
+		class="com.ametis.cms.dao.impl.ClaimInvestigationDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="claimItemService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.ClaimItemService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="claimItemServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+				<prop key="ver*">PROPAGATION_REQUIRED</prop>
+				<prop key="rej*">PROPAGATION_REQUIRED</prop>
+				<prop key="app*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="claimItemServiceImpl"
+		class="com.ametis.cms.service.impl.ClaimItemServiceImpl">
+		<property name="claimItemDao">
+			<ref bean="claimItemDao" />
+		</property>
+		<property name="memberBenefitService">
+			<ref bean="memberBenefitService" />
+		</property>
+		<property name="costContainmentService">
+			<ref bean="costContainmentService" />
+		</property>
+		<property name="benefitService">
+			<ref bean="benefitService" />
+		</property>
+		<property name="memberProductService">
+			<ref bean="memberProductService" />
+		</property>
+		<property name="memberService">
+			<ref bean="memberService" />
+		</property>
+		<property name="productService"> 
+			<ref bean="productService" />
+		</property>
+		<property name="mostFrequentItemService">
+			<ref bean="mostFrequentItemService" />
+		</property>
+		
+	</bean>
+	<bean id="claimItemDao"
+		class="com.ametis.cms.dao.impl.ClaimItemDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+<bean id="productLimitTypeService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.ProductLimitTypeService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+				<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="productLimitTypeServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="productLimitTypeServiceImpl" class="com.ametis.cms.service.impl.ProductLimitTypeServiceImpl">
+		<property name="productLimitTypeDao">
+			<ref bean="productLimitTypeDao" />
+		</property>
+	</bean>
+
+
+	<bean id="claimTypeService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.ClaimTypeService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="claimTypeServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="claimTypeServiceImpl"
+		class="com.ametis.cms.service.impl.ClaimTypeServiceImpl">
+		<property name="claimTypeDao">
+			<ref bean="claimTypeDao" />
+		</property>
+	</bean>
+	<bean id="claimTypeDao"
+		class="com.ametis.cms.dao.impl.ClaimTypeDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="clausulService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.ClausulService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="clausulServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="clausulServiceImpl"
+		class="com.ametis.cms.service.impl.ClausulServiceImpl">
+		<property name="clausulDao">
+			<ref bean="clausulDao" />
+		</property>
+	</bean>
+	<bean id="clausulDao"
+		class="com.ametis.cms.dao.impl.ClausulDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="clausulCategoryService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.ClausulCategoryService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="clausulCategoryServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="clausulCategoryServiceImpl"
+		class="com.ametis.cms.service.impl.ClausulCategoryServiceImpl">
+		<property name="clausulCategoryDao">
+			<ref bean="clausulCategoryDao" />
+		</property>
+	</bean>
+	<bean id="clausulCategoryDao"
+		class="com.ametis.cms.dao.impl.ClausulCategoryDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="clientService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.ClientService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="clientServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="clientServiceImpl"
+		class="com.ametis.cms.service.impl.ClientServiceImpl">
+		<property name="clientDao">
+			<ref bean="clientDao" />
+		</property>
+	</bean>
+	<bean id="clientDao"
+		class="com.ametis.cms.dao.impl.ClientDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="clientCategoryService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.ClientCategoryService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="clientCategoryServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="clientCategoryServiceImpl"
+		class="com.ametis.cms.service.impl.ClientCategoryServiceImpl">
+		<property name="clientCategoryDao">
+			<ref bean="clientCategoryDao" />
+		</property>
+	</bean>
+	<bean id="clientCategoryDao"
+		class="com.ametis.cms.dao.impl.ClientCategoryDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="clientProviderService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.ClientProviderService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="clientProviderServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+				<prop key="save*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="clientProviderServiceImpl"
+		class="com.ametis.cms.service.impl.ClientProviderServiceImpl">
+		<property name="clientProviderDao">
+			<ref bean="clientProviderDao" />
+		</property>
+	</bean>
+	<bean id="clientProviderDao"
+		class="com.ametis.cms.dao.impl.ClientProviderDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="conversationCategoryService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.ConversationCategoryService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="conversationCategoryServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="conversationCategoryServiceImpl"
+		class="com.ametis.cms.service.impl.ConversationCategoryServiceImpl">
+		<property name="conversationCategoryDao">
+			<ref bean="conversationCategoryDao" />
+		</property>
+	</bean>
+	<bean id="conversationCategoryDao"
+		class="com.ametis.cms.dao.impl.ConversationCategoryDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="costContainmentService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.CostContainmentService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="costContainmentServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="costContainmentServiceImpl"
+		class="com.ametis.cms.service.impl.CostContainmentServiceImpl">
+		<property name="costContainmentDao">
+			<ref bean="costContainmentDao" />
+		</property>
+	</bean>
+	<bean id="costContainmentDao"
+		class="com.ametis.cms.dao.impl.CostContainmentDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+
+	<bean id="coverageStatusDao"
+		class="com.ametis.cms.dao.impl.CoverageStatusDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="costContainmentTypeDao"
+		class="com.ametis.cms.dao.impl.CostContainmentTypeDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="currencyService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.CurrencyService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="currencyServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="currencyServiceImpl"
+		class="com.ametis.cms.service.impl.CurrencyServiceImpl">
+		<property name="currencyDao">
+			<ref bean="currencyDao" />
+		</property>
+	</bean>
+	<bean id="currencyDao"
+		class="com.ametis.cms.dao.impl.CurrencyDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="diagnosisService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.DiagnosisService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="diagnosisServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="diagnosisServiceImpl"
+		class="com.ametis.cms.service.impl.DiagnosisServiceImpl">
+		<property name="diagnosisDao">
+			<ref bean="diagnosisDao" />
+		</property>
+	</bean>
+	<bean id="diagnosisDao"
+		class="com.ametis.cms.dao.impl.DiagnosisDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="diagnosisItemService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.DiagnosisItemService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="diagnosisItemServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="diagnosisItemServiceImpl"
+		class="com.ametis.cms.service.impl.DiagnosisItemServiceImpl">
+		<property name="diagnosisItemDao">
+			<ref bean="diagnosisItemDao" />
+		</property>
+	</bean>
+	<bean id="diagnosisItemDao"
+		class="com.ametis.cms.dao.impl.DiagnosisItemDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="discountUsageTypeService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.DiscountUsageTypeService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="discountUsageTypeServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="discountUsageTypeServiceImpl"
+		class="com.ametis.cms.service.impl.DiscountUsageTypeServiceImpl">
+		<property name="discountUsageTypeDao">
+			<ref bean="discountUsageTypeDao" />
+		</property>
+	</bean>
+	<bean id="discountUsageTypeDao"
+		class="com.ametis.cms.dao.impl.DiscountUsageTypeDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="eventCategoryService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.EventCategoryService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="eventCategoryServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="eventCategoryServiceImpl"
+		class="com.ametis.cms.service.impl.EventCategoryServiceImpl">
+		<property name="eventCategoryDao">
+			<ref bean="eventCategoryDao" />
+		</property>
+	</bean>
+	<bean id="eventCategoryDao"
+		class="com.ametis.cms.dao.impl.EventCategoryDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="excessChargeService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.ExcessChargeService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="excessChargeServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="excessChargeServiceImpl"
+		class="com.ametis.cms.service.impl.ExcessChargeServiceImpl">
+		<property name="excessChargeDao">
+			<ref bean="excessChargeDao" />
+		</property>
+		<property name="clientService">
+			<ref bean="clientService" />
+		</property>
+		<property name="numberCounterService">
+			<ref bean="numberCounterService" />
+		</property>
+	</bean>
+	<bean id="excessChargeDao"
+		class="com.ametis.cms.dao.impl.ExcessChargeDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="excessChargeItemService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.ExcessChargeItemService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="excessChargeItemServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="excessChargeItemServiceImpl"
+		class="com.ametis.cms.service.impl.ExcessChargeItemServiceImpl">
+		<property name="excessChargeItemDao">
+			<ref bean="excessChargeItemDao" />
+		</property>
+	</bean>
+	<bean id="excessChargeItemDao"
+		class="com.ametis.cms.dao.impl.ExcessChargeItemDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="excessReminderService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.ExcessReminderService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!--  <ref local="debugInterceptor" />		-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="excessReminderServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="excessReminderServiceImpl"
+		class="com.ametis.cms.service.impl.ExcessReminderServiceImpl">
+		<property name="excessReminderDao">
+			<ref bean="excessReminderDao" />
+		</property>
+		<property name="excessChargeService">
+			<ref bean="excessChargeService" />
+		</property>
+	</bean>
+	<bean id="excessReminderDao"
+		class="com.ametis.cms.dao.impl.ExcessReminderDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="firstCallService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.FirstCallService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="firstCallServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="firstCallServiceImpl"
+		class="com.ametis.cms.service.impl.FirstCallServiceImpl">
+		<property name="firstCallDao">
+			<ref bean="firstCallDao" />
+		</property>
+		<property name="clientService">
+			<ref bean="clientService" />
+		</property>
+		<property name="numberCounterService">
+			<ref bean="numberCounterService" />
+		</property>
+	</bean>
+	<bean id="firstCallDao"
+		class="com.ametis.cms.dao.impl.FirstCallDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="fundService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.FundService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="fundServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="fundServiceImpl"
+		class="com.ametis.cms.service.impl.FundServiceImpl">
+		<property name="fundDao">
+			<ref bean="fundDao" />
+		</property>
+		<property name="outstandingService">
+			<ref bean="outstandingService" />
+		</property>
+		<property name="excessChargeService">
+			<ref bean="excessChargeService" />
+		</property>
+		<property name="numberCounterService">
+			<ref bean="numberCounterService" />
+		</property>
+		<property name="clientService">
+			<ref bean="clientService" />
+		</property>
+	</bean>
+	<bean id="fundDao" class="com.ametis.cms.dao.impl.FundDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="fundCategoryService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.FundCategoryService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="fundCategoryServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="fundCategoryServiceImpl"
+		class="com.ametis.cms.service.impl.FundCategoryServiceImpl">
+		<property name="fundCategoryDao">
+			<ref bean="fundCategoryDao" />
+		</property>
+	</bean>
+	<bean id="fundCategoryDao"
+		class="com.ametis.cms.dao.impl.FundCategoryDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+
+	<bean id="genderDao"
+		class="com.ametis.cms.dao.impl.GenderDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="groupBenefitService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.GroupBenefitService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="groupBenefitServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="groupBenefitServiceImpl"
+		class="com.ametis.cms.service.impl.GroupBenefitServiceImpl">
+		<property name="groupBenefitDao">
+			<ref bean="groupBenefitDao" />
+		</property>
+	</bean>
+	<bean id="groupBenefitDao"
+		class="com.ametis.cms.dao.impl.GroupBenefitDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+<bean id="groupClaimUtilReportService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.GroupClaimUtilReportService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<ref local="debugInterceptor" />
+			</list>
+		</property>
+		<property name="target">
+			<ref local="groupClaimUtilReportServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="groupClaimUtilReportServiceImpl" class="com.ametis.cms.service.impl.GroupClaimUtilReportServiceImpl">
+		<property name="groupClaimUtilReportDao">
+			<ref bean="groupClaimUtilReportDao" />
+		</property>
+	</bean>
+	<bean id="groupClaimUtilReportDao" class="com.ametis.cms.dao.impl.GroupClaimUtilReportDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="groupPackageService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.GroupPackageService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="groupPackageServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="groupPackageServiceImpl"
+		class="com.ametis.cms.service.impl.GroupPackageServiceImpl">
+		<property name="groupPackageDao">
+			<ref bean="groupPackageDao" />
+		</property>
+	</bean>
+	<bean id="groupPackageDao"
+		class="com.ametis.cms.dao.impl.GroupPackageDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="groupProductService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.GroupProductService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="groupProductServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="groupProductServiceImpl"
+		class="com.ametis.cms.service.impl.GroupProductServiceImpl">
+		<property name="groupProductDao">
+			<ref bean="groupProductDao" />
+		</property>
+	</bean>
+	<bean id="groupProductDao"
+		class="com.ametis.cms.dao.impl.GroupProductDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="insurancePackageService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.InsurancePackageService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="insurancePackageServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="insurancePackageServiceImpl"
+		class="com.ametis.cms.service.impl.InsurancePackageServiceImpl">
+		<property name="insurancePackageDao">
+			<ref bean="insurancePackageDao" />
+		</property>
+	</bean>
+	<bean id="insurancePackageDao"
+		class="com.ametis.cms.dao.impl.InsurancePackageDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="investigationService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.InvestigationService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="investigationServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="investigationServiceImpl"
+		class="com.ametis.cms.service.impl.InvestigationServiceImpl">
+		<property name="investigationDao">
+			<ref bean="investigationDao" />
+		</property>
+	</bean>
+	<bean id="investigationDao"
+		class="com.ametis.cms.dao.impl.InvestigationDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="invoiceService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.InvoiceService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="invoiceServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="invoiceServiceImpl"
+		class="com.ametis.cms.service.impl.InvoiceServiceImpl">
+		<property name="invoiceDao">
+			<ref bean="invoiceDao" />
+		</property>
+	</bean>
+	<bean id="invoiceDao"
+		class="com.ametis.cms.dao.impl.InvoiceDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="invoiceItemService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.InvoiceItemService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="invoiceItemServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="invoiceItemServiceImpl"
+		class="com.ametis.cms.service.impl.InvoiceItemServiceImpl">
+		<property name="invoiceItemDao">
+			<ref bean="invoiceItemDao" />
+		</property>
+	</bean>
+	<bean id="invoiceItemDao"
+		class="com.ametis.cms.dao.impl.InvoiceItemDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="itemService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.ItemService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="itemServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="itemServiceImpl"
+		class="com.ametis.cms.service.impl.ItemServiceImpl">
+		<property name="itemDao">
+			<ref bean="itemDao" />
+		</property>
+	</bean>
+	<bean id="itemDao" class="com.ametis.cms.dao.impl.ItemDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="itemCategoryService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.ItemCategoryService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="itemCategoryServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="itemCategoryServiceImpl"
+		class="com.ametis.cms.service.impl.ItemCategoryServiceImpl">
+		<property name="itemCategoryDao">
+			<ref bean="itemCategoryDao" />
+		</property>
+	</bean>
+	<bean id="itemCategoryDao"
+		class="com.ametis.cms.dao.impl.ItemCategoryDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="itemCategoryMapService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.ItemCategoryMapService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<ref local="debugInterceptor" />
+			</list>
+		</property>
+		<property name="target">
+			<ref local="itemCategoryMapServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="itemCategoryMapServiceImpl" class="com.ametis.cms.service.impl.ItemCategoryMapServiceImpl">
+		<property name="itemCategoryMapDao">
+			<ref bean="itemCategoryMapDao" />
+		</property>
+	</bean>
+	<bean id="itemCategoryMapDao" class="com.ametis.cms.dao.impl.ItemCategoryMapDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="itemMeasurementUnitService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.ItemMeasurementUnitService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="itemMeasurementUnitServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="itemMeasurementUnitServiceImpl"
+		class="com.ametis.cms.service.impl.ItemMeasurementUnitServiceImpl">
+		<property name="itemMeasurementUnitDao">
+			<ref bean="itemMeasurementUnitDao" />
+		</property>
+	</bean>
+	<bean id="itemMeasurementUnitDao"
+		class="com.ametis.cms.dao.impl.ItemMeasurementUnitDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="measurementUnitService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.MeasurementUnitService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="measurementUnitServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="measurementUnitServiceImpl"
+		class="com.ametis.cms.service.impl.MeasurementUnitServiceImpl">
+		<property name="measurementUnitDao">
+			<ref bean="measurementUnitDao" />
+		</property>
+	</bean>
+	<bean id="measurementUnitDao"
+		class="com.ametis.cms.dao.impl.MeasurementUnitDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="mostFrequentItemService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.MostFrequentItemService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<ref local="debugInterceptor" />
+			</list>
+		</property>
+		<property name="target">
+			<ref local="mostFrequentItemServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="mostFrequentItemServiceImpl" class="com.ametis.cms.service.impl.MostFrequentItemServiceImpl">
+		<property name="mostFrequentItemDao">
+			<ref bean="mostFrequentItemDao" />
+		</property>
+	</bean>
+	<bean id="mostFrequentItemDao" class="com.ametis.cms.dao.impl.MostFrequentItemDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="memberService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.MemberService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="memberServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+				<prop key="terminate*">PROPAGATION_REQUIRED</prop>
+				<prop key="activate*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="memberServiceImpl"
+		class="com.ametis.cms.service.impl.MemberServiceImpl">
+		<property name="memberDao">
+			<ref bean="memberDao" />
+		</property>
+		<property name="memberBenefitService">
+			<ref bean="memberBenefitService" />
+		</property>
+		<property name="memberProductService">
+			<ref bean="memberProductService"/>
+		</property>
+		<property name="productService">
+			<ref bean="productService" />
+		</property>
+		<property name="benefitService">
+			<ref bean="benefitService" />
+		</property>
+		<property name="clausulService">
+			<ref bean="clausulService" />
+		</property>
+		<property name="memberClausulService">
+			<ref bean="memberClausulService" />
+ 		</property>
+ 		<property name="productClausulService">
+ 			<ref bean="productClausulService" />
+ 		</property>
+ 		<property name="productBenefitService">
+ 			<ref bean="productBenefitService" />
+ 		</property>
+	</bean>
+	<bean id="memberDao"
+		class="com.ametis.cms.dao.impl.MemberDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="memberBenefitService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.MemberBenefitService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="memberBenefitServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="memberBenefitServiceImpl"
+		class="com.ametis.cms.service.impl.MemberBenefitServiceImpl">
+		<property name="memberBenefitDao">
+			<ref bean="memberBenefitDao" />
+		</property>
+	</bean>
+	<bean id="memberBenefitDao"
+		class="com.ametis.cms.dao.impl.MemberBenefitDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="memberClausulService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.MemberClausulService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="memberClausulServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="memberClausulServiceImpl"
+		class="com.ametis.cms.service.impl.MemberClausulServiceImpl">
+		<property name="memberClausulDao">
+			<ref bean="memberClausulDao" />
+		</property>
+	</bean>
+	<bean id="memberClausulDao"
+		class="com.ametis.cms.dao.impl.MemberClausulDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="memberDiagnosisService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.MemberDiagnosisService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="memberDiagnosisServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="memberDiagnosisServiceImpl"
+		class="com.ametis.cms.service.impl.MemberDiagnosisServiceImpl">
+		<property name="memberDiagnosisDao">
+			<ref bean="memberDiagnosisDao" />
+		</property>
+	</bean>
+	<bean id="memberDiagnosisDao"
+		class="com.ametis.cms.dao.impl.MemberDiagnosisDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="memberGroupService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.MemberGroupService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="memberGroupServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="memberGroupServiceImpl"
+		class="com.ametis.cms.service.impl.MemberGroupServiceImpl">
+		<property name="memberGroupDao">
+			<ref bean="memberGroupDao" />
+		</property>
+	</bean>
+	<bean id="memberGroupDao"
+		class="com.ametis.cms.dao.impl.MemberGroupDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="memberGroupProviderService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.MemberGroupProviderService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="memberGroupProviderServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="memberGroupProviderServiceImpl"
+		class="com.ametis.cms.service.impl.MemberGroupProviderServiceImpl">
+		<property name="memberGroupProviderDao">
+			<ref bean="memberGroupProviderDao" />
+		</property>
+	</bean>
+	<bean id="memberGroupProviderDao"
+		class="com.ametis.cms.dao.impl.MemberGroupProviderDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="memberPackageService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.MemberPackageService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="memberPackageServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="memberPackageServiceImpl"
+		class="com.ametis.cms.service.impl.MemberPackageServiceImpl">
+		<property name="memberPackageDao">
+			<ref bean="memberPackageDao" />
+		</property>
+	</bean>
+	<bean id="memberPackageDao"
+		class="com.ametis.cms.dao.impl.MemberPackageDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="numberCounterService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.NumberCounterService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="numberCounterServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="numberCounterServiceImpl"
+		class="com.ametis.cms.service.impl.NumberCounterServiceImpl">
+		<property name="numberCounterDao">
+			<ref bean="numberCounterDao" />
+		</property>
+	</bean>
+	<bean id="numberCounterDao"
+		class="com.ametis.cms.dao.impl.NumberCounterDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="memberProductService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.MemberProductService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="memberProductServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="memberProductServiceImpl"
+		class="com.ametis.cms.service.impl.MemberProductServiceImpl">
+		<property name="memberProductDao">
+			<ref bean="memberProductDao" />
+		</property>
+	</bean>
+	<bean id="memberProductDao"
+		class="com.ametis.cms.dao.impl.MemberProductDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="outstandingService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.OutstandingService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="outstandingServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="outstandingServiceImpl"
+		class="com.ametis.cms.service.impl.OutstandingServiceImpl">
+		<property name="outstandingDao">
+			<ref bean="outstandingDao" />
+		</property>
+		<property name="clientService">
+			<ref bean="clientService" />
+		</property>
+		<property name="numberCounterService">
+			<ref bean="numberCounterService" />
+		</property>
+	</bean>
+	<bean id="outstandingDao"
+		class="com.ametis.cms.dao.impl.OutstandingDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="outstandingClaimService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.OutstandingClaimService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+				<ref local="debugInterceptor" />
+				 -->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="outstandingClaimServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="outstandingClaimServiceImpl" class="com.ametis.cms.service.impl.OutstandingClaimServiceImpl">
+		<property name="outstandingClaimDao">
+			<ref bean="outstandingClaimDao" />
+		</property>
+		<property name="outstandingClaimItemService">
+			<ref bean="outstandingClaimItemService" />
+		</property>
+		<property name="claimItemService">
+			<ref bean="claimItemService" />
+		</property>
+		<property name="claimService">
+			<ref bean="claimService" />
+		</property>
+		<property name="providerService">
+			<ref bean="providerService" />
+		</property>
+		<property name="memberBenefitService">
+			<ref bean="memberBenefitService" />
+		</property>
+		<property name="memberProductService">
+			<ref bean="memberProductService" />
+		</property>
+		<property name="memberService">
+			<ref bean="memberService" />
+		</property>
+		
+	</bean>
+	<bean id="outstandingClaimDao" class="com.ametis.cms.dao.impl.OutstandingClaimDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+	
+	<bean id="outstandingClaimItemService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.OutstandingClaimItemService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+				<ref local="debugInterceptor" />
+				 -->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="outstandingClaimItemServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="outstandingClaimItemServiceImpl" class="com.ametis.cms.service.impl.OutstandingClaimItemServiceImpl">
+		<property name="outstandingClaimItemDao">
+			<ref bean="outstandingClaimItemDao" />
+		</property>
+	</bean>
+	<bean id="outstandingClaimItemDao" class="com.ametis.cms.dao.impl.OutstandingClaimItemDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="paymentService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.PaymentService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="paymentServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="paymentServiceImpl"
+		class="com.ametis.cms.service.impl.PaymentJasindoServiceImpl">
+		<property name="paymentDao">
+			<ref bean="paymentDao" />
+		</property>
+		<property name="outstandingService">
+			<ref bean="outstandingService" />
+		</property>
+		<property name="batchClaimService">
+			<ref bean="batchClaimService" />
+		</property>
+		<property name="numberCounterService">
+			<ref bean="numberCounterService" />
+		</property>
+		<property name="claimService">
+			<ref bean="claimService" />
+		</property>
+		<property name="configurationService">
+			<ref bean="configurationService" />
+		</property>
+		<property name="clientService">
+			<ref bean="clientService" />
+		</property>
+	</bean>
+	<bean id="paymentDao"
+		class="com.ametis.cms.dao.impl.PaymentDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="paymentRecipientService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.PaymentRecipientService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="paymentRecipientServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="paymentRecipientServiceImpl"
+		class="com.ametis.cms.service.impl.PaymentRecipientServiceImpl">
+		<property name="paymentRecipientDao">
+			<ref bean="paymentRecipientDao" />
+		</property>
+	</bean>
+	
+	<bean id="policyService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.PolicyService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<ref local="debugInterceptor" />
+			</list>
+		</property>
+		<property name="target">
+			<ref local="policyServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="policyServiceImpl" class="com.ametis.cms.service.impl.PolicyServiceImpl">
+		<property name="policyDao">
+			<ref bean="policyDao" />
+		</property>
+	</bean>
+	<bean id="policyDao" class="com.ametis.cms.dao.impl.PolicyDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+	
+	<bean id="policyMemberService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.PolicyMemberService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<ref local="debugInterceptor" />
+			</list>
+		</property>
+		<property name="target">
+			<ref local="policyMemberServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="policyMemberServiceImpl" class="com.ametis.cms.service.impl.PolicyMemberServiceImpl">
+		<property name="policyMemberDao">
+			<ref bean="policyMemberDao" />
+		</property>
+	</bean>
+	<bean id="policyMemberDao" class="com.ametis.cms.dao.impl.PolicyMemberDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+	
+	<bean id="policyPaymentService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.PolicyPaymentService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<ref local="debugInterceptor" />
+			</list>
+		</property>
+		<property name="target">
+			<ref local="policyPaymentServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="policyPaymentServiceImpl" class="com.ametis.cms.service.impl.PolicyPaymentServiceImpl">
+		<property name="policyPaymentDao">
+			<ref bean="policyPaymentDao" />
+		</property>
+	</bean>
+	<bean id="policyPaymentDao" class="com.ametis.cms.dao.impl.PolicyPaymentDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+	
+	<bean id="policyProductService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.PolicyProductService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<ref local="debugInterceptor" />
+			</list>
+		</property>
+		<property name="target">
+			<ref local="policyProductServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="policyProductServiceImpl" class="com.ametis.cms.service.impl.PolicyProductServiceImpl">
+		<property name="policyProductDao">
+			<ref bean="policyProductDao" />
+		</property>
+	</bean>
+	<bean id="policyProductDao" class="com.ametis.cms.dao.impl.PolicyProductDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="priorityService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+
+
+				<value>com.ametis.cms.service.PriorityService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="priorityServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="priorityServiceImpl"
+		class="com.ametis.cms.service.impl.PriorityServiceImpl">
+		<property name="priorityDao">
+			<ref bean="priorityDao" />
+		</property>
+	</bean>
+	<bean id="paymentMethodService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.PaymentMethodService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="paymentMethodServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="paymentMethodServiceImpl"
+		class="com.ametis.cms.service.impl.PaymentMethodServiceImpl">
+		<property name="paymentMethodDao">
+			<ref bean="paymentMethodDao" />
+		</property>
+	</bean>
+	<bean id="paymentMethodDao"
+		class="com.ametis.cms.dao.impl.PaymentMethodDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="paymentRecipientDao"
+		class="com.ametis.cms.dao.impl.PaymentRecipientDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="paymentStatusDao"
+		class="com.ametis.cms.dao.impl.PaymentStatusDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="pendingClaimService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.PendingClaimService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="pendingClaimServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="pendingClaimServiceImpl"
+		class="com.ametis.cms.service.impl.PendingClaimServiceImpl">
+		<property name="pendingClaimDao">
+			<ref bean="pendingClaimDao" />
+		</property>
+		<property name="claimService">
+			<ref bean="claimService" />
+		</property>
+	</bean>
+	<bean id="pendingClaimDao"
+		class="com.ametis.cms.dao.impl.PendingClaimDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+
+	<bean id="priorityDao"
+		class="com.ametis.cms.dao.impl.PriorityDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+	
+	<bean id="problemService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.ProblemService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<ref local="debugInterceptor" />
+			</list>
+		</property>
+		<property name="target">
+			<ref local="problemServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="problemServiceImpl" class="com.ametis.cms.service.impl.ProblemServiceImpl">
+		<property name="problemDao">
+			<ref bean="problemDao" />
+		</property>
+	</bean>
+	<bean id="problemDao" class="com.ametis.cms.dao.impl.ProblemDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="productService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.ProductService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="productServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="productServiceImpl"
+		class="com.ametis.cms.service.impl.ProductServiceImpl">
+		<property name="productDao">
+			<ref bean="productDao" />
+		</property>
+	</bean>
+	<bean id="productDao"
+		class="com.ametis.cms.dao.impl.ProductDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="productBenefitService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.ProductBenefitService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="productBenefitServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="productBenefitServiceImpl"
+		class="com.ametis.cms.service.impl.ProductBenefitServiceImpl">
+		<property name="productBenefitDao">
+			<ref bean="productBenefitDao" />
+		</property>
+	</bean>
+	<bean id="productBenefitDao"
+		class="com.ametis.cms.dao.impl.ProductBenefitDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="productClausulService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.ProductClausulService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="productClausulServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="productClausulServiceImpl"
+		class="com.ametis.cms.service.impl.ProductClausulServiceImpl">
+		<property name="productClausulDao">
+			<ref bean="productClausulDao" />
+		</property>
+	</bean>
+	<bean id="productClausulDao"
+		class="com.ametis.cms.dao.impl.ProductClausulDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="productItemService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.ProductItemService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="productItemServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="productItemServiceImpl"
+		class="com.ametis.cms.service.impl.ProductItemServiceImpl">
+		<property name="productItemDao">
+			<ref bean="productItemDao" />
+		</property>
+	</bean>
+	<bean id="productItemDao"
+		class="com.ametis.cms.dao.impl.ProductItemDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+
+	<bean id="productLimitTypeDao"
+		class="com.ametis.cms.dao.impl.ProductLimitTypeDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="productPackageService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.ProductPackageService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="productPackageServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="productPackageServiceImpl"
+		class="com.ametis.cms.service.impl.ProductPackageServiceImpl">
+		<property name="productPackageDao">
+			<ref bean="productPackageDao" />
+		</property>
+	</bean>
+	<bean id="productPackageDao"
+		class="com.ametis.cms.dao.impl.ProductPackageDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="productTypeService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.ProductTypeService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="productTypeServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="productTypeServiceImpl"
+		class="com.ametis.cms.service.impl.ProductTypeServiceImpl">
+		<property name="productTypeDao">
+			<ref bean="productTypeDao" />
+		</property>
+	</bean>
+	<bean id="productTypeDao"
+		class="com.ametis.cms.dao.impl.ProductTypeDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="providerClaimUtilReportService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.ProviderClaimUtilReportService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<ref local="debugInterceptor" />
+			</list>
+		</property>
+		<property name="target">
+			<ref local="providerClaimUtilReportServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="providerClaimUtilReportServiceImpl" class="com.ametis.cms.service.impl.ProviderClaimUtilReportServiceImpl">
+		<property name="providerClaimUtilReportDao">
+			<ref bean="providerClaimUtilReportDao" />
+		</property>
+	</bean>
+	<bean id="providerClaimUtilReportDao" class="com.ametis.cms.dao.impl.ProviderClaimUtilReportDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="providerService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.ProviderService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="providerServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="providerServiceImpl"
+		class="com.ametis.cms.service.impl.ProviderServiceImpl">
+		<property name="providerDao">
+			<ref bean="providerDao" />
+		</property>
+	</bean>
+	<bean id="providerDao"
+		class="com.ametis.cms.dao.impl.ProviderDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="providerCategoryService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.ProviderCategoryService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="providerCategoryServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="providerCategoryServiceImpl"
+		class="com.ametis.cms.service.impl.ProviderCategoryServiceImpl">
+		<property name="providerCategoryDao">
+			<ref bean="providerCategoryDao" />
+		</property>
+	</bean>
+	<bean id="providerCategoryDao"
+		class="com.ametis.cms.dao.impl.ProviderCategoryDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="providerItemService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.ProviderItemService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="providerItemServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="providerItemServiceImpl"
+		class="com.ametis.cms.service.impl.ProviderItemServiceImpl">
+		<property name="providerItemDao">
+			<ref bean="providerItemDao" />
+		</property>
+	</bean>
+	<bean id="providerItemDao"
+		class="com.ametis.cms.dao.impl.ProviderItemDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+	
+	<bean id="quotationService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.QuotationService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<ref local="debugInterceptor" />
+			</list>
+		</property>
+		<property name="target">
+			<ref local="quotationServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="quotationServiceImpl" class="com.ametis.cms.service.impl.QuotationServiceImpl">
+		<property name="quotationDao">
+			<ref bean="quotationDao" />
+		</property>
+	</bean>
+	<bean id="quotationDao" class="com.ametis.cms.dao.impl.QuotationDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+	
+	<bean id="quotationProductService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.QuotationProductService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<ref local="debugInterceptor" />
+			</list>
+		</property>
+		<property name="target">
+			<ref local="quotationProductServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="quotationProductServiceImpl" class="com.ametis.cms.service.impl.QuotationProductServiceImpl">
+		<property name="quotationProductDao">
+			<ref bean="quotationProductDao" />
+		</property>
+	</bean>
+	<bean id="quotationProductDao" class="com.ametis.cms.dao.impl.QuotationProductDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="rejectedCaseService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.RejectedCaseService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="rejectedCaseServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="rejectedCaseServiceImpl"
+		class="com.ametis.cms.service.impl.RejectedCaseServiceImpl">
+		<property name="rejectedCaseDao">
+			<ref bean="rejectedCaseDao" />
+		</property>
+		<property name="costContainmentService">
+			<ref bean="costContainmentService" />
+		</property>
+		<property name="caseService">
+			<ref bean="myCaseService" />
+		</property>
+
+	</bean>
+	<bean id="rejectedCaseDao"
+		class="com.ametis.cms.dao.impl.RejectedCaseDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="rejectedClaimService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.RejectedClaimService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="rejectedClaimServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="rejectedClaimServiceImpl"
+		class="com.ametis.cms.service.impl.RejectedClaimServiceImpl">
+		<property name="rejectedClaimDao">
+			<ref bean="rejectedClaimDao" />
+		</property>
+
+		<property name="claimService">
+			<ref bean="claimService" />
+		</property>
+		<property name="costContainmentService">
+			<ref bean="costContainmentService" />
+		</property>
+
+	</bean>
+	<bean id="rejectedClaimDao"
+		class="com.ametis.cms.dao.impl.RejectedClaimDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+
+	<bean id="relationshipDao"
+		class="com.ametis.cms.dao.impl.RelationshipDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="roleService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.RoleService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="roleServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="roleServiceImpl"
+		class="com.ametis.cms.service.impl.RoleServiceImpl">
+		<property name="roleDao">
+			<ref bean="roleDao" />
+		</property>
+	</bean>
+	<bean id="roleDao" class="com.ametis.cms.dao.impl.RoleDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="roleActionService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.RoleActionService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="roleActionServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="roleActionServiceImpl"
+		class="com.ametis.cms.service.impl.RoleActionServiceImpl">
+		<property name="roleActionDao">
+			<ref bean="roleActionDao" />
+		</property>
+	</bean>
+	<bean id="roleActionDao"
+		class="com.ametis.cms.dao.impl.RoleActionDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="serviceCategoryService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.ServiceCategoryService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="serviceCategoryServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="serviceCategoryServiceImpl"
+		class="com.ametis.cms.service.impl.ServiceCategoryServiceImpl">
+		<property name="serviceCategoryDao">
+			<ref bean="serviceCategoryDao" />
+		</property>
+	</bean>
+	<bean id="serviceCategoryDao"
+		class="com.ametis.cms.dao.impl.ServiceCategoryDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="serviceDiagnosisService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.ServiceDiagnosisService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="serviceDiagnosisServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="serviceDiagnosisServiceImpl"
+		class="com.ametis.cms.service.impl.ServiceDiagnosisServiceImpl">
+		<property name="serviceDiagnosisDao">
+			<ref bean="serviceDiagnosisDao" />
+		</property>
+	</bean>
+	<bean id="serviceDiagnosisDao"
+		class="com.ametis.cms.dao.impl.ServiceDiagnosisDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="securityService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.SecurityService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="securityServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="securityServiceImpl"
+		class="com.ametis.cms.service.impl.SecurityServiceImpl">
+		<property name="actionService">
+			<ref bean="actionService" />
+		</property>
+		<property name="roleActionService">
+			<ref bean="roleActionService" />
+		</property>
+		<property name="roleService">
+			<ref bean="roleService" />
+		</property>
+		<property name="userService">
+			<ref bean="userService" />
+		</property>
+	</bean>
+
+	<bean id="subscriptionStatusDao"
+		class="com.ametis.cms.dao.impl.SubscriptionStatusDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+<bean id="subscriptionStatusService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.SubscriptionStatusService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+				<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="subscriptionStatusServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="subscriptionStatusServiceImpl" class="com.ametis.cms.service.impl.SubscriptionStatusServiceImpl">
+		<property name="subscriptionStatusDao">
+			<ref bean="subscriptionStatusDao" />
+		</property>
+	</bean>
+
+	<bean id="substitutionItemService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.SubstitutionItemService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="substitutionItemServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="substitutionItemServiceImpl"
+		class="com.ametis.cms.service.impl.SubstitutionItemServiceImpl">
+		<property name="substitutionItemDao">
+			<ref bean="substitutionItemDao" />
+		</property>
+	</bean>
+	<bean id="substitutionItemDao"
+		class="com.ametis.cms.dao.impl.SubstitutionItemDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+<bean id="treatmentLocationService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.TreatmentLocationService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+				<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="treatmentLocationServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="treatmentLocationServiceImpl" class="com.ametis.cms.service.impl.TreatmentLocationServiceImpl">
+		<property name="treatmentLocationDao">
+			<ref bean="treatmentLocationDao" />
+		</property>
+	</bean>
+
+	<bean id="treatmentLocationDao"
+		class="com.ametis.cms.dao.impl.TreatmentLocationDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="userService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>com.ametis.cms.service.UserService</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="userServiceImpl" />
+		</property>
+		
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+				<prop key="log*">PROPAGATION_REQUIRED</prop>
+				<prop key="change*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="userServiceImpl"
+		class="com.ametis.cms.service.impl.UserServiceImpl">
+		<property name="userDao">
+			<ref bean="userDao" />
+		</property>
+		<property name="activityLogService">
+			<ref bean="activityLogService" />
+		</property>
+	</bean>
+	<bean id="userDao" class="com.ametis.cms.dao.impl.UserDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+	<!-- service,dao and the impl end-->
+	<bean id="investigationCategoryService"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					com.ametis.cms.service.InvestigationCategoryService
+				</value>
+			</list>
+		</property>
+		<property name="postInterceptors">
+			<list>
+				<ref local="exceptionInterceptor" />
+				<!-- 
+					<ref local="debugInterceptor" />
+				-->
+			</list>
+		</property>
+		<property name="target">
+			<ref local="investigationCategoryServiceImpl" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="search*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="trash*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="investigationCategoryServiceImpl"
+		class="com.ametis.cms.service.impl.InvestigationCategoryServiceImpl">
+		<property name="investigationCategoryDao">
+			<ref bean="investigationCategoryDao" />
+		</property>
+	</bean>
+	<bean id="investigationCategoryDao"
+		class="com.ametis.cms.dao.impl.InvestigationCategoryDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<!-- Misc start-->
+	<bean id="countSet" class="java.lang.Integer" abstract="false"
+		singleton="true" lazy-init="default" autowire="default"
+		dependency-check="default">
+		<constructor-arg>
+			<value>15</value>
+		</constructor-arg>
+	</bean>
+	<bean id="maxPercountSet" class="java.lang.Integer" abstract="false"
+		singleton="true" lazy-init="default" autowire="default"
+		dependency-check="default">
+		<constructor-arg>
+			<value>15</value>
+		</constructor-arg>
+	</bean>
+	<bean id="themeResolver"
+		class="org.springframework.web.servlet.theme.SessionThemeResolver">
+		<property name="defaultThemeName" value="springThemes" />
+	</bean>
+	<!-- Misc end-->
+	
+	<!-- 
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				 
+				<ref bean="cronTriggerActivationService" />
+				
+				<ref bean="cronTriggerRecycleService"/>
+				<ref bean="cronTriggerSynchronizationService" />
+			
+			</list>
+		</property>
+	</bean>
+	<bean id="activationServiceBean" class="com.ametis.cms.jms.ActivationService">	
+		<property name="dataSource" value="java:INSURANCEDB" />
+	</bean>
+	<bean id="recycleServiceBean" class="com.ametis.cms.jms.RecycleService">	
+		<property name="dataSource" value="java:INSURANCEDB" />
+	</bean>
+	<bean id="synchronizationServiceBean" class="com.ametis.cms.jms.SynchronizationService">	
+		<property name="dataSource" value="java:INSURANCEDB" />
+	</bean>
+	
+	<bean id="cronActivationService" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="activationServiceBean" />
+		<property name="targetMethod">
+			<value>activateMember</value>
+		</property>
+	</bean>
+	<bean id="cronTriggerActivationService" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="cronActivationService" />
+		</property>
+		<property name="cronExpression">
+-->
+			<!-- Diisi dengan cron yang mirip dengan cron pada *NIX / Linux.
+				Kita bisa ganti juga dengan property holder di Spring yang
+				telah kita definisikan, misalnya ${mail.cron}.
+				Dalam contoh di bawah ini, cron akan dijalankan
+				setiap hari pada pukul 6 sampai dengan pukul 10, menit 0 dan 30 
+				
+				cron:detik menit jam gaktau lagi
+			-->
+<!-- 
+			<value>0 49 9 * * ?</value>
+		</property>
+	</bean>
+	
+	
+	
+	<bean id="cronRecycleService" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="recycleServiceBean" />
+		<property name="targetMethod">
+			<value>recycleMember</value>
+		</property>
+	</bean>
+	<bean id="cronTriggerRecycleService" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="cronRecycleService" />
+		</property>
+		<property name="cronExpression">
+-->
+			<!-- Diisi dengan cron yang mirip dengan cron pada *NIX / Linux.
+				Kita bisa ganti juga dengan property holder di Spring yang
+				telah kita definisikan, misalnya ${mail.cron}.
+				Dalam contoh di bawah ini, cron akan dijalankan
+				setiap hari pada pukul 6 sampai dengan pukul 10, menit 0 dan 30 
+				
+				cron:detik menit jam gaktau lagi
+			-->
+<!-- 
+			<value>0 49 9 * * ?</value>
+		</property>
+	</bean>
+
+	<bean id="cronSynchronizationService" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="synchronizationServiceBean" />
+		<property name="targetMethod">
+			<value>synchronizeClaim</value>
+		</property>
+	</bean>
+	<bean id="cronTriggerSynchronizationService" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="cronSynchronizationService" />
+		</property>
+		<property name="cronExpression">
+
+	-->		<!-- Diisi dengan cron yang mirip dengan cron pada *NIX / Linux.
+				Kita bisa ganti juga dengan property holder di Spring yang
+				telah kita definisikan, misalnya ${mail.cron}.
+				Dalam contoh di bawah ini, cron akan dijalankan
+				setiap hari pada pukul 6 sampai dengan pukul 10, menit 0 dan 30 
+				
+				cron:detik menit jam gaktau lagi
+			-->
+<!-- 
+			<value>0 49 9 * * ?</value>
+		</property>
+	</bean>
+	-->
+
+	<bean id="ajaxRemoteController"
+		class="com.ametis.cms.web.ajax.AJAXRemoteController">
+		<property name="memberService">
+			<ref bean="memberService" />
+		</property>
+		<property name="diagnosisService">
+			<ref bean="diagnosisService" />
+		</property>
+		<property name="itemCategoryService">
+			<ref bean="itemCategoryService" />
+		</property>
+		<property name="dependentService">
+			<ref bean="dependentService" />
+		</property>
+	</bean>
+	
+	<bean id="ajaxClaimItemService" class="com.ametis.cms.web.ajax.AJAXClaimItemService">
+		<property name="claimItemService">
+			<ref bean="claimItemService" />
+		</property>
+		<property name="claimService">
+			<ref bean="claimService" />
+		</property>
+	</bean>
+	<bean id="ajaxMeasurementService" class="com.ametis.cms.web.ajax.AJAXMeasurementService">
+		<property name="itemMeasurementUnitService">
+			<ref bean="itemMeasurementUnitService" />
+		</property>
+	</bean>
+	<bean id="ajaxPaymentRecipientService" class="com.ametis.cms.web.ajax.AJAXPaymentRecipientService">
+		<property name="paymentRecipientService" >
+		<ref bean="paymentRecipientService" />
+		</property>
+		</bean>
+	
+	<bean id="ajaxDiagnosisController"
+		class="com.ametis.cms.web.ajax.AJAXDiagnosisController">
+		<property name="diagnosisService">
+			<ref bean="diagnosisService" />
+		</property>
+	</bean>
+	
+	<!-- 
+	
+		<bean id="jmsConnectionFactory" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName">
+			<value>java:/ConnectionFactory</value>
+		</property>
+		<property name="jndiEnvironment">
+			<props>
+				<prop key="java.naming.factory.initial">org.jnp.interfaces.NamingContextFactory</prop>
+				<prop key="java.naming.provider.url">jnp://localhost:1099</prop>
+				<prop key="java.naming.factory.url.pkgs">org.jboss.naming:org.jnp.interfaces</prop>
+			</props>
+		</property>
+		<property name="resourceRef">
+			<value>true</value>
+		</property>
+	</bean>
+
+	<bean id="jndiTemplate" class="org.springframework.jndi.JndiTemplate">
+		<property name="environment">
+			<props>
+				<prop key="java.naming.factory.initial">org.jnp.interfaces.NamingContextFactory</prop>
+				<prop key="java.naming.provider.url">localhost</prop>
+				<prop key="java.naming.factory.url.pkgs">org.jnp.interfaces:org.jboss.naming</prop>
+			</props>
+		</property>
+	</bean>
+	-->
+		<!-- buat expire reminder -->
+		 <!-- 
+	<bean id="activationServiceMessageListener" class="com.ametis.cms.jms.ActivationReceiver" >
+		<property name="config" ref="configBean" />
+		<property name="memberService">
+			<ref bean="memberService"/>
+		</property>
+	</bean>
+	<bean id="activationSender" class="com.ametis.cms.jms.ActivationSender">
+		<property name="jmsTemplate" ref="activationServiceJmsTemplate" />
+	</bean>
+
+	<bean id="activationServiceJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="jmsConnectionFactory" />
+		<property name="defaultDestination" ref="activationDestination" />
+	</bean>
+	<bean id="notifyServiceListenerContainer" class="org.springframework.jms.listener.SimpleMessageListenerContainer">
+		<property name="connectionFactory" ref="jmsConnectionFactory" />
+		<property name="destination" ref="activationDestination" />
+		<property name="messageListener" ref="activationServiceMessageListener" />
+	</bean>
+	<bean id="activationDestination" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiTemplate">
+			<ref bean="jndiTemplate" />
+		</property>
+		<property name="jndiName">
+			<value>queue/insuranceActivationQueue</value>
+		</property>
+	</bean> -->
+	
+</beans>

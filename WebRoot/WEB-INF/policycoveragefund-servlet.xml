@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="policyCoverageFundValidator" class="com.ametis.cms.web.validator.PolicyCoverageFundValidator"/>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/policycoveragefund">policyCoverageFundController</prop>
+				<prop key="/policycoveragefund-form">policyCoverageFundFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/policyCoverageFund/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="policyCoverageFundController" class="com.ametis.cms.web.controller.PolicyCoverageFundController">
+		<property name="policyService">
+			<ref bean="policyService" />
+		</property>
+		<property name="policyCoverageFundService">
+			<ref bean="policyCoverageFundService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+		<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+	</bean>
+
+	<bean name="policyCoverageFundFormController" class="com.ametis.cms.web.controller.PolicyCoverageFundFormController">
+		<property name="formView" value="editPolicyCoverageFund"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="policyCoverageFundValidator"/>
+		<property name="commandName" value="policyCoverageFundForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.PolicyCoverageFundForm" />
+
+		<property name="policyCoverageFundService">
+			<ref bean="policyCoverageFundService" />
+		</property>
+		<property name="caseCategoryService">
+			<ref bean="caseCategoryService" />
+		</property>
+		<property name="securityService" >
+			<ref bean="securityService" />
+		</property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+		
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.policyCoverageFund</value></property>
+	</bean>
+</beans>
+
+

@@ -1,0 +1,100 @@
+    html, body, div, dl, dt, dd, ul, ol, li, h1, h2, h3,
+    h4, h5, h6, pre, form, fieldset, input, textarea,
+    p, blockquote, th, td                   					{ margin:0;padding:0; }
+
+	/*
+	**** Header - Nav ******************************************
+	*/
+    #header ol, ul   											{ list-style:none; }
+	#header h3, #header span									{ font-family: 'Droid Sans',arial,serif; }
+	#header .nav-wrapper-left									{ height:135px;padding-left:10px; }
+	#header .nav-wrapper-right									{ height:135px;padding-right:10px; }
+
+	#header .nav 												{ width:980px;margin:0 auto;height:135px; }
+
+	#header .nav h3												{ color:#626161;text-align:center;margin:0;padding:0;line-height:20px;padding-top:10px;font-size:15px; }
+	#header .nav span											{ color: #009999;display:block;text-align:center;font-size:11px; }
+	#header .nav img											{ padding:30px 35px 10px 35px; }
+
+	#header .nav li 											{ position:relative;z-index:5;width:105px;height:135px;float:left;cursor:pointer;position:relative; }
+	#header .nav li:hover 										{  }
+	#header .nav li:hover h3									{ color:#ccc; }
+	#header .nav li.logo										{ width:240px; }
+
+	#header .nav li.selected									{ }
+	#header .nav li.selected .sel								{ display:block; }
+	#header .nav li.selected h3									{ position:relative;z-index:5;color:#fff;}
+	#header .nav li.selected span								{ position:relative;z-index:5;color: rgba(255, 255, 255, 0.3);}
+	#header .nav li.selected img								{ position:relative;z-index:5;}
+
+	#header .nav div.sel 										{ background:url('../images/back-menu-center-selected.png') no-repeat center bottom;position:absolute;top:0;left:0;right:0;bottom:0;z-index:0;display:none; }
+
+	#header #sub												{ width:960px;height:40px;margin:0 auto;padding:0; }
+	#header #sub-wrapper-left								    { background:url('../images/back-bar-header.png') repeat-x left top;height:40px;margin-bottom:10px; }
+	#header #sub-wrapper-right								    { }
+
+	#header #sub span 										    { display:block;height:40px;line-height:40px;font-size:12px;text-shadow:0 1px #fff;margin:0 10px;}
+
+	#header #sub a.selected 								    { background:#013854;background:rgba(0,0,0, 0.4);padding:0 10px;border-radius:4px;-moz-border-radius:4px;-webkit-border-radius:4px;text-shadow:none;font-size:12px;color:#fff;border-bottom:1px solid rgba(255,255,255, 0.4); }
+	#header #sub a.selected:link 							    { }
+	#header #sub a.selected:visited							    { }
+	#header #sub a.selected:hover 							    { background:#2c425f;color:#ccc; }
+	#header #sub a.selected:active 							    { }
+
+	#header #sub a 											    { color:#CCE5F2;color:rgba(255,255,255, 0.8);text-decoration:none;line-height:22px;font-family:'Pt Sans', arial, serif;font-size:12px;display:inline-block;margin-top:7px;height:24px;padding:0 5px; }
+	#header #sub a:link 										{ }
+	#header #sub a:visited 									    { }
+	#header #sub a:hover 									    { color:rgba(255,255,255, 1);}
+	#header #sub a:active 									    { }
+
+    /**************** Menu Slider Styles ******************/
+
+    .handle-container {
+        cursor:pointer;
+        display:block;
+        position:fixed;
+        margin-top:50px;
+        z-index:9999;
+    }
+
+    .handle-button-item span {
+        font-size:12px;
+        display:block;
+        width:100px;
+        height:30px;
+        background-color:#e7f0fe;
+        color:#000000;
+        text-align:center;
+        line-height:25px;
+        border-bottom-left-radius:5px;
+        border-bottom-right-radius:5px;
+        box-shadow: 2px 2px 2px #888;
+    }
+
+    .handle-button-item img {
+        padding-right: 10px;
+    }
+    
+    /*Handle container sidebar by aju :D*/
+    .handle-container-sidebar {
+        cursor:pointer;
+        display:block;
+    }
+
+    .handle-button-item-sidebar span {
+        font-size:12px;
+        display:block;
+        width:100px;
+        height:30px;
+        background-color:#e7f0fe;
+        color:#000000;
+        text-align:center;
+        line-height:25px;
+        border-bottom-left-radius:5px;
+        border-bottom-right-radius:5px;
+        box-shadow: 2px 2px 2px #888;
+    }
+
+    .handle-button-item-sidebar img {
+        padding-right: 10px;
+    }

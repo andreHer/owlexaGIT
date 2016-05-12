@@ -1,0 +1,64 @@
+#footer table {
+	font-size: 0.7em;
+	margin: auto;
+	width: 900px;
+}
+
+#header {
+	background: #024592;
+	color: #ffffff;
+	height: 80px;
+	margin-bottom: 20px;
+	position: relative;
+	padding: 10px 15px 15px 10px;
+}
+
+.box {
+	border-collapse: collapse;
+	margin: auto;
+	width: 800px;
+}
+
+.box td {
+	border-style: solid;
+	border-width: 1px;
+}
+
+.box td.center {
+	text-align: center;
+}
+
+.box td.right {
+	text-align: right;
+}
+
+.box th {
+	border-style: solid;
+	border-width: 1px;
+}
+
+.container {
+	width: 900px;
+}
+
+.content {
+	position: relative;
+	font-size: 10px;
+}
+
+.logo {
+	background: url("../images/logo.png");
+	background-repeat: no-repeat;
+	float: left;
+	height: 44px;
+	width: 150px;
+	z-index: 2;
+}
+
+.no-margin-left {
+	margin-left: 0;
+}
+
+.subheader {
+	float: left;
+}

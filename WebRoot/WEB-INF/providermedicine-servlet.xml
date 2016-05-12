@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="providerMedicineValidator" class="com.ametis.cms.web.validator.ProviderMedicineValidator"/>
+
+	
+ 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+ 	
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/providermedicine">providerMedicineController</prop>
+				<prop key="/providermedicine-form">providerMedicineFormController</prop>
+				<prop key="/providermedicine-upload">uploadProviderMedicineFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/providerMedicine/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="providerMedicineController" class="com.ametis.cms.web.controller.ProviderMedicineController">
+		<property name="providerService">
+			<ref bean="providerService" />
+		</property>
+		<property name="providerMedicineService">
+			<ref bean="providerMedicineService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+		<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+		<property name="memberService">
+			<ref bean="memberService" />
+		</property>
+		<property name="caseService">
+			<ref bean="myCaseService" />
+		</property>
+		
+		<property name="clientService">
+			<ref bean="clientService" />
+		</property>
+		<property name="memberGroupService">
+			<ref bean="memberGroupService" />
+		</property>
+		<property name="policyService">
+			<ref bean="policyService" />
+		</property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+	</bean>
+
+	<bean name="providerMedicineFormController" class="com.ametis.cms.web.controller.ProviderMedicineFormController">
+		<property name="formView" value="editProviderMedicine"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="providerMedicineValidator"/>
+		<property name="commandName" value="providerMedicineForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.ProviderMedicineForm" />
+
+		<property name="providerMedicineService">
+			<ref bean="providerMedicineService" />
+		</property>
+		<property name="securityService" >
+			<ref bean="securityService" />
+		</property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+			<property name="providerService">
+			<ref bean="providerService" />
+		</property>
+				<property name="medicineService">
+			<ref bean="medicineService" />
+		</property>
+			
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean name="uploadProviderMedicineFormController" class="com.ametis.cms.web.controller.ProviderMedicineFormController">
+		<property name="formView" value="uploadProviderMedicine"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="providerMedicineValidator"/>
+		<property name="commandName" value="providerMedicineForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.ProviderMedicineForm" />
+
+		<property name="providerMedicineService">
+			<ref bean="providerMedicineService" />
+		</property>
+		<property name="securityService" >
+			<ref bean="securityService" />
+		</property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+			<property name="providerService">
+			<ref bean="providerService" />
+		</property>
+				<property name="medicineService">
+			<ref bean="medicineService" />
+		</property>
+			
+<!-- foreign affairs end -->
+
+	</bean>
+	
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.providerMedicine</value></property>
+	</bean>
+</beans>
+
+

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="roleActionValidator" class="com.ametis.cms.web.validator.RoleActionValidator"/>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/roleaction">roleActionController</prop>
+				<prop key="/roleaction-form">roleActionFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/roleAction/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="roleActionController" class="com.ametis.cms.web.controller.RoleActionController">
+		<property name="roleActionService">
+			<ref bean="roleActionService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+	</bean>
+
+	<bean name="roleActionFormController" class="com.ametis.cms.web.controller.RoleActionFormController">
+		<property name="formView" value="editRoleAction"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="roleActionValidator"/>
+		<property name="commandName" value="roleActionForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.RoleActionForm" />
+
+		<property name="roleActionService">
+			<ref bean="roleActionService" />
+		</property>
+
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+			<property name="actionService">
+			<ref bean="actionService" />
+		</property>
+				<property name="roleService">
+			<ref bean="roleService" />
+		</property>
+			
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.roleAction</value></property>
+	</bean>
+</beans>
+
+

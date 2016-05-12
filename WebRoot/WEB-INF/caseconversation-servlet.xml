@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+
+	<bean id="caseConversationValidator"
+		class="com.ametis.cms.web.validator.CaseConversationValidator" />
+
+	<bean id="urlMapping"
+		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/caseconversation">
+					caseConversationController
+				</prop>
+				<prop key="/caseconversation-form">
+					caseConversationFormController
+				</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/caseConversation/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="caseConversationController"
+		class="com.ametis.cms.web.controller.CaseConversationController">
+		<property name="caseConversationService">
+			<ref bean="caseConversationService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+		<property name="caseService">
+			<ref bean="myCaseService" />
+		</property>
+		<property name="userService">
+			<ref bean="userService" />
+		</property>
+<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+	</bean>
+
+	<bean name="caseConversationFormController"
+		class="com.ametis.cms.web.controller.CaseConversationFormController">
+		<property name="formView" value="editCaseConversation" />
+		<property name="successView" value="ownerRedirect" />
+		<property name="validator" ref="caseConversationValidator" />
+		<property name="commandName" value="caseConversationForm" />
+		<property name="commandClass"
+			value="com.ametis.cms.web.form.CaseConversationForm" />
+<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+		<property name="caseConversationService">
+			<ref bean="caseConversationService" />
+		</property>
+		<property name="priorityService">
+			<ref bean="priorityService" />
+		</property>
+		<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+		<property name="userService">
+			<ref bean="userService" />
+		</property>
+
+		<property name="conversationCategoryService">
+			<ref bean="conversationCategoryService" />
+		</property>
+
+		<property name="caseService">
+			<ref bean="myCaseService" />
+		</property>
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+		<!-- foreign affairs -->
+
+
+		<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename">
+			<value>com.ametis.cms.messages.caseConversation</value>
+		</property>
+	</bean>
+</beans>
+
+

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.14" id="1">
+    <list-property name="configVars">
+        <structure>
+            <property name="name">__isdisplay__contactPerson_59</property>
+            <property name="value">Adhityo Priyambodo</property>
+        </structure>
+        <structure>
+            <property name="name">__isdisplay__halaman1Body_60</property>
+            <property name="value">a</property>
+        </structure>
+        <structure>
+            <property name="name">__isdisplay__groupName_85</property>
+            <property name="value">Ametis Technology</property>
+        </structure>
+        <structure>
+            <property name="name">__isdisplay__totalInvoiceValue_86</property>
+            <property name="value">1200000</property>
+        </structure>
+        <structure>
+            <property name="name">__isdisplay__totalValueString_87</property>
+            <property name="value">Satu Juta Dua Ratus Ribu Rupiah</property>
+        </structure>
+        <structure>
+            <property name="name">__isdisplay__nomorPolis_88</property>
+            <property name="value">123456</property>
+        </structure>
+        <structure>
+            <property name="name">__isdisplay__invoiceId_141</property>
+            <property name="value">1</property>
+        </structure>
+        <structure>
+            <property name="name">__isdisplay__coveragePeriode_146</property>
+            <property name="value">1</property>
+        </structure>
+        <structure>
+            <property name="name">__isdisplay__currency_147</property>
+            <property name="value">IDR</property>
+        </structure>
+        <structure>
+            <property name="name">__isdisplay__groupAddress_152</property>
+            <property name="value">Jln Raya Condet</property>
+        </structure>
+        <structure>
+            <property name="name">__isdisplay__excessPeriode_192</property>
+            <property name="value">123</property>
+        </structure>
+        <structure>
+            <property name="name">groupName_85</property>
+            <property name="value">Ametis Technology</property>
+        </structure>
+        <structure>
+            <property name="name">groupName_85_type</property>
+            <property name="value">string</property>
+        </structure>
+        <structure>
+            <property name="name">coveragePeriode_146</property>
+            <property name="value">1</property>
+        </structure>
+        <structure>
+            <property name="name">coveragePeriode_146_type</property>
+            <property name="value">string</property>
+        </structure>
+        <structure>
+            <property name="name">invoiceId_141</property>
+            <property name="value">1</property>
+        </structure>
+        <structure>
+            <property name="name">invoiceId_141_type</property>
+            <property name="value">string</property>
+        </structure>
+        <structure>
+            <property name="name">excessPeriode_192</property>
+            <property name="value">123</property>
+        </structure>
+        <structure>
+            <property name="name">excessPeriode_192_type</property>
+            <property name="value">string</property>
+        </structure>
+        <structure>
+            <property name="name">nomorPolis_88</property>
+            <property name="value">123456</property>
+        </structure>
+        <structure>
+            <property name="name">nomorPolis_88_type</property>
+            <property name="value">string</property>
+        </structure>
+        <structure>
+            <property name="name">totalInvoiceValue_86</property>
+            <property name="value">1200000</property>
+        </structure>
+        <structure>
+            <property name="name">totalInvoiceValue_86_type</property>
+            <property name="value">string</property>
+        </structure>
+        <structure>
+            <property name="name">groupAddress_152</property>
+            <property name="value">Jln Raya Condet</property>
+        </structure>
+        <structure>
+            <property name="name">groupAddress_152_type</property>
+            <property name="value">string</property>
+        </structure>
+        <structure>
+            <property name="name">halaman1Body_60</property>
+            <property name="value">a</property>
+        </structure>
+        <structure>
+            <property name="name">halaman1Body_60_type</property>
+            <property name="value">string</property>
+        </structure>
+        <structure>
+            <property name="name">contactPerson_59</property>
+            <property name="value">Adhityo Priyambodo</property>
+        </structure>
+        <structure>
+            <property name="name">contactPerson_59_type</property>
+            <property name="value">string</property>
+        </structure>
+        <structure>
+            <property name="name">currency_147</property>
+            <property name="value">IDR</property>
+        </structure>
+        <structure>
+            <property name="name">currency_147_type</property>
+            <property name="value">string</property>
+        </structure>
+        <structure>
+            <property name="name">totalValueString_87</property>
+            <property name="value">Satu Juta Dua Ratus Ribu Rupiah</property>
+        </structure>
+        <structure>
+            <property name="name">totalValueString_87_type</property>
+            <property name="value">string</property>
+        </structure>
+    </list-property>
+    <styles>
+        <style name="crosstab-cell" id="2">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+        <style name="crosstab" id="3">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+    </styles>
+</report>

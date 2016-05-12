@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="diagnosisValidator" class="com.ametis.cms.web.validator.DiagnosisValidator"/>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/diagnosis">diagnosisController</prop>
+				<prop key="/diagnosis-form">diagnosisFormController</prop>
+				<prop key="/diagnosis-lookup">ajaxDiagnosisServlet</prop>
+				<prop key="/diagnosishealthreport">diagnosisController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/diagnosis/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="ajaxDiagnosisServlet"  class="com.ametis.cms.web.ajax.AJAXDiagnosisServlet">
+		<property name="diagnosisService">
+			<ref bean="diagnosisService"/>
+		</property>
+	</bean>
+	<bean name="diagnosisController" class="com.ametis.cms.web.controller.DiagnosisController">
+		<property name="diagnosisService">
+			<ref bean="diagnosisService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+        <property name="memberService">
+			<ref bean="memberService" />
+		</property>
+		<property name="clientService">
+			<ref bean="clientService" />
+		</property>
+			<property name="memberGroupService">
+			<ref bean="memberGroupService" />
+		</property>
+	</bean>
+
+	<bean name="diagnosisFormController" class="com.ametis.cms.web.controller.DiagnosisFormController">
+		<property name="formView" value="editDiagnosis"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="diagnosisValidator"/>
+		<property name="commandName" value="diagnosisForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.DiagnosisForm" />
+
+		<property name="diagnosisService">
+			<ref bean="diagnosisService" />
+		</property>
+
+<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+		
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.diagnosis</value></property>
+	</bean>
+</beans>
+
+

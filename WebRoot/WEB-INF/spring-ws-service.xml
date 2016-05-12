@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <import resource="classpath:org/codehaus/xfire/spring/xfire.xml"/>
+    
+    <bean id="jaxbTypeMappingRegistry" class="org.codehaus.xfire.jaxb2.JaxbTypeRegistry" 
+              init-method="createDefaultMappings" singleton="true"/>
+              
+    <bean id="webAnnotations" class="org.codehaus.xfire.annotations.jsr181.Jsr181WebAnnotations"/>
+    
+    <bean id="handlerMapping" class="org.codehaus.xfire.spring.remoting.Jsr181HandlerMapping">
+        <property name="typeMappingRegistry">
+            <ref bean="jaxbTypeMappingRegistry"/>
+        </property>
+        <property name="xfire">
+            <ref bean="xfire"/>
+        </property>
+        <property name="webAnnotations">
+            <ref bean="webAnnotations"/>
+        </property>
+    </bean>
+    
+    <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="urlMap">
+            <map>
+                <entry key="/">
+                    <ref bean="handlerMapping"/>
+                </entry>
+            </map>
+        </property>
+    </bean>
+    
+
+	<bean id="diagnosisWebService" class="com.ametis.cms.webservice.DiagnosisWebServiceImpl">
+		<property name="diagnosisService">
+			<ref bean="diagnosisService" />
+		</property>
+		<property name="memberDiagnosisService">
+			<ref bean="memberDiagnosisService" />
+		</property>
+	</bean>
+    <bean id="memberWebService" class="com.ametis.cms.webservice.MemberWebServiceImpl">
+		<property name="memberBenefitService">
+			<ref bean="memberBenefitService" />
+		</property>
+		<property name="policyProviderService">
+			<ref bean="policyProviderService" />
+		</property>
+		<property name="memberProductService">
+			<ref bean="memberProductService" />
+		</property>
+		<property name="memberService">
+			<ref bean="memberService" />
+		</property>
+		<property name="memberClausulService">
+			<ref bean="memberClausulService" />
+		</property>
+		<property name="diagnosisService">
+			<ref bean="diagnosisService" />
+		</property>
+		<property name="caseCategoryService">
+			<ref bean="caseCategoryService" />
+		</property>
+		<property name="clientService">
+			<ref bean="clientService" />
+		</property>
+		<property name="memberGroupService">
+			<ref bean="memberGroupService" />
+		</property>
+		<property name="providerService">
+			<ref bean="providerService" />
+		</property>
+		<property name="memberProviderService">
+			<ref bean="memberProviderService" />
+		</property>
+		<property name="clientProviderService">
+			<ref bean="clientProviderService" />
+		</property>
+		<property name="memberGroupProviderService">
+			<ref bean="memberGroupProviderService" />
+		</property>
+		<property name="policyService">
+			<ref bean="policyService" />
+		</property>
+		<property name="caseService">
+			<ref bean="myCaseService" />
+		</property>
+		<property name="memberCardService">
+			<ref bean="memberElectronicCardService" />
+		</property>
+		<property name="policyClausulService">
+			<ref bean="policyClausulService" />
+		</property>
+	</bean>
+	
+	<bean id="userWebService" class="com.ametis.cms.webservice.UserWebServiceImpl">
+		<property name="userService">
+			<ref bean="userService" />
+		</property>
+	</bean>
+	<bean id="batchClaimWebService" class="com.ametis.cms.webservice.BatchClaimWebServiceImpl">
+		<property name="batchClaimService">
+			<ref bean="batchClaimService" />
+		</property>
+		<property name="paymentService">
+			<ref bean="paymentService" />
+		</property>
+	</bean>
+	<bean id="providerWebService" class="com.ametis.cms.webservice.ProviderWebServiceImpl">
+		<property name="providerService">
+			<ref bean="providerService" />
+		</property>
+		
+	</bean>
+	<bean id="edcLogWebService" class="com.ametis.cms.webservice.EDCTransactionLogWebServiceImpl">
+		<property name="edcLogService">
+			<ref bean="edcTransactionLogService" />
+		</property>
+	</bean>
+	<bean id="reportWebService" class="com.ametis.cms.webservice.ReportWebServiceImpl">
+		<property name="claimItemService">
+			<ref bean="claimItemService" />
+		</property>
+		<property name="claimService">
+			<ref bean="claimService" />
+		</property>
+		<property name="claimReportService">
+			<ref bean="claimReportService" />
+		</property>
+		<property name="memberService">
+			<ref bean="memberService"/>
+		</property>
+		<property name="memberDao">
+			<ref bean="memberDao" />
+		</property>
+		<property name="memberGroupService">
+			<ref bean="memberGroupService" />
+		</property>
+		<property name="claimItemDao">
+			<ref bean="claimItemDao" />
+		</property>
+		<property name="reportRequestService">
+			<ref bean="reportRequestService" />
+		</property>
+		
+	</bean>
+	<bean id="claimWebService" class="com.ametis.cms.webservice.ClaimWebServiceImpl">	
+		<property name="policyService">
+			<ref bean="policyService" />
+		</property>
+		<property name="clientProviderService">
+			<ref bean="clientProviderService" />
+		</property>
+		<property name="memberGroupProviderService">
+			<ref bean="memberGroupProviderService" />
+		</property>
+		<property name="memberProviderService">
+			<ref bean="memberProviderService" />
+		</property>
+		<property name="claimService">
+			<ref bean="claimService" />
+		</property>
+		<property name="claimItemService">
+			<ref bean="claimItemService" />
+		</property>
+		<property name="caseCategoryService">
+			<ref bean="caseCategoryService" />
+		</property>
+		<property name="clientService">
+			<ref bean="clientService" />
+		</property>
+		<property name="diagnosisService">
+			<ref bean="diagnosisService" />
+		</property>
+		<property name="batchClaimService">
+			<ref bean="batchClaimService" />
+		</property>
+		<property name="memberGroupService">
+			<ref bean="memberGroupService" />
+		</property>
+		<property name="itemCategoryService">
+			<ref bean="itemCategoryService" />
+		</property>
+		<property name="outstandingClaimService">
+			<ref bean="outstandingClaimService" />
+		</property>
+		<property name="outstandingClaimItemService">
+			<ref bean="outstandingClaimItemService" />
+		</property>
+		<property name="memberBenefitService">
+			<ref bean="memberBenefitService" />
+		</property>
+		<property name="memberProductService">
+			<ref bean="memberProductService" />
+		</property>
+		<property name="itemService">
+			<ref bean="itemService" />
+		</property>
+		<property name="memberService">
+			<ref bean="memberService" />
+		</property>
+		<property name="providerService">
+			<ref bean="providerService" />
+		</property>
+		<property name="memberDiagnosisService">
+			<ref bean="memberDiagnosisService" />
+		</property>
+		<property name="configurationService">
+			<ref bean="configurationService" />
+		</property>
+	</bean>
+</beans>

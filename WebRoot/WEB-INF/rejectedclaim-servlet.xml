@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="rejectedClaimValidator" class="com.ametis.cms.web.validator.RejectedClaimValidator"/>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/rejectedclaim">rejectedClaimController</prop>
+				<prop key="/rejectedclaim-form">rejectedClaimFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/rejectedClaim/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="rejectedClaimController" class="com.ametis.cms.web.controller.RejectedClaimController">
+		<property name="rejectedClaimService">
+			<ref bean="rejectedClaimService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		<property name="claimService">
+			<ref bean="claimService"/> 
+		</property>
+		<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+        <property name="batchClaimService">
+        	<ref bean="batchClaimService" />
+        </property>
+	</bean>
+
+	<bean name="rejectedClaimFormController" class="com.ametis.cms.web.controller.RejectedClaimFormController">
+		<property name="formView" value="editRejectedClaim"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="rejectedClaimValidator"/>
+		<property name="commandName" value="rejectedClaimForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.RejectedClaimForm" />
+<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+		<property name="rejectedClaimService">
+			<ref bean="rejectedClaimService" />
+		</property>
+		<property name="rejectCategoryService">
+			<ref bean="rejectCategoryService"/>
+		</property>
+		<property name="claimService">
+			<ref bean="claimService"/>
+		</property>
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+		
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.rejectedClaim</value></property>
+	</bean>
+</beans>
+
+

@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="configurationValidator" class="com.ametis.cms.web.validator.ConfigurationValidator"/>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/configuration">configurationController</prop>
+				<prop key="/configuration-form">configurationFormController</prop>
+				<prop key="/riskconfig-form">riskConfigFormController</prop>
+				<prop key="/numberconfig-form">numberConfigFormController</prop>
+				<prop key="/providerconfig-form">providerConfigFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/configuration/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="configurationController" class="com.ametis.cms.web.controller.ConfigurationController">
+		<property name="configurationService">
+			<ref bean="configurationService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+		<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+	</bean>
+
+	<bean name="configurationFormController" class="com.ametis.cms.web.controller.ConfigurationFormController">
+		<property name="formView" value="editConfiguration"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="configurationValidator"/>
+		<property name="commandName" value="configurationForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.ConfigurationForm" />
+
+		<property name="configurationService">
+			<ref bean="configurationService" />
+		</property>
+		<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+        <property name="exportImportTemplateService">
+            <ref bean="exportImportTemplateService" />
+        </property>
+        <property name="clientService">
+        	<ref bean="clientService" />
+        </property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+		
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean name="numberConfigFormController" class="com.ametis.cms.web.controller.ConfigurationFormController">
+		<property name="formView" value="editNumberConfig"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="configurationValidator"/>
+		<property name="commandName" value="configurationForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.ConfigurationForm" />
+
+		<property name="configurationService">
+			<ref bean="configurationService" />
+		</property>
+<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+        <property name="clientService">
+        	<ref bean="clientService" />
+        </property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+		
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean name="riskConfigFormController" class="com.ametis.cms.web.controller.ConfigurationFormController">
+		<property name="formView" value="editRiskConfig"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="configurationValidator"/>
+		<property name="commandName" value="configurationForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.ConfigurationForm" />
+
+		<property name="configurationService">
+			<ref bean="configurationService" />
+		</property>
+<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+        <property name="clientService">
+        	<ref bean="clientService" />
+        </property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+		
+<!-- foreign affairs end -->
+
+	</bean>
+	
+	<bean name="providerConfigFormController" class="com.ametis.cms.web.controller.ConfigurationFormController">
+		<property name="formView" value="editProviderConfig"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="configurationValidator"/>
+		<property name="commandName" value="configurationForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.ConfigurationForm" />
+
+		<property name="configurationService">
+			<ref bean="configurationService" />
+		</property>
+<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+        <property name="clientService">
+        	<ref bean="clientService" />
+        </property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+		
+<!-- foreign affairs end -->
+
+	</bean>
+	
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.configuration</value></property>
+	</bean>
+</beans>
+
+

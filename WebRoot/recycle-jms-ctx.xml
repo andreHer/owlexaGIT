@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<!--  start jms -->
+	<bean id="jmsConnectionFactory" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName">
+			<value>java:/ConnectionFactory</value>
+		</property>
+		<property name="jndiEnvironment">
+			<props>
+				<prop key="java.naming.factory.initial">org.jnp.interfaces.NamingContextFactory</prop>
+				<prop key="java.naming.provider.url">jnp://localhost:1099</prop>
+				<prop key="java.naming.factory.url.pkgs">org.jboss.naming:org.jnp.interfaces</prop>
+			</props>
+		</property>
+		<property name="resourceRef">
+			<value>true</value>
+		</property>
+	</bean>
+
+	<bean id="jndiTemplate" class="org.springframework.jndi.JndiTemplate">
+		<property name="environment">
+			<props>
+				<prop key="java.naming.factory.initial">org.jnp.interfaces.NamingContextFactory</prop>
+				<prop key="java.naming.provider.url">localhost</prop>
+				<prop key="java.naming.factory.url.pkgs">org.jnp.interfaces:org.jboss.naming</prop>
+			</props>
+		</property>
+	</bean>
+	
+		<!-- buat expire reminder -->
+	<bean id="recycleServiceMessageListener" class="com.ametis.cms.jms.RecycleReceiver" >
+<!--		<property name="config" ref="configBean" />-->
+		<property name="dataSource" value="java:INSURANCEDB" />
+	
+	</bean>
+	<bean id="recycleSender" class="com.ametis.cms.jms.RecycleSender">
+		<property name="jmsTemplate" ref="recycleServiceJmsTemplate" />
+	</bean>
+
+	<bean id="recycleServiceJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="jmsConnectionFactory" />
+		<property name="defaultDestination" ref="recycleDestination" />
+	</bean>
+	<bean id="recycleServiceListenerContainer" class="org.springframework.jms.listener.SimpleMessageListenerContainer">
+		<property name="connectionFactory" ref="jmsConnectionFactory" />
+		<property name="destination" ref="recycleDestination" />
+		<property name="messageListener" ref="recycleServiceMessageListener" />
+	</bean>
+	<bean id="recycleDestination" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiTemplate">
+			<ref bean="jndiTemplate" />
+		</property>
+		<property name="jndiName">
+			<value>queue/insuranceRecycleQueue</value>
+		</property>
+	</bean>
+	<!-- end of expire reminder -->
+	
+	<!--  end jms -->
+</beans>

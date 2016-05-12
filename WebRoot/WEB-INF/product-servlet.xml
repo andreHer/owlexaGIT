@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="productValidator" class="com.ametis.cms.web.validator.ProductValidator"/>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/product">productController</prop>
+				<prop key="/product-form">productFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/product/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="productController" class="com.ametis.cms.web.controller.ProductController">
+		<property name="policyService">
+			<ref bean="policyService" />
+		</property>
+		<property name="clientService">
+			<ref bean="clientService" />
+		</property>
+		<property name="productLayerLimitService">
+			<ref bean="productLayerLimitService" />
+		</property>
+		<property name="productService">
+			<ref bean="productService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+		<property name="caseCategoryService">
+			<ref bean="caseCategoryService" />
+		</property>
+		<property name="userService">
+			<ref bean="userService" />
+		</property>
+		<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+	</bean>
+
+	<bean name="productFormController" class="com.ametis.cms.web.controller.ProductFormController">
+		<property name="formView" value="editProduct"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="productValidator"/>
+		<property name="commandName" value="productForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.ProductForm" />
+<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+		<property name="productService">
+			<ref bean="productService" />
+		</property>
+		<property name="policyService">
+			<ref bean="policyService" />
+		</property>
+		<property name="currencyService">
+			<ref bean="currencyService" />
+		</property>
+		<property name="caseCategoryService">
+			<ref bean="caseCategoryService" />
+		</property>
+		<property name="cardTypeService">
+			<ref bean="cardTypeService" />
+		</property>
+
+<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+			<property name="clientService">
+			<ref bean="clientService" />
+		</property>
+				<property name="productLimitTypeService">
+			<ref bean="productLimitTypeService" />
+		</property>
+				<property name="productTypeService">
+			<ref bean="productTypeService" />
+		</property>
+			
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.product</value></property>
+	</bean>
+</beans>
+
+

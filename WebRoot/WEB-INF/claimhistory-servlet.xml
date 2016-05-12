@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="claimHistoryValidator" class="com.ametis.cms.web.validator.ClaimHistoryValidator"/>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/claimhistory">claimHistoryController</prop>
+				<prop key="/claimhistory-form">claimHistoryFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/claimHistory/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="claimHistoryController" class="com.ametis.cms.web.controller.ClaimHistoryController">
+		<property name="claimHistoryService">
+			<ref bean="claimHistoryService" />
+		</property>
+		<property name="claimService">
+			<ref bean="claimService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+		<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+	</bean>
+
+	<bean name="claimHistoryFormController" class="com.ametis.cms.web.controller.ClaimHistoryFormController">
+		<property name="formView" value="editClaimHistory"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="claimHistoryValidator"/>
+		<property name="commandName" value="claimHistoryForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.ClaimHistoryForm" />
+
+		<property name="claimHistoryService">
+			<ref bean="claimHistoryService" />
+		</property>
+		<property name="securityService" >
+			<ref bean="securityService" />
+		</property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+			<property name="claimService">
+			<ref bean="claimService" />
+		</property>
+			
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.claimHistory</value></property>
+	</bean>
+</beans>
+
+

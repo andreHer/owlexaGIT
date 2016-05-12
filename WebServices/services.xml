@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans >	
+	<service xmlns="http://xfire.codehaus.org/config/1.0">
+		<name>ClaimWebService</name>		
+		<serviceBean>#claimWebService</serviceBean>		
+		<serviceClass>
+			com.ametis.cms.webservice.IClaimWebService
+		</serviceClass>
+		<implementationClass>
+			com.ametis.cms.webservice.ClaimWebServiceImpl
+		</implementationClass>
+		<style>wrapped</style>
+		<use>literal</use>
+		<scope>application</scope>
+	</service>
+	<service xmlns="http://xfire.codehaus.org/config/1.0">
+		<name>PolicyWebService</name>		
+		<serviceBean>#policyWebService</serviceBean>		
+		<serviceClass>
+			com.ametis.cms.webservice.IPolicyWebService
+		</serviceClass>
+		<implementationClass>
+			com.ametis.cms.webservice.PolicyWebServiceImpl
+		</implementationClass>
+		<style>wrapped</style>
+		<use>literal</use>
+		<scope>application</scope>
+	</service>
+	<service xmlns="http://xfire.codehaus.org/config/1.0">
+		<name>MemberWebService</name>
+		<serviceBean>#memberWebService</serviceBean>
+		<serviceClass>
+			com.ametis.cms.webservice.IMemberWebService
+		</serviceClass>
+		<implementationClass>
+			com.ametis.cms.webservice.MemberWebServiceImpl
+		</implementationClass>
+		<style>wrapped</style>
+		<use>literal</use>
+		<scope>application</scope>
+	</service>
+	<service xmlns="http://xfire.codehaus.org/config/1.0">
+		<name>UserWebService</name>
+		<serviceBean>#userWebService</serviceBean>
+		<serviceClass>
+			com.ametis.cms.webservice.IUserWebService
+		</serviceClass>
+		<implementationClass>
+			com.ametis.cms.webservice.UserWebServiceImpl
+		</implementationClass>
+		<style>wrapped</style>
+		<use>literal</use>
+		<scope>application</scope>
+	</service>
+
+	<service xmlns="http://xfire.codehaus.org/config/1.0">
+		<name>ProviderWebService</name>
+		<serviceBean>#providerWebService</serviceBean>
+		<serviceClass>
+			com.ametis.cms.webservice.IProviderWebService
+		</serviceClass>
+		<implementationClass>
+			com.ametis.cms.webservice.ProviderWebServiceImpl
+		</implementationClass>
+		<style>wrapped</style>
+		<use>literal</use>
+		<scope>application</scope>
+	</service>
+	
+	<service xmlns="http://xfire.codehaus.org/config/1.0">
+		<name>EDCTransactionLogWebService</name>
+		<serviceBean>#edcLogWebService</serviceBean>
+		<serviceClass>
+			com.ametis.cms.webservice.IEDCTransactionLogWebService
+		</serviceClass>
+		<implementationClass>
+			com.ametis.cms.webservice.EDCTransactionLogWebServiceImpl
+		</implementationClass>
+		<style>wrapped</style>
+		<use>literal</use>
+		<scope>application</scope>
+	</service>
+	<service xmlns="http://xfire.codehaus.org/config/1.0">
+		<name>DiagnosisWebService</name>
+		<serviceBean>#diagnosisWebService</serviceBean>
+		<serviceClass>
+			com.ametis.cms.webservice.IDiagnosisWebService
+		</serviceClass>
+		<implementationClass>
+			com.ametis.cms.webservice.DiagnosisWebServiceImpl
+		</implementationClass>
+		<style>wrapped</style>
+		<use>literal</use>
+		<scope>application</scope>
+	</service >	
+	<service xmlns="http://xfire.codehaus.org/config/1.0">
+		<name>ConnectorWebService</name>
+		<serviceBean>#connectorWebService</serviceBean>
+		<serviceClass>
+			com.ametis.cms.webservice.IConnectorWebService
+		</serviceClass>
+		<implementationClass>
+			com.ametis.cms.webservice.ConnectorWebServiceImpl
+		</implementationClass>
+		<style>wrapped</style>
+		<use>literal</use>
+		<scope>application</scope>
+	</service>
+	<service xmlns="http://xfire.codehaus.org/config/1.0">
+		<name>ClientWebService</name>
+		<serviceBean>#clientWebService</serviceBean>
+		<serviceClass>
+			com.ametis.cms.webservice.IClientWebService
+		</serviceClass>
+		<implementationClass>
+			com.ametis.cms.webservice.ClientWebServiceImpl
+		</implementationClass>
+		<style>wrapped</style>
+		<use>literal</use>
+		<scope>application</scope>
+	</service>
+	<!-- Add by aju on 20150416, for encryption things fufufu -->
+	<service xmlns="http://xfire.codehaus.org/config/1.0">
+		<name>SecurityWebService</name>
+		<serviceBean>#securityWebService</serviceBean>
+		<serviceClass>
+			com.ametis.cms.webservice.ISecurityWebService
+		</serviceClass>
+		<implementationClass>
+			com.ametis.cms.webservice.SecurityWebServiceImpl
+		</implementationClass>
+		<style>wrapped</style>
+		<use>literal</use>
+		<scope>application</scope>
+	</service>
+	<!-- Add by aju on 20150722, for mobile application fufufu -->
+	<service xmlns="http://xfire.codehaus.org/config/1.0">
+		<name>MobileApplicationWebService</name>
+		<serviceBean>#mobileApplicationWebService</serviceBean>
+		<serviceClass>
+			com.ametis.cms.webservice.IMobileApplicationWebService
+		</serviceClass>
+		<implementationClass>
+			com.ametis.cms.webservice.MobileApplicationWebServiceImpl
+		</implementationClass>
+		<style>wrapped</style>
+		<use>literal</use>
+		<scope>application</scope>
+	</service>
+	<service xmlns="http://xfire.codehaus.org/config/1.0">
+		<name>ContactPersonWebService</name>
+		<serviceBean>#contactPersonWebService</serviceBean>
+		<serviceClass>
+			com.ametis.cms.webservice.IContactPersonWebService
+		</serviceClass>
+		<implementationClass>
+			com.ametis.cms.webservice.ContactPersonWebServiceImpl
+		</implementationClass>
+		<style>wrapped</style>
+		<use>literal</use>
+		<scope>application</scope>
+	</service>
+	<service xmlns="http://xfire.codehaus.org/config/1.0">
+		<name>CaseWebService</name>
+		<serviceBean>#caseWebService</serviceBean>
+		<serviceClass>
+			com.ametis.cms.webservice.ICaseWebService
+		</serviceClass>
+		<implementationClass>
+			com.ametis.cms.webservice.CaseWebServiceImpl
+		</implementationClass>
+		<style>wrapped</style>
+		<use>literal</use>
+		<scope>application</scope>
+	</service>
+	<service xmlns="http://xfire.codehaus.org/config/1.0">
+		<name>CRMWebService</name>
+		<serviceBean>#crmWebService</serviceBean>
+		<serviceClass>
+			com.ametis.cms.webservice.ICRMWebService
+		</serviceClass>
+		<implementationClass>
+			com.ametis.cms.webservice.CRMWebServiceImpl
+		</implementationClass>
+		<style>wrapped</style>
+		<use>literal</use>
+		<scope>application</scope>
+	</service>
+	
+	<service xmlns="http://xfire.codehaus.org/config/1.0">
+		<name>ClaimExchangeWebService</name>		
+		<serviceBean>#claimExchangeWebService</serviceBean>		
+		<serviceClass>
+			com.ametis.cms.webservice.IClaimExchangeWebService
+		</serviceClass>
+		<implementationClass>
+			com.ametis.cms.webservice.ClaimExchangeWebServiceImpl
+		</implementationClass>
+		<style>wrapped</style>
+		<use>literal</use>
+		<scope>application</scope>
+	</service>
+</beans>

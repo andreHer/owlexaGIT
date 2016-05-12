@@ -1,0 +1,1867 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.14" id="1">
+    <property name="createdBy">MyEclipse Report Designer Version 1.0</property>
+    <property name="units">in</property>
+    <property name="comments">Copyright (c) 2007 &lt;&lt;Your Company Name here>></property>
+    <html-property name="description">Creates a blank report with no predefined content.</html-property>
+    <text-property name="displayName">Blank Report</text-property>
+    <property name="iconFile">/templates/blank_report.gif</property>
+    <parameters>
+        <scalar-parameter name="contactPerson" id="59">
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="halaman1Body" id="60">
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="groupName" id="85">
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="totalInvoiceValue" id="86">
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="totalValueString" id="87">
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="nomorPolis" id="88">
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="invoiceId" id="141">
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="coveragePeriode" id="146">
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="currency" id="147">
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="groupAddress" id="152">
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="excessPeriode" id="192">
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+    </parameters>
+    <data-sources>
+        <oda-data-source extensionID="com.genuitec.eclipse.reporting.oda" name="Data Source" id="52">
+            <property name="meDriver">com.mysql.jdbc.Driver</property>
+            <property name="odaDriverClass">com.mysql.jdbc.Driver</property>
+            <property name="odaURL">jdbc:mysql://localhost:3306/relife</property>
+            <property name="odaUser">root</property>
+            <encrypted-property name="odaPassword">cm9vdA==</encrypted-property>
+        </oda-data-source>
+    </data-sources>
+    <data-sets>
+        <oda-data-set extensionID="com.genuitec.eclipse.reporting.oda.dataSet" name="Data Set" id="53">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">excess_charge_id</property>
+                    <property name="displayName">excess_charge_id</property>
+                </structure>
+                <structure>
+                    <property name="columnName">created_time</property>
+                    <property name="displayName">created_time</property>
+                </structure>
+                <structure>
+                    <property name="columnName">created_by</property>
+                    <property name="displayName">created_by</property>
+                </structure>
+                <structure>
+                    <property name="columnName">deleted_time</property>
+                    <property name="displayName">deleted_time</property>
+                </structure>
+                <structure>
+                    <property name="columnName">deleted_by</property>
+                    <property name="displayName">deleted_by</property>
+                </structure>
+                <structure>
+                    <property name="columnName">modified_time</property>
+                    <property name="displayName">modified_time</property>
+                </structure>
+                <structure>
+                    <property name="columnName">modified_by</property>
+                    <property name="displayName">modified_by</property>
+                </structure>
+                <structure>
+                    <property name="columnName">deleted_status</property>
+                    <property name="displayName">deleted_status</property>
+                </structure>
+                <structure>
+                    <property name="columnName">reminder_counter</property>
+                    <property name="displayName">reminder_counter</property>
+                </structure>
+                <structure>
+                    <property name="columnName">remarks</property>
+                    <property name="displayName">remarks</property>
+                </structure>
+                <structure>
+                    <property name="columnName">excess_charge_value</property>
+                    <property name="displayName">excess_charge_value</property>
+                </structure>
+                <structure>
+                    <property name="columnName">excess_charge_time</property>
+                    <property name="displayName">excess_charge_time</property>
+                </structure>
+                <structure>
+                    <property name="columnName">last_reminder_time</property>
+                    <property name="displayName">last_reminder_time</property>
+                </structure>
+                <structure>
+                    <property name="columnName">next_reminder_time</property>
+                    <property name="displayName">next_reminder_time</property>
+                </structure>
+                <structure>
+                    <property name="columnName">excess_charge_number</property>
+                    <property name="displayName">excess_charge_number</property>
+                </structure>
+                <structure>
+                    <property name="columnName">member_id</property>
+                    <property name="displayName">member_id</property>
+                </structure>
+                <structure>
+                    <property name="columnName">claim_id</property>
+                    <property name="displayName">claim_id</property>
+                </structure>
+                <structure>
+                    <property name="columnName">excess_charge_status</property>
+                    <property name="displayName">excess_charge_status</property>
+                </structure>
+                <structure>
+                    <property name="columnName">excess_number_counter</property>
+                    <property name="displayName">excess_number_counter</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">excess_charge_id</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">created_time</property>
+                        <property name="dataType">date-time</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">created_by</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">deleted_time</property>
+                        <property name="dataType">date-time</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">deleted_by</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">modified_time</property>
+                        <property name="dataType">date-time</property>
+                    </structure>
+                    <structure>
+                        <property name="position">7</property>
+                        <property name="name">modified_by</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">8</property>
+                        <property name="name">deleted_status</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">9</property>
+                        <property name="name">reminder_counter</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">10</property>
+                        <property name="name">remarks</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">11</property>
+                        <property name="name">excess_charge_value</property>
+                        <property name="dataType">float</property>
+                    </structure>
+                    <structure>
+                        <property name="position">12</property>
+                        <property name="name">excess_charge_time</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">13</property>
+                        <property name="name">last_reminder_time</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">14</property>
+                        <property name="name">next_reminder_time</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">15</property>
+                        <property name="name">excess_charge_number</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">16</property>
+                        <property name="name">member_id</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">17</property>
+                        <property name="name">claim_id</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">18</property>
+                        <property name="name">excess_charge_status</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">19</property>
+                        <property name="name">excess_number_counter</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">Data Source</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">excess_charge_id</property>
+                    <property name="nativeName">excess_charge_id</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">created_time</property>
+                    <property name="nativeName">created_time</property>
+                    <property name="dataType">date-time</property>
+                    <property name="nativeDataType">93</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">created_by</property>
+                    <property name="nativeName">created_by</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">deleted_time</property>
+                    <property name="nativeName">deleted_time</property>
+                    <property name="dataType">date-time</property>
+                    <property name="nativeDataType">93</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">deleted_by</property>
+                    <property name="nativeName">deleted_by</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">modified_time</property>
+                    <property name="nativeName">modified_time</property>
+                    <property name="dataType">date-time</property>
+                    <property name="nativeDataType">93</property>
+                </structure>
+                <structure>
+                    <property name="position">7</property>
+                    <property name="name">modified_by</property>
+                    <property name="nativeName">modified_by</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">8</property>
+                    <property name="name">deleted_status</property>
+                    <property name="nativeName">deleted_status</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">9</property>
+                    <property name="name">reminder_counter</property>
+                    <property name="nativeName">reminder_counter</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">10</property>
+                    <property name="name">remarks</property>
+                    <property name="nativeName">remarks</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">11</property>
+                    <property name="name">excess_charge_value</property>
+                    <property name="nativeName">excess_charge_value</property>
+                    <property name="dataType">float</property>
+                    <property name="nativeDataType">8</property>
+                </structure>
+                <structure>
+                    <property name="position">12</property>
+                    <property name="name">excess_charge_time</property>
+                    <property name="nativeName">excess_charge_time</property>
+                    <property name="dataType">date</property>
+                    <property name="nativeDataType">91</property>
+                </structure>
+                <structure>
+                    <property name="position">13</property>
+                    <property name="name">last_reminder_time</property>
+                    <property name="nativeName">last_reminder_time</property>
+                    <property name="dataType">date</property>
+                    <property name="nativeDataType">91</property>
+                </structure>
+                <structure>
+                    <property name="position">14</property>
+                    <property name="name">next_reminder_time</property>
+                    <property name="nativeName">next_reminder_time</property>
+                    <property name="dataType">date</property>
+                    <property name="nativeDataType">91</property>
+                </structure>
+                <structure>
+                    <property name="position">15</property>
+                    <property name="name">excess_charge_number</property>
+                    <property name="nativeName">excess_charge_number</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">16</property>
+                    <property name="name">member_id</property>
+                    <property name="nativeName">member_id</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">17</property>
+                    <property name="name">claim_id</property>
+                    <property name="nativeName">claim_id</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">18</property>
+                    <property name="name">excess_charge_status</property>
+                    <property name="nativeName">excess_charge_status</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">19</property>
+                    <property name="name">excess_number_counter</property>
+                    <property name="nativeName">excess_number_counter</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+            </list-property>
+            <property name="queryText">select * 
+from excess_charge where excess_charge_status = 1</property>
+        </oda-data-set>
+        <oda-data-set extensionID="com.genuitec.eclipse.reporting.oda.dataSet" name="Invoice" id="140">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">invoice_id</property>
+                    <property name="displayName">invoice_id</property>
+                </structure>
+                <structure>
+                    <property name="columnName">description</property>
+                    <property name="displayName">description</property>
+                </structure>
+                <structure>
+                    <property name="columnName">created_time</property>
+                    <property name="displayName">created_time</property>
+                </structure>
+                <structure>
+                    <property name="columnName">created_by</property>
+                    <property name="displayName">created_by</property>
+                </structure>
+                <structure>
+                    <property name="columnName">deleted_time</property>
+                    <property name="displayName">deleted_time</property>
+                </structure>
+                <structure>
+                    <property name="columnName">deleted_by</property>
+                    <property name="displayName">deleted_by</property>
+                </structure>
+                <structure>
+                    <property name="columnName">modified_time</property>
+                    <property name="displayName">modified_time</property>
+                </structure>
+                <structure>
+                    <property name="columnName">modified_by</property>
+                    <property name="displayName">modified_by</property>
+                </structure>
+                <structure>
+                    <property name="columnName">deleted_status</property>
+                    <property name="displayName">deleted_status</property>
+                </structure>
+                <structure>
+                    <property name="columnName">approved_by</property>
+                    <property name="displayName">approved_by</property>
+                </structure>
+                <structure>
+                    <property name="columnName">invoice_date</property>
+                    <property name="displayName">invoice_date</property>
+                </structure>
+                <structure>
+                    <property name="columnName">invoice_due_date</property>
+                    <property name="displayName">invoice_due_date</property>
+                </structure>
+                <structure>
+                    <property name="columnName">invoice_value</property>
+                    <property name="displayName">invoice_value</property>
+                </structure>
+                <structure>
+                    <property name="columnName">invoice_status</property>
+                    <property name="displayName">invoice_status</property>
+                </structure>
+                <structure>
+                    <property name="columnName">approval_time</property>
+                    <property name="displayName">approval_time</property>
+                </structure>
+                <structure>
+                    <property name="columnName">member_group_id</property>
+                    <property name="displayName">member_group_id</property>
+                </structure>
+                <structure>
+                    <property name="columnName">invoice_number</property>
+                    <property name="displayName">invoice_number</property>
+                </structure>
+                <structure>
+                    <property name="columnName">invoice_type</property>
+                    <property name="displayName">invoice_type</property>
+                </structure>
+                <structure>
+                    <property name="columnName">approval_signature</property>
+                    <property name="displayName">approval_signature</property>
+                </structure>
+                <structure>
+                    <property name="columnName">bill_description</property>
+                    <property name="displayName">bill_description</property>
+                </structure>
+                <structure>
+                    <property name="columnName">create_signature</property>
+                    <property name="displayName">create_signature</property>
+                </structure>
+                <structure>
+                    <property name="columnName">outstanding</property>
+                    <property name="displayName">outstanding</property>
+                </structure>
+                <structure>
+                    <property name="columnName">paid</property>
+                    <property name="displayName">paid</property>
+                </structure>
+                <structure>
+                    <property name="columnName">last_payment_date</property>
+                    <property name="displayName">last_payment_date</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">invoice_id</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">description</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">created_time</property>
+                        <property name="dataType">date-time</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">created_by</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">deleted_time</property>
+                        <property name="dataType">date-time</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">deleted_by</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">7</property>
+                        <property name="name">modified_time</property>
+                        <property name="dataType">date-time</property>
+                    </structure>
+                    <structure>
+                        <property name="position">8</property>
+                        <property name="name">modified_by</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">9</property>
+                        <property name="name">deleted_status</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">10</property>
+                        <property name="name">approved_by</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">11</property>
+                        <property name="name">invoice_date</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">12</property>
+                        <property name="name">invoice_due_date</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">13</property>
+                        <property name="name">invoice_value</property>
+                        <property name="dataType">float</property>
+                    </structure>
+                    <structure>
+                        <property name="position">14</property>
+                        <property name="name">invoice_status</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">15</property>
+                        <property name="name">approval_time</property>
+                        <property name="dataType">date-time</property>
+                    </structure>
+                    <structure>
+                        <property name="position">16</property>
+                        <property name="name">member_group_id</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">17</property>
+                        <property name="name">invoice_number</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">18</property>
+                        <property name="name">invoice_type</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">19</property>
+                        <property name="name">approval_signature</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">20</property>
+                        <property name="name">bill_description</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">21</property>
+                        <property name="name">create_signature</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">22</property>
+                        <property name="name">outstanding</property>
+                        <property name="dataType">float</property>
+                    </structure>
+                    <structure>
+                        <property name="position">23</property>
+                        <property name="name">paid</property>
+                        <property name="dataType">float</property>
+                    </structure>
+                    <structure>
+                        <property name="position">24</property>
+                        <property name="name">last_payment_date</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">Data Source</property>
+            <list-property name="parameters">
+                <structure>
+                    <property name="name">invoiceId</property>
+                    <property name="paramName">invoiceId</property>
+                    <property name="dataType">any</property>
+                    <property name="position">1</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+            </list-property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">invoice_id</property>
+                    <property name="nativeName">invoice_id</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">description</property>
+                    <property name="nativeName">description</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">created_time</property>
+                    <property name="nativeName">created_time</property>
+                    <property name="dataType">date-time</property>
+                    <property name="nativeDataType">93</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">created_by</property>
+                    <property name="nativeName">created_by</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">deleted_time</property>
+                    <property name="nativeName">deleted_time</property>
+                    <property name="dataType">date-time</property>
+                    <property name="nativeDataType">93</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">deleted_by</property>
+                    <property name="nativeName">deleted_by</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">7</property>
+                    <property name="name">modified_time</property>
+                    <property name="nativeName">modified_time</property>
+                    <property name="dataType">date-time</property>
+                    <property name="nativeDataType">93</property>
+                </structure>
+                <structure>
+                    <property name="position">8</property>
+                    <property name="name">modified_by</property>
+                    <property name="nativeName">modified_by</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">9</property>
+                    <property name="name">deleted_status</property>
+                    <property name="nativeName">deleted_status</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">10</property>
+                    <property name="name">approved_by</property>
+                    <property name="nativeName">approved_by</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">11</property>
+                    <property name="name">invoice_date</property>
+                    <property name="nativeName">invoice_date</property>
+                    <property name="dataType">date</property>
+                    <property name="nativeDataType">91</property>
+                </structure>
+                <structure>
+                    <property name="position">12</property>
+                    <property name="name">invoice_due_date</property>
+                    <property name="nativeName">invoice_due_date</property>
+                    <property name="dataType">date</property>
+                    <property name="nativeDataType">91</property>
+                </structure>
+                <structure>
+                    <property name="position">13</property>
+                    <property name="name">invoice_value</property>
+                    <property name="nativeName">invoice_value</property>
+                    <property name="dataType">float</property>
+                    <property name="nativeDataType">8</property>
+                </structure>
+                <structure>
+                    <property name="position">14</property>
+                    <property name="name">invoice_status</property>
+                    <property name="nativeName">invoice_status</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">15</property>
+                    <property name="name">approval_time</property>
+                    <property name="nativeName">approval_time</property>
+                    <property name="dataType">date-time</property>
+                    <property name="nativeDataType">93</property>
+                </structure>
+                <structure>
+                    <property name="position">16</property>
+                    <property name="name">member_group_id</property>
+                    <property name="nativeName">member_group_id</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">17</property>
+                    <property name="name">invoice_number</property>
+                    <property name="nativeName">invoice_number</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">18</property>
+                    <property name="name">invoice_type</property>
+                    <property name="nativeName">invoice_type</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">4</property>
+                </structure>
+                <structure>
+                    <property name="position">19</property>
+                    <property name="name">approval_signature</property>
+                    <property name="nativeName">approval_signature</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">20</property>
+                    <property name="name">bill_description</property>
+                    <property name="nativeName">bill_description</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">21</property>
+                    <property name="name">create_signature</property>
+                    <property name="nativeName">create_signature</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">22</property>
+                    <property name="name">outstanding</property>
+                    <property name="nativeName">outstanding</property>
+                    <property name="dataType">float</property>
+                    <property name="nativeDataType">8</property>
+                </structure>
+                <structure>
+                    <property name="position">23</property>
+                    <property name="name">paid</property>
+                    <property name="nativeName">paid</property>
+                    <property name="dataType">float</property>
+                    <property name="nativeDataType">8</property>
+                </structure>
+                <structure>
+                    <property name="position">24</property>
+                    <property name="name">last_payment_date</property>
+                    <property name="nativeName">last_payment_date</property>
+                    <property name="dataType">date</property>
+                    <property name="nativeDataType">91</property>
+                </structure>
+            </list-property>
+            <property name="queryText">select * 
+from invoice WHERE invoice_id = ?</property>
+        </oda-data-set>
+        <oda-data-set extensionID="com.genuitec.eclipse.reporting.oda.dataSet" name="DataExcess" id="306">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">first_name</property>
+                    <property name="displayName">first_name</property>
+                </structure>
+                <structure>
+                    <property name="columnName">customer_policy_number</property>
+                    <property name="displayName">customer_policy_number</property>
+                </structure>
+                <structure>
+                    <property name="columnName">claim_number</property>
+                    <property name="displayName">claim_number</property>
+                </structure>
+                <structure>
+                    <property name="columnName">excess_charge_value</property>
+                    <property name="displayName">excess_charge_value</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">first_name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">customer_policy_number</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">first_name_3</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">customer_policy_number_4</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">claim_number</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">excess_charge_value</property>
+                        <property name="dataType">float</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">Data Source</property>
+            <list-property name="parameters">
+                <structure>
+                    <property name="name">invoiceId</property>
+                    <property name="paramName">invoiceId</property>
+                    <property name="dataType">any</property>
+                    <property name="position">1</property>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+            </list-property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">first_name</property>
+                    <property name="nativeName">first_name</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">customer_policy_number</property>
+                    <property name="nativeName">customer_policy_number</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">first_name_3</property>
+                    <property name="nativeName">first_name</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">customer_policy_number_4</property>
+                    <property name="nativeName">customer_policy_number</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">claim_number</property>
+                    <property name="nativeName">claim_number</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">excess_charge_value</property>
+                    <property name="nativeName">excess_charge_value</property>
+                    <property name="dataType">float</property>
+                    <property name="nativeDataType">8</property>
+                </structure>
+            </list-property>
+            <property name="queryText">select p.first_name, p.customer_policy_number, m.first_name ,m.customer_policy_number, c.claim_number,
+ec.excess_charge_value
+from member p, member m, excess_charge ec, claim c
+WHERE m.parent_id = p.member_id
+and ec.member_id = m.member_id
+and ec.claim_id = c.claim_id and. ec.invoice_id = ?
+ORDER BY p.first_name,m.first_name
+
+</property>
+        </oda-data-set>
+    </data-sets>
+    <styles>
+        <style name="crosstab" id="4">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+        <style name="crosstab-cell" id="5">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+    </styles>
+    <page-setup>
+        <simple-master-page name="Simple MasterPage" id="2">
+            <property name="type">a4</property>
+            <property name="leftMargin">0.5in</property>
+            <property name="rightMargin">0.5in</property>
+            <page-footer>
+                <text id="3">
+                    <property name="contentType">html</property>
+                    <text-property name="content"><![CDATA[<value-of>new Date()</value-of>]]></text-property>
+                </text>
+            </page-footer>
+        </simple-master-page>
+    </page-setup>
+    <body>
+        <image id="56">
+            <property name="source">file</property>
+            <expression name="uri">"images/relife.png"</expression>
+        </image>
+        <grid id="6">
+            <property name="width">100%</property>
+            <column id="7"/>
+            <column id="8"/>
+            <column id="9"/>
+            <row id="10">
+                <cell id="11">
+                    <label id="66"/>
+                </cell>
+                <cell id="12"/>
+                <cell id="13">
+                    <label id="67"/>
+                </cell>
+            </row>
+            <row id="14">
+                <cell id="15">
+                    <label id="76">
+                        <text-property name="text">Kepada Yth,</text-property>
+                    </label>
+                </cell>
+                <cell id="16"/>
+                <cell id="17"/>
+            </row>
+            <row id="18">
+                <cell id="19"/>
+                <cell id="20"/>
+                <cell id="21"/>
+            </row>
+            <row id="72">
+                <cell id="73"/>
+                <cell id="74"/>
+                <cell id="75"/>
+            </row>
+            <row id="68">
+                <cell id="69"/>
+                <cell id="70"/>
+                <cell id="71"/>
+            </row>
+        </grid>
+        <label id="50"/>
+        <label id="80"/>
+        <label id="79"/>
+        <label id="78">
+            <text-property name="text">Hormat Kami,</text-property>
+        </label>
+        <image id="62">
+            <property name="height">93px</property>
+            <property name="width">219px</property>
+            <property name="source">file</property>
+            <expression name="uri">"images/relife_excess.png"</expression>
+        </image>
+        <label id="63">
+            <property name="fontWeight">bold</property>
+            <property name="textUnderline">underline</property>
+            <text-property name="text">Rudy B. Setiawan</text-property>
+        </label>
+        <label id="64">
+            <property name="fontWeight">bold</property>
+            <text-property name="text">Finance &amp; Accounting Head</text-property>
+        </label>
+        <label id="51">
+            <property name="pageBreakAfter">always</property>
+        </label>
+        <label id="89">
+            <property name="fontSize">larger</property>
+            <property name="fontWeight">bold</property>
+            <property name="textUnderline">underline</property>
+            <property name="textAlign">center</property>
+            <property name="pageBreakBefore">always</property>
+            <text-property name="text">TAGIHAN KELEBIHAN KLAIM</text-property>
+        </label>
+        <label id="90">
+            <property name="fontSize">larger</property>
+            <property name="fontWeight">bold</property>
+            <property name="textAlign">center</property>
+            <text-property name="text">EXCESS OF CLAIM (EOC) INVOICE</text-property>
+        </label>
+        <grid id="91">
+            <property name="width">100%</property>
+            <column id="92">
+                <property name="width">2.9166666667in</property>
+            </column>
+            <column id="93">
+                <property name="width">1.7604166667in</property>
+            </column>
+            <column id="94">
+                <property name="width">0.2083333333in</property>
+            </column>
+            <column id="95"/>
+            <row id="96">
+                <cell id="97"/>
+                <cell id="98">
+                    <label id="124">
+                        <text-property name="text">No. Tagihan / Invoice No.</text-property>
+                    </label>
+                </cell>
+                <cell id="99">
+                    <label id="111">
+                        <text-property name="text">:</text-property>
+                    </label>
+                </cell>
+                <cell id="100">
+                    <data id="142">
+                        <property name="dataSet">Invoice</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">invoice_number</property>
+                                <expression name="expression">dataSetRow["invoice_number"]</expression>
+                                <property name="dataType">string</property>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">invoice_number</property>
+                    </data>
+                </cell>
+            </row>
+            <row id="101">
+                <cell id="102">
+                    <label id="150">
+                        <text-property name="text">Kepada Yth,</text-property>
+                    </label>
+                </cell>
+                <cell id="103">
+                    <label id="126">
+                        <property name="fontSize">smaller</property>
+                        <text-property name="text">Tanggal Tagihan / Invoice Date</text-property>
+                    </label>
+                </cell>
+                <cell id="104">
+                    <label id="112">
+                        <text-property name="text">:</text-property>
+                    </label>
+                </cell>
+                <cell id="105">
+                    <data id="143">
+                        <property name="dataSet">Invoice</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">invoice_date</property>
+                                <expression name="expression">dataSetRow["invoice_date"]</expression>
+                                <property name="dataType">date</property>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">invoice_date</property>
+                    </data>
+                </cell>
+            </row>
+            <row id="106">
+                <cell id="107">
+                    <data id="151">
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">groupName</property>
+                                <expression name="expression">params["groupName"]</expression>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">groupName</property>
+                    </data>
+                </cell>
+                <cell id="108">
+                    <label id="127">
+                        <property name="fontSize">smaller</property>
+                        <text-property name="text">Tanggal Jatuh Tempo / Due Date</text-property>
+                    </label>
+                </cell>
+                <cell id="109">
+                    <label id="113">
+                        <text-property name="text">:</text-property>
+                    </label>
+                </cell>
+                <cell id="110">
+                    <data id="144">
+                        <property name="dataSet">Invoice</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">invoice_due_date</property>
+                                <expression name="expression">dataSetRow["invoice_due_date"]</expression>
+                                <property name="dataType">date</property>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">invoice_due_date</property>
+                    </data>
+                </cell>
+            </row>
+            <row id="119">
+                <cell id="120">
+                    <property name="colSpan">1</property>
+                    <property name="rowSpan">2</property>
+                    <data id="153">
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">groupAddress</property>
+                                <expression name="expression">params["groupAddress"]</expression>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">groupAddress</property>
+                    </data>
+                </cell>
+                <cell id="121">
+                    <label id="128">
+                        <property name="fontSize">smaller</property>
+                        <text-property name="text">No. Polis / Policy No.</text-property>
+                    </label>
+                </cell>
+                <cell id="122">
+                    <label id="136">
+                        <text-property name="text">:</text-property>
+                    </label>
+                </cell>
+                <cell id="123">
+                    <data id="145">
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">nomorPolis</property>
+                                <expression name="expression">params["nomorPolis"]</expression>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">nomorPolis</property>
+                    </data>
+                </cell>
+            </row>
+            <row id="114">
+                <cell id="116">
+                    <label id="129">
+                        <property name="fontSize">smaller</property>
+                        <text-property name="text">Periode Pertanggungan / Coverage Period</text-property>
+                    </label>
+                </cell>
+                <cell id="117">
+                    <label id="137">
+                        <text-property name="text">:</text-property>
+                    </label>
+                </cell>
+                <cell id="118">
+                    <data id="148">
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">coveragePeriode</property>
+                                <expression name="expression">params["coveragePeriode"]</expression>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">coveragePeriode</property>
+                    </data>
+                </cell>
+            </row>
+            <row id="130">
+                <cell id="131"/>
+                <cell id="132">
+                    <label id="135">
+                        <property name="fontSize">smaller</property>
+                        <text-property name="text">Mata Uang / Currency</text-property>
+                    </label>
+                </cell>
+                <cell id="133">
+                    <label id="138">
+                        <text-property name="text">:</text-property>
+                    </label>
+                </cell>
+                <cell id="134">
+                    <data id="149">
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">currency</property>
+                                <expression name="expression">params["currency"]</expression>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">currency</property>
+                    </data>
+                </cell>
+            </row>
+        </grid>
+        <label id="154"/>
+        <grid id="254">
+            <property name="width">100%</property>
+            <column id="255">
+                <property name="width">0.7708333333in</property>
+            </column>
+            <column id="256"/>
+            <column id="257">
+                <property name="width">1.5in</property>
+            </column>
+            <column id="258"/>
+            <row id="259">
+                <cell id="260">
+                    <label id="264">
+                        <property name="fontWeight">bold</property>
+                        <text-property name="text">UP  :</text-property>
+                    </label>
+                </cell>
+                <cell id="261">
+                    <data id="265">
+                        <property name="fontSize">larger</property>
+                        <property name="fontWeight">bold</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">contactPerson</property>
+                                <expression name="expression">params["contactPerson"]</expression>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">contactPerson</property>
+                    </data>
+                </cell>
+                <cell id="262">
+                    <label id="266">
+                        <property name="fontWeight">bold</property>
+                        <text-property name="text">Total Tagihan EOC :</text-property>
+                    </label>
+                </cell>
+                <cell id="263">
+                    <data id="268">
+                        <property name="fontWeight">bold</property>
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">medium</property>
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">medium</property>
+                        <property name="borderRightColor">#000000</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">medium</property>
+                        <property name="borderTopColor">#000000</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">medium</property>
+                        <property name="paddingTop">1pt</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">totalInvoiceValue</property>
+                                <expression name="expression">params["totalInvoiceValue"]</expression>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">totalInvoiceValue</property>
+                    </data>
+                </cell>
+            </row>
+            <row id="269">
+                <cell id="270"/>
+                <cell id="271"/>
+                <cell id="272">
+                    <label id="274">
+                        <property name="fontWeight">normal</property>
+                        <property name="fontStyle">italic</property>
+                        <text-property name="text">Terbilang</text-property>
+                    </label>
+                </cell>
+                <cell id="273">
+                    <data id="276">
+                        <property name="fontStyle">italic</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">totalValueString</property>
+                                <expression name="expression">params["totalValueString"]</expression>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">totalValueString</property>
+                    </data>
+                </cell>
+            </row>
+        </grid>
+        <label id="245">
+            <property name="fontWeight">bold</property>
+            <property name="textAlign">center</property>
+            <text-property name="text">( Rincian Terlampir )</text-property>
+        </label>
+        <label id="277"/>
+        <grid id="194">
+            <property name="width">100%</property>
+            <column id="195">
+                <property name="width">2.3854166667in</property>
+            </column>
+            <column id="196">
+                <property name="width">3.9270833333in</property>
+            </column>
+            <column id="197"/>
+            <row id="198">
+                <cell id="199">
+                    <label id="210">
+                        <property name="fontWeight">bold</property>
+                        <text-property name="text">Ketentuan Pembayaran</text-property>
+                    </label>
+                </cell>
+                <cell id="200"/>
+                <cell id="201"/>
+            </row>
+            <row id="202">
+                <cell id="203">
+                    <property name="colSpan">3</property>
+                    <property name="rowSpan">1</property>
+                    <label id="211">
+                        <property name="fontSize">x-small</property>
+                        <text-property name="text">1. Mohon tagihan ini diteliti kembali dan akan dianggap benar jika tidak ada pemberitahuan keberatan terhadap tagihan ini dalam waktu 5 (lima) hari kalender</text-property>
+                    </label>
+                </cell>
+            </row>
+            <row id="206">
+                <cell id="207">
+                    <property name="paddingTop">1pt</property>
+                    <label id="224">
+                        <property name="fontSize">x-small</property>
+                        <text-property name="text">2. Transfer melalui bank ke rekening :</text-property>
+                    </label>
+                </cell>
+                <cell id="208">
+                    <label id="229">
+                        <property name="fontWeight">bold</property>
+                        <text-property name="text">PT. Asuransi Jiwa Recapital</text-property>
+                    </label>
+                </cell>
+                <cell id="209"/>
+            </row>
+            <row id="220">
+                <cell id="221"/>
+                <cell id="222">
+                    <label id="230">
+                        <property name="fontWeight">bold</property>
+                        <text-property name="text">BCA - Cabang Wisma BCA</text-property>
+                    </label>
+                </cell>
+                <cell id="223"/>
+            </row>
+            <row id="216">
+                <cell id="217"/>
+                <cell id="218">
+                    <label id="231">
+                        <property name="fontWeight">bold</property>
+                        <text-property name="text">No. Rekening  035-309041-8 (IDR)</text-property>
+                    </label>
+                </cell>
+                <cell id="219"/>
+            </row>
+            <row id="212">
+                <cell id="213">
+                    <property name="colSpan">3</property>
+                    <property name="rowSpan">1</property>
+                    <label id="240">
+                        <property name="fontSize">x-small</property>
+                        <text-property name="text">3. Mohon tidak melakukan pembayaran secara tunai</text-property>
+                    </label>
+                </cell>
+            </row>
+            <row id="236">
+                <cell id="237">
+                    <property name="colSpan">3</property>
+                    <property name="rowSpan">1</property>
+                    <label id="241">
+                        <property name="fontSize">x-small</property>
+                        <text-property name="text">4. Biaya yang timbul dari proses transfer yang dilakukan harus ditanggung oleh Pemegang Polis</text-property>
+                    </label>
+                </cell>
+            </row>
+            <row id="232">
+                <cell id="233">
+                    <property name="colSpan">3</property>
+                    <property name="rowSpan">1</property>
+                    <label id="242">
+                        <property name="fontSize">x-small</property>
+                        <text-property name="text">5. Mohon mencantumkan keterangan "Pembayaran EOC No. Tagihan " di slip pembayaran pada saat melakukan transfer.</text-property>
+                    </label>
+                </cell>
+            </row>
+            <row id="225">
+                <cell id="226">
+                    <property name="colSpan">3</property>
+                    <property name="rowSpan">1</property>
+                    <label id="244">
+                        <property name="fontSize">x-small</property>
+                        <text-property name="text">6. Apabila ada pertanyaan lebih lanjut, mohon untuk dapat menghubungi kami di No. Telepon : 021-725-6272  No. Fax : 021-725-3858</text-property>
+                    </label>
+                </cell>
+            </row>
+        </grid>
+        <label id="155">
+            <property name="fontSize">large</property>
+            <property name="fontWeight">bold</property>
+            <property name="pageBreakBefore">always</property>
+            <text-property name="text">Rincian Tagihan Kelebihan Klaim / Detail of Excess of Claim (EOC) Invoice</text-property>
+        </label>
+        <grid id="157">
+            <property name="width">100%</property>
+            <column id="158"/>
+            <column id="159">
+                <property name="width">1.9895833333in</property>
+            </column>
+            <column id="160">
+                <property name="width">0.2083333333in</property>
+            </column>
+            <column id="161"/>
+            <column id="162"/>
+            <row id="163">
+                <cell id="164">
+                    <label id="181">
+                        <text-property name="text">No. Polis</text-property>
+                    </label>
+                </cell>
+                <cell id="165">
+                    <data id="184">
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">nomorPolis</property>
+                                <expression name="expression">params["nomorPolis"]</expression>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">nomorPolis</property>
+                    </data>
+                </cell>
+                <cell id="166"/>
+                <cell id="167">
+                    <label id="187">
+                        <text-property name="text">Invoice Ref No.</text-property>
+                    </label>
+                </cell>
+                <cell id="168">
+                    <data id="190">
+                        <property name="dataSet">Invoice</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">invoice_number</property>
+                                <expression name="expression">dataSetRow["invoice_number"]</expression>
+                                <property name="dataType">string</property>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">invoice_number</property>
+                    </data>
+                </cell>
+            </row>
+            <row id="169">
+                <cell id="170">
+                    <label id="182">
+                        <text-property name="text">Nama Polis</text-property>
+                    </label>
+                </cell>
+                <cell id="171">
+                    <data id="185">
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">groupName</property>
+                                <expression name="expression">params["groupName"]</expression>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">groupName</property>
+                    </data>
+                </cell>
+                <cell id="172"/>
+                <cell id="173">
+                    <label id="188">
+                        <text-property name="text">Currency</text-property>
+                    </label>
+                </cell>
+                <cell id="174">
+                    <data id="191">
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">currency</property>
+                                <expression name="expression">params["currency"]</expression>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">currency</property>
+                    </data>
+                </cell>
+            </row>
+            <row id="175">
+                <cell id="176">
+                    <label id="183">
+                        <text-property name="text">Periode Polis</text-property>
+                    </label>
+                </cell>
+                <cell id="177">
+                    <data id="186">
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">coveragePeriode</property>
+                                <expression name="expression">params["coveragePeriode"]</expression>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">coveragePeriode</property>
+                    </data>
+                </cell>
+                <cell id="178"/>
+                <cell id="179">
+                    <label id="189">
+                        <text-property name="text">Periode Approve</text-property>
+                    </label>
+                </cell>
+                <cell id="180">
+                    <data id="193">
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">excessPeriode</property>
+                                <expression name="expression">params["excessPeriode"]</expression>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">excessPeriode</property>
+                    </data>
+                </cell>
+            </row>
+        </grid>
+        <label id="57">
+            <property name="pageBreakAfter">always</property>
+        </label>
+        <table id="278">
+            <property name="width">100%</property>
+            <column id="300"/>
+            <column id="301"/>
+            <column id="302"/>
+            <column id="303"/>
+            <column id="304"/>
+            <column id="305"/>
+            <header>
+                <row id="279">
+                    <cell id="280"/>
+                    <cell id="281"/>
+                    <cell id="282"/>
+                    <cell id="283"/>
+                    <cell id="284"/>
+                    <cell id="285"/>
+                </row>
+            </header>
+            <detail>
+                <row id="286">
+                    <cell id="287"/>
+                    <cell id="288"/>
+                    <cell id="289"/>
+                    <cell id="290"/>
+                    <cell id="291"/>
+                    <cell id="292"/>
+                </row>
+            </detail>
+            <footer>
+                <row id="293">
+                    <cell id="294"/>
+                    <cell id="295"/>
+                    <cell id="296"/>
+                    <cell id="297"/>
+                    <cell id="298"/>
+                    <cell id="299"/>
+                </row>
+            </footer>
+        </table>
+        <label id="307">
+            <property name="pageBreakAfter">always</property>
+        </label>
+        <label id="308">
+            <property name="pageBreakAfter">always</property>
+        </label>
+        <grid id="309">
+            <property name="width">100%</property>
+            <column id="310"/>
+            <column id="311">
+                <property name="width">2.7395833333in</property>
+            </column>
+            <column id="312"/>
+            <row id="313">
+                <cell id="314">
+                    <label id="315"/>
+                </cell>
+                <cell id="316">
+                    <label id="369">
+                        <property name="fontWeight">bold</property>
+                        <property name="textAlign">right</property>
+                        <text-property name="text">Invoice Ref :</text-property>
+                    </label>
+                </cell>
+                <cell id="317">
+                    <data id="370">
+                        <property name="fontWeight">bold</property>
+                        <property name="dataSet">Invoice</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">invoice_number</property>
+                                <expression name="expression">dataSetRow["invoice_number"]</expression>
+                                <property name="dataType">string</property>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">invoice_number</property>
+                    </data>
+                </cell>
+            </row>
+            <row id="319">
+                <cell id="320">
+                    <label id="321">
+                        <text-property name="text">Kepada Yth,</text-property>
+                    </label>
+                </cell>
+                <cell id="322"/>
+                <cell id="323"/>
+            </row>
+            <row id="324">
+                <cell id="325">
+                    <data id="367">
+                        <property name="fontWeight">bold</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">groupName</property>
+                                <expression name="expression">params["groupName"]</expression>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">groupName</property>
+                    </data>
+                </cell>
+                <cell id="326"/>
+                <cell id="327"/>
+            </row>
+            <row id="328">
+                <cell id="329">
+                    <property name="colSpan">1</property>
+                    <property name="rowSpan">2</property>
+                    <data id="368">
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">groupAddress</property>
+                                <expression name="expression">params["groupAddress"]</expression>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">groupAddress</property>
+                    </data>
+                </cell>
+                <cell id="330"/>
+                <cell id="331"/>
+            </row>
+            <row id="332">
+                <cell id="334"/>
+                <cell id="335"/>
+            </row>
+        </grid>
+        <grid id="336">
+            <property name="width">100%</property>
+            <column id="337">
+                <property name="width">1.1041666667in</property>
+            </column>
+            <column id="338"/>
+            <row id="339">
+                <cell id="340">
+                    <label id="345">
+                        <property name="fontWeight">bold</property>
+                        <text-property name="text">UP   :</text-property>
+                    </label>
+                </cell>
+                <cell id="341">
+                    <data id="347">
+                        <property name="fontWeight">bold</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">contactPerson</property>
+                                <expression name="expression">params["contactPerson"]</expression>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">contactPerson</property>
+                    </data>
+                </cell>
+            </row>
+            <row id="342">
+                <cell id="343">
+                    <label id="346">
+                        <property name="fontWeight">bold</property>
+                        <text-property name="text">Hal   :</text-property>
+                    </label>
+                </cell>
+                <cell id="344">
+                    <label id="348">
+                        <property name="fontWeight">bold</property>
+                        <text-property name="text">Tagihan Kelebihan Klaim / Excess of Claim (EOC)</text-property>
+                    </label>
+                </cell>
+            </row>
+        </grid>
+        <label id="349"/>
+        <label id="350">
+            <text-property name="text">Berikut ini adalah rincian per Peserta untuk tagihan Excess of Claim (EOC) :</text-property>
+        </label>
+        <table id="351">
+            <property name="width">100%</property>
+            <column id="364"/>
+            <column id="365"/>
+            <column id="366"/>
+            <header>
+                <row id="352">
+                    <cell id="353"/>
+                    <cell id="354"/>
+                    <cell id="355"/>
+                </row>
+            </header>
+            <detail>
+                <row id="356">
+                    <cell id="357"/>
+                    <cell id="358"/>
+                    <cell id="359"/>
+                </row>
+            </detail>
+            <footer>
+                <row id="360">
+                    <cell id="361"/>
+                    <cell id="362"/>
+                    <cell id="363"/>
+                </row>
+            </footer>
+        </table>
+        <label id="371"/>
+        <grid id="372">
+            <property name="width">100%</property>
+            <column id="373"/>
+            <column id="374">
+                <property name="width">1.0104166667in</property>
+            </column>
+            <column id="375"/>
+            <column id="376"/>
+            <row id="377">
+                <cell id="378">
+                    <property name="colSpan">2</property>
+                    <property name="rowSpan">1</property>
+                    <label id="382">
+                        <property name="fontWeight">bold</property>
+                        <text-property name="text">Total yang harus dibayarkan :</text-property>
+                    </label>
+                </cell>
+                <cell id="380">
+                    <property name="colSpan">2</property>
+                    <property name="rowSpan">1</property>
+                    <data id="383">
+                        <property name="fontWeight">bold</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">totalInvoiceValue</property>
+                                <expression name="expression">params["totalInvoiceValue"]</expression>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">totalInvoiceValue</property>
+                    </data>
+                </cell>
+            </row>
+            <row id="384">
+                <cell id="385"/>
+                <cell id="386"/>
+                <cell id="387">
+                    <property name="colSpan">2</property>
+                    <property name="rowSpan">1</property>
+                    <data id="389">
+                        <property name="fontStyle">italic</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">totalValueString</property>
+                                <expression name="expression">params["totalValueString"]</expression>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">totalValueString</property>
+                    </data>
+                </cell>
+            </row>
+        </grid>
+        <label id="390"/>
+        <label id="391">
+            <property name="fontWeight">bold</property>
+            <text-property name="text">Hormat Kami,</text-property>
+        </label>
+        <label id="395"/>
+        <image id="396">
+            <property name="height">90px</property>
+            <property name="width">219px</property>
+            <property name="source">file</property>
+            <expression name="uri">"images/excess_relife_spv.png"</expression>
+        </image>
+        <label id="393">
+            <property name="fontWeight">bold</property>
+            <text-property name="text">Nandang Iriansyah</text-property>
+        </label>
+        <label id="394">
+            <property name="fontStyle">normal</property>
+            <text-property name="text">Claim Supervisor</text-property>
+        </label>
+    </body>
+</report>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="memberDiagnosisExclusionValidator" class="com.ametis.cms.web.validator.MemberDiagnosisExclusionValidator"/>
+	
+ 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+ 	
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/memberdiagnosisexclusion">memberDiagnosisExclusionController</prop>
+				<prop key="/memberdiagnosisexclusion-form">memberDiagnosisExclusionFormController</prop>
+				<prop key="/memberdiagnosisexclusion-upload">uploadMemberDiagnosisExclusionFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/memberDiagnosisExclusion/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="memberDiagnosisExclusionController" class="com.ametis.cms.web.controller.MemberDiagnosisExclusionController">
+		<property name="memberDiagnosisExclusionService">
+			<ref bean="memberDiagnosisExclusionService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+		<property name="memberService">
+			<ref bean="memberService" />
+		</property>
+		<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+
+				<property name="actionUserService">
+			<ref bean="userService" />
+		</property>
+		
+	</bean>
+
+	<bean name="memberDiagnosisExclusionFormController" class="com.ametis.cms.web.controller.MemberDiagnosisExclusionFormController">
+		<property name="formView" value="editMemberDiagnosisExclusion"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="memberDiagnosisExclusionValidator"/>
+		<property name="commandName" value="memberDiagnosisExclusionForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.MemberDiagnosisExclusionForm" />
+
+		<property name="memberDiagnosisExclusionService">
+			<ref bean="memberDiagnosisExclusionService" />
+		</property>
+		<property name="securityService" >
+			<ref bean="securityService" />
+		</property>
+
+				<property name="actionUserService">
+			<ref bean="userService" />
+		</property>
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+	</bean>
+		<bean name="uploadMemberDiagnosisExclusionFormController" class="com.ametis.cms.web.controller.MemberDiagnosisExclusionFormController">
+		<property name="formView" value="uploadMemberDiagnosisExclusion"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="memberDiagnosisExclusionValidator"/>
+		<property name="commandName" value="memberDiagnosisExclusionForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.MemberDiagnosisExclusionForm" />
+
+		<property name="memberDiagnosisExclusionService">
+			<ref bean="memberDiagnosisExclusionService" />
+		</property>
+		<property name="securityService" >
+			<ref bean="securityService" />
+		</property>
+
+				<property name="actionUserService">
+			<ref bean="userService" />
+		</property>
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.memberDiagnosisExclusion</value></property>
+	</bean>
+</beans>
+
+

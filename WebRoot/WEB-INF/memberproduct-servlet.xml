@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="memberProductValidator" class="com.ametis.cms.web.validator.MemberProductValidator"/>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/memberproduct">memberProductController</prop>
+				<prop key="/memberproduct-form">memberProductFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/memberProduct/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="memberProductController" class="com.ametis.cms.web.controller.MemberProductController">
+		<property name="memberProductService">
+			<ref bean="memberProductService" />
+		</property>
+		<property name="memberService">
+			<ref bean="memberService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+        <property name="memberBenefitService">
+			<ref bean="memberBenefitService" />
+		</property>
+		<property name="memberLimitLayerService">
+			<ref bean="memberLimitLayerService" />
+		</property>
+	</bean>
+
+	<bean name="memberProductFormController" class="com.ametis.cms.web.controller.MemberProductFormController">
+		<property name="formView" value="editMemberProduct"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="memberProductValidator"/>
+		<property name="commandName" value="memberProductForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.MemberProductForm" />
+<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+		<property name="memberProductService">
+			<ref bean="memberProductService" />
+		</property>
+
+<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+			<property name="subscriptionStatusService">
+			<ref bean="subscriptionStatusService" />
+		</property>
+				<property name="memberService">
+			<ref bean="memberService" />
+		</property>
+				<property name="productService">
+			<ref bean="productService" />
+		</property>
+			
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.memberProduct</value></property>
+	</bean>
+</beans>
+
+

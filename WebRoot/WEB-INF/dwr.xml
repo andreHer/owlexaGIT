@@ -1,0 +1,57 @@
+<!DOCTYPE dwr PUBLIC
+"-//GetAhead Limited//DTD Direct Web Remoting 1.0//EN"
+"http://www.getahead.ltd.uk/dwr/dwr10.dtd">
+
+<dwr>
+	<allow>
+
+		<create creator="spring" javascript="AJAXRemoteController">
+			<param name="beanName" value="ajaxRemoteController" />
+		</create>
+		
+		<convert converter="bean" match="com.ametis.cms.dto.*">
+
+		</convert>
+		
+		<create creator="spring" javascript="AJAXDiagnosisService">
+			<param name="beanName" value="ajaxDiagnosisController" />
+		</create>
+		
+		<create creator="spring" javascript="AJAXMemberGroupService">
+			<param name="beanName" value="memberGroupService" />
+		</create>
+		
+		<create javascript="AJAXMeasurementService" creator="spring">
+			<param name="beanName" value="ajaxMeasurementService" />
+		</create>
+		<create creator="spring" javascript="AJAXPaymentRecipientService">
+			<param name="beanName" value="ajaxPaymentRecipientService" />
+		</create>
+		
+		<create creator="spring" javascript="AJAXCaseService">
+			<param name="beanName" value="ajaxCaseService" />
+		</create>
+		
+		<create creator="spring" javascript="AJAXMemberService">
+			<param name="beanName" value="memberService" />
+		</create>
+		
+		<create creator="spring" javascript="AJAXClaimService">
+			<param name="beanName" value="ajaxClaimService" />
+		</create>
+		
+		<create creator="spring" javascript="AJAXClaimItemService">
+			<param name="beanName" value="ajaxClaimItemService" />
+		</create>
+		<create creator="spring" javascript="AJAXDependentService">
+			<param name="beanName" value="dependentService" />
+		</create>
+		
+		<convert converter="bean" match="com.ametis.cms.datamodel.Diagnosis" >
+		</convert>
+		
+		<convert converter="bean" match="com.ametis.cms.dto.ItemCategoryDto" >
+		</convert>
+
+	</allow>
+</dwr>

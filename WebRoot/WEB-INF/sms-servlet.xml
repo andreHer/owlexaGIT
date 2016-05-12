@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+
+	<bean id="actionValidator"
+		class="com.ametis.cms.web.validator.ActionValidator" />
+
+	<bean id="urlMapping"
+		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/sms">smsController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/sms/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+
+	<bean name="smsController"
+		class="com.ametis.cms.web.controller.SMSController">
+		
+		<property name="smsGatewayURL">
+			<value>localhost</value>
+		</property>
+		<property name="username">
+			<value>jahe</value>
+		</property>
+		<property name="password">
+			<value>jahe</value>
+		</property>
+		<property name="smsGatewayPort">
+			<value>13013</value>
+		</property>
+		<property name="memberService">
+			<ref bean="memberService"/>
+		</property>
+		<property name="memberBenefitService">
+			<ref bean="memberBenefitService" />
+		</property>
+		<property name="memberClausulService">
+			<ref bean="memberClausulService" />
+		</property>
+		<property name="productService">
+			<ref bean="productService" />
+		</property>
+		<property name="productBenefitService">
+			<ref bean="productBenefitService" />
+		</property>
+		<property name="memberProductService">
+			<ref bean="memberProductService" />
+		</property>
+		<property name="claimService">
+			<ref bean="claimService" />
+		</property>
+		<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+	</bean>
+
+	<bean id="alertProperties"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename">
+			<value>com.ametis.cms.messages.action</value>
+		</property>
+	</bean>
+</beans>
+
+

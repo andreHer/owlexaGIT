@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="contactPersonValidator" class="com.ametis.cms.web.validator.ContactPersonValidator"/>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/contactperson">contactPersonController</prop>
+				<prop key="/contactperson-form">contactPersonFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/contactPerson/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="contactPersonController" class="com.ametis.cms.web.controller.ContactPersonController">
+		<property name="providerService">
+			<ref bean="providerService" />
+		</property>
+		<property name="clientService">
+			<ref bean="clientService" />
+		</property>
+		<property name="memberGroupService">
+			<ref bean="memberGroupService" />
+		</property>
+		<property name="contactPersonService">
+			<ref bean="contactPersonService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+		<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+	</bean>
+
+	<bean name="contactPersonFormController" class="com.ametis.cms.web.controller.ContactPersonFormController">
+		<property name="formView" value="editContactPerson"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="contactPersonValidator"/>
+		<property name="commandName" value="contactPersonForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.ContactPersonForm" />
+
+		<property name="contactPersonService">
+			<ref bean="contactPersonService" />
+		</property>
+		<property name="securityService" >
+			<ref bean="securityService" />
+		</property>
+
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+			<property name="clientService">
+			<ref bean="clientService" />
+		</property>
+				<property name="memberGroupService">
+			<ref bean="memberGroupService" />
+		</property>
+				<property name="providerService">
+			<ref bean="providerService" />
+		</property>
+			
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.contactPerson</value></property>
+	</bean>
+</beans>
+
+

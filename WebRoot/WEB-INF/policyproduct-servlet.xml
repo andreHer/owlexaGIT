@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="policyProductValidator" class="com.ametis.cms.web.validator.PolicyProductValidator"/>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/policyproduct">policyProductController</prop>
+				<prop key="/policyproduct-form">policyProductFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/policyProduct/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="policyProductController" class="com.ametis.cms.web.controller.PolicyProductController">
+		<property name="policyProductService">
+			<ref bean="policyProductService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+	</bean>
+
+	<bean name="policyProductFormController" class="com.ametis.cms.web.controller.PolicyProductFormController">
+		<property name="formView" value="editPolicyProduct"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="policyProductValidator"/>
+		<property name="commandName" value="policyProductForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.PolicyProductForm" />
+
+		<property name="policyProductService">
+			<ref bean="policyProductService" />
+		</property>
+
+<property name="logService">
+            <ref bean="activityLogService" />
+        </property>
+				<property name="userService">
+			<ref bean="userService" />
+		</property>
+		
+
+<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+			<property name="policyService">
+			<ref bean="policyService" />
+		</property>
+				<property name="productService">
+			<ref bean="productService" />
+		</property>
+			
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.policyProduct</value></property>
+	</bean>
+</beans>
+
+

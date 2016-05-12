@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	
+	<bean id="policyMedicineValidator" class="com.ametis.cms.web.validator.PolicyMedicineValidator"/>
+
+	
+ 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+ 	
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/policymedicine">policyMedicineController</prop>
+				<prop key="/policymedicine-form">policyMedicineFormController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass">
+			<value>org.springframework.web.servlet.view.JstlView</value>
+		</property>
+		<property name="prefix">
+			<value>WEB-INF/jsp/policyMedicine/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+	<bean name="policyMedicineController" class="com.ametis.cms.web.controller.PolicyMedicineController">
+	
+		<property name="policyService">
+			<ref bean="policyService" />
+		</property>
+		<property name="policyMedicineService">
+			<ref bean="policyMedicineService" />
+		</property>
+		<property name="countSet">
+			<ref bean="countSet" />
+		</property>
+		<property name="maxPercountSet">
+			<ref bean="maxPercountSet" />
+		</property>
+		<property name="alertProperties">
+			<ref bean="alertProperties" />
+		</property>
+		<property name="securityService">
+			<ref bean="securityService" />
+		</property>
+
+				<property name="actionUserService">
+			<ref bean="userService" />
+		</property>
+		
+	</bean>
+
+	<bean name="policyMedicineFormController" class="com.ametis.cms.web.controller.PolicyMedicineFormController">
+		<property name="formView" value="editPolicyMedicine"/>
+		<property name="successView" value="ownerRedirect"/>
+		<property name="validator" ref="policyMedicineValidator"/>
+		<property name="commandName" value="policyMedicineForm" />
+		<property name="commandClass" value="com.ametis.cms.web.form.PolicyMedicineForm" />
+
+		<property name="policyMedicineService">
+			<ref bean="policyMedicineService" />
+		</property>
+		<property name="securityService" >
+			<ref bean="securityService" />
+		</property>
+
+				<property name="actionUserService">
+			<ref bean="userService" />
+		</property>
+		
+
+
+		<property name="propertiesUtil">
+			<ref bean="alertProperties" />
+		</property>
+
+<!-- foreign affairs -->
+	
+			<property name="medicineService">
+			<ref bean="medicineService" />
+		</property>
+				<property name="policyService">
+			<ref bean="policyService" />
+		</property>
+			
+<!-- foreign affairs end -->
+
+	</bean>
+	<bean id="alertProperties" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename"><value>com.ametis.cms.messages.policyMedicine</value></property>
+	</bean>
+</beans>
+
+
